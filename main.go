@@ -11,6 +11,20 @@ import (
 // baseURL for creatures pages
 const baseURL = "https://2e.aonprd.com/Monsters.aspx?ID="
 
+var creatures []Creature
+
+type Creature struct {
+	Name         string   `json:"name"`
+	Family       string   `json:"family"`
+	Level        string   `json:"level"`
+	Alignment    string   `json:"alignment"`
+	CreatureType string   `json:"creature_type"`
+	Size         string   `json:"size"`
+	Traits       []string `json:"traits"`
+	Rarity       string   `json:"rarity"`
+	Id           string   `json:"id"`
+}
+
 func main() {
 	// FIXME hardcoded id, should be .env for good practices
 	url := "https://2e.aonprd.com/Monsters.aspx?Letter=All"
@@ -19,7 +33,7 @@ func main() {
 	parseAONTable(creaturesMainTable)
 
 	for i, c := range creatures {
-		getCreature(i, c.Id)
+		getCreatureDetails(i, c.Id)
 		if os.Getenv("DEBUG") == "1" && i == 3 {
 			break
 		}

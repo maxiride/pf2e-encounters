@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func getCreature(i int, id string) {
+func getCreatureDetails(i int, id string) {
 
 	data := getAONCreatures(baseURL + id)
 

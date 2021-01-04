@@ -72,17 +72,3 @@ func getCreatureID(html string, err error) string {
 
 	return id
 }
-
-var creatures []Creature
-
-type Creature struct {
-	Name         string   `json:"name"`
-	Family       string   `json:"family"`
-	Level        string   `json:"level"`
-	Alignment    string   `json:"alignment"`
-	CreatureType string   `json:"creature_type"`
-	Size         string   `json:"size"`
-	Traits       []string `json:"traits"`
-	Rarity       string   `json:"rarity"`
-	Id           string   `json:"id"`
-}
