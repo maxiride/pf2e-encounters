@@ -33,6 +33,12 @@ func getCreatureDetails(i int, id string) {
 			}
 		}
 
+		// Get the the creature's lore
+		if selection.AttrOr("id", "") == "ctl00_MainContent_DetailedOutput" {
+			lore := selection.Text()
+			lore = lore[:strings.Index(lore, "Creature ")]
+			creatures[i].Lore = lore
+		}
 	})
 
 }

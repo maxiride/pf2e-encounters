@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/helloeave/json"
+	"io"
 	"io/ioutil"
 	"os"
 )
@@ -23,6 +24,7 @@ type Creature struct {
 	Traits       []string `json:"traits"`
 	Rarity       string   `json:"rarity"`
 	Id           string   `json:"id"`
+	Lore         string   `json:"lore"`
 }
 
 func main() {
@@ -37,6 +39,9 @@ func main() {
 		if os.Getenv("DEBUG") == "1" && i == 3 {
 			break
 		}
+
+		str := fmt.Sprintf("Fetching creature %d of %d \r", i, len(creatures))
+		_, _ = io.WriteString(io.Writer(os.Stdout), str)
 	}
 
 	// Pretty print the result, DEBUG only
