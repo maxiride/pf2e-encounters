@@ -37,19 +37,20 @@ func parseAONTable(data string) {
 			rowhtml.Find("td").Each(func(indexth int, tablecell *goquery.Selection) {
 				switch indexth {
 				case 0:
-					c.name = tablecell.Text()
-					id := getCreatureID(tablecell.Html())
-					c.id = id
+					c.Name = tablecell.Text()
+					str := tablecell.Find("a").AttrOr("href", "")
+					equalIndex := strings.LastIndex(str, "=")
+					c.Id = str[equalIndex+1:]
 				case 1:
-					c.family = tablecell.Text()
+					c.Family = tablecell.Text()
 				case 2:
-					c.level = tablecell.Text()
+					c.Level = tablecell.Text()
 				case 3:
-					c.alignment = tablecell.Text()
+					c.Alignment = tablecell.Text()
 				case 4:
-					c.creatureType = tablecell.Text()
+					c.CreatureType = tablecell.Text()
 				case 5:
-					c.size = tablecell.Text()
+					c.Size = tablecell.Text()
 				}
 
 			})
@@ -75,12 +76,13 @@ func getCreatureID(html string, err error) string {
 var creatures []Creature
 
 type Creature struct {
-	name         string
-	family       string
-	level        string
-	alignment    string
-	creatureType string
-	size         string
-	traits       []string
-	id           string
+	Name         string   `json:"name"`
+	Family       string   `json:"family"`
+	Level        string   `json:"level"`
+	Alignment    string   `json:"alignment"`
+	CreatureType string   `json:"creature_type"`
+	Size         string   `json:"size"`
+	Traits       []string `json:"traits"`
+	Rarity       string   `json:"rarity"`
+	Id           string   `json:"id"`
 }
