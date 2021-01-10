@@ -7,7 +7,7 @@
           <q-avatar>
             <!--           Do we need one at all?-->
           </q-avatar>
-          Pathfinder 2 Encounter builder
+          Pathfinder 2e Encounter builder
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
