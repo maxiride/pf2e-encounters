@@ -22,7 +22,7 @@ func getAONCreatures(url string) string {
 	return string(bodyBytes)
 }
 
-func parseAONTable(data string) {
+func (d *Data) parseAONTable(data string) {
 
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(data))
 	if err != nil {
@@ -54,21 +54,10 @@ func parseAONTable(data string) {
 				}
 
 			})
-			creatures = append(creatures, c)
+			d.Creatures = append(d.Creatures, c)
 		})
 	})
 
 	// Drop first entry which is the table header row
-	creatures = creatures[1:]
-}
-
-// TODO this is a peasant approach, goquery con proably do it all. Gotta look better in its API
-func getCreatureID(html string, err error) string {
-
-	// Example URL to parse Monsters.aspx?ID=799
-	// we just want the ID
-	index := strings.LastIndex(html, "=")
-	id := html[index+1 : index+4]
-
-	return id
+	d.Creatures = d.Creatures[1:]
 }

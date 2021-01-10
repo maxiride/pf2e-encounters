@@ -7,11 +7,11 @@ import (
 	"strings"
 )
 
-func getCreatureDetails(i int, id string) {
+func (d *Data) getCreatureDetails(i int, id string) {
 
-	data := getAONCreatures(baseURL + id)
+	rawData := getAONCreatures(baseURL + id)
 
-	doc, err := goquery.NewDocumentFromReader(strings.NewReader(data))
+	doc, err := goquery.NewDocumentFromReader(strings.NewReader(rawData))
 	if err != nil {
 		fmt.Println("No id found")
 		log.Fatal(err)
@@ -20,16 +20,16 @@ func getCreatureDetails(i int, id string) {
 	rarityAssigned := false
 	doc.Find("span").Each(func(index int, selection *goquery.Selection) {
 		if selection.HasClass("trait") {
-			creatures[i].Traits = append(creatures[i].Traits, selection.Text())
+			d.Creatures[i].Traits = append(d.Creatures[i].Traits, selection.Text())
 		}
 		// I expected common and unique creatures to have the class traitcommon and traitunique, instead
 		// common creatures do not have the span at all while unique ones have the span class traitrare
 		if !rarityAssigned {
 			if selection.HasClass("traituncommon") || selection.HasClass("traitrare") {
-				creatures[i].Rarity = selection.Text()
+				d.Creatures[i].Rarity = selection.Text()
 				rarityAssigned = true
 			} else {
-				creatures[i].Rarity = "Common"
+				d.Creatures[i].Rarity = "Common"
 			}
 		}
 
@@ -37,8 +37,9 @@ func getCreatureDetails(i int, id string) {
 		if selection.AttrOr("id", "") == "ctl00_MainContent_DetailedOutput" {
 			lore := selection.Text()
 			lore = lore[:strings.Index(lore, "Creature ")]
-			creatures[i].Lore = lore
+			d.Creatures[i].Lore = lore
 		}
+		// TODO Get the creature's image
 	})
 
 }

@@ -6,13 +6,17 @@ import (
 	"github.com/helloeave/json"
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
 )
 
 // baseURL for creatures pages
 const baseURL = "https://2e.aonprd.com/Monsters.aspx?ID="
 
-var creatures []Creature
+type Data struct {
+	Creatures []Creature `json:"creatures"`
+	Metadata  metadata   `json:"metadata"`
+}
 
 type Creature struct {
 	Name         string   `json:"name"`
@@ -27,32 +31,64 @@ type Creature struct {
 	Lore         string   `json:"lore"`
 }
 
+type metadata struct {
+	MinLevel      int      `json:"min_level"`
+	MaxLevel      int      `json:"max_level"`
+	Total         int      `json:"total"`
+	Families      []string `json:"families"`
+	Alignments    []string `json:"alignments"`
+	CreatureTypes []string `json:"creature_types"`
+	Traits        []string `json:"traits"`
+	Rarities      []string `json:"rarities"`
+	Sizes         []string `json:"sizes"`
+}
+
 func main() {
 	// FIXME hardcoded id, should be .env for good practices
 	url := "https://2e.aonprd.com/Monsters.aspx?Letter=All"
 
-	creaturesMainTable := getAONCreatures(url)
-	parseAONTable(creaturesMainTable)
+	var d Data
+	if file, ok := ioutil.ReadFile("output/creatures.json"); ok == nil {
+		log.Print("creatures.json already present, will skip fetching and just compile the metadata")
+		_ = json.Unmarshal(file, &d)
+		d.FillMetadata()
+		jsonC, _ := json.MarshalSafeCollections(d)
+		_ = os.Mkdir("output", os.ModePerm)
+		_ = ioutil.WriteFile("output/creatures.json", jsonC, os.ModePerm)
+		return
+	}
 
-	for i, c := range creatures {
-		getCreatureDetails(i, c.Id)
+	creaturesMainTable := getAONCreatures(url)
+
+	d.parseAONTable(creaturesMainTable)
+
+	for i, c := range d.Creatures {
+		d.getCreatureDetails(i, c.Id)
+		// If in debug, fetch detailed infos of only three creatures
 		if os.Getenv("DEBUG") == "1" && i == 3 {
 			break
 		}
 
-		str := fmt.Sprintf("Fetching creature %d of %d \r", i, len(creatures))
+		str := fmt.Sprintf("Fetching creature %d of %d \r", i, len(d.Creatures))
 		_, _ = io.WriteString(io.Writer(os.Stdout), str)
 	}
 
 	// Pretty print the result, DEBUG only
 	if os.Getenv("DEBUG") == "1" {
-		fmt.Printf("Found %i creatures\n", len(creatures))
+		fmt.Printf("Found %i creatures\n", len(d.Creatures))
 		// Just spew a bunch of them, we don't need to check them all!
-		spew.Dump(creatures[:2])
+		spew.Dump(d.Creatures[:2])
 	}
 
-	jsonC, _ := json.MarshalSafeCollections(creatures)
-
+	// Save creatures
+	jsonC, _ := json.MarshalSafeCollections(d)
 	_ = os.Mkdir("output", os.ModePerm)
 	_ = ioutil.WriteFile("output/creatures.json", jsonC, os.ModePerm)
+
+	// Add additional metadata and save
+	d.FillMetadata()
+	jsonC, _ = json.MarshalSafeCollections(d)
+	_ = os.Mkdir("output", os.ModePerm)
+	_ = ioutil.WriteFile("output/creatures.json", jsonC, os.ModePerm)
+
 }
