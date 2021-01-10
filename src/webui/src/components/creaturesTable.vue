@@ -116,6 +116,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+tr:nth-child(even) {
+  background-color: $grey-1  !important;
+}
 </style>
