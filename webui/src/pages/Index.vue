@@ -122,7 +122,7 @@
 
             <q-item :key="index" dense>
               <q-item-section avatar v-if="false">
-                <q-avatar><img src="https://2e.aonprd.com/Images/Monsters/Ammut.png"></q-avatar>
+                <q-avatar><img alt="creature picture" src="https://2e.aonprd.com/Images/Monsters/Ammut.png"></q-avatar>
               </q-item-section>
 
               <q-item-section class="col-3">
@@ -204,12 +204,47 @@ export default {
       let rawData = this.creaturesDump.creatures
       let nameFilter = rawData.filter(el => el.name.toLowerCase().includes(this.name.toLowerCase()))
       let levelFilter = nameFilter.filter(el => el.level <= (this.maxLevel === "" ? 25 : this.maxLevel) && el.level >= (this.minLevel === "" ? -1 : this.minLevel))
-      let sizeFilter = levelFilter.filter(el => this.size.length > 0 ? this.size.includes(el.size) : el)
-      let familyFilter = sizeFilter.filter(el => this.family.length > 0 ? this.family.includes(el.family) : el)
-      let traitFilter = familyFilter.filter(el => this.trait.length > 0 ? this.trait.some(v => el.traits.includes(v)) : el)
-      let creatureTypeFilter = traitFilter.filter(el => this.creature_type.length > 0 ? this.creature_type.includes(el.creature_type) : el)
-      let alignmentFilter = creatureTypeFilter.filter(el => this.alignment.length > 0 ? this.alignment.includes(el.alignment) : el)
-      let rarityFilter = alignmentFilter.filter(el => this.rarity.length > 0 ? this.rarity.includes(el.rarity) : el)
+      let sizeFilter = levelFilter.filter(el => {
+          if (this.size != null && this.size.length !== 0) {
+            return this.size.includes(el.size)
+          }
+          return el
+        }
+      )
+      let familyFilter = sizeFilter.filter(el => {
+        if (this.family != null && this.family.length !== 0) {
+          return this.family.includes(el.family)
+        }
+        return el
+      })
+      let traitFilter = familyFilter.filter(el => {
+        if (this.trait != null && this.trait.length !== 0) {
+          return this.trait.some(v => el.traits.includes(v))
+        }
+        return el
+
+      })
+
+      let creatureTypeFilter = traitFilter.filter(el => {
+        if (this.creature_type != null && this.creature_type.length !== 0) {
+          return this.creature_type.includes(el.creature_type)
+        }
+        return el
+
+      })
+      let alignmentFilter = creatureTypeFilter.filter(el => {
+        if (this.alignment != null && this.alignment.length !== 0) {
+          return this.alignment.includes(el.alignment)
+        }
+        return el
+
+      })
+      let rarityFilter = alignmentFilter.filter(el => {
+        if (this.rarity != null && this.rarity.length !== 0) {
+          return this.rarity.includes(el.rarity)
+        }
+        return el
+      })
 
       return rarityFilter
     },
@@ -252,7 +287,8 @@ export default {
       let extreme = 160 + 40 * Number(this.partySize - 4)
       return Number(this.xpCost) / extreme
     },
-  },
+  }
+  ,
 
   methods: {
     addToEncounter(creature) {
@@ -265,7 +301,8 @@ export default {
       creature.weak = 0
       creature.elite = 0
       this.encounter.push(creature)
-    },
+    }
+    ,
 
     counter(creature, power, add) {
       let index = this.encounter.findIndex(c => c.id === creature.id)
@@ -280,7 +317,8 @@ export default {
         return
       }
       this.$set(this.encounter, index, creature)
-    },
+    }
+    ,
   }
   ,
 
