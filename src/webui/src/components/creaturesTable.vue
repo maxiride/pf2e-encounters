@@ -16,6 +16,7 @@
       selection="single"
     >
       <template v-slot:top>
+        <span class="q-table__title">Creatures</span>
         <q-space/>
         <q-select
           v-model="visibleColumns"
