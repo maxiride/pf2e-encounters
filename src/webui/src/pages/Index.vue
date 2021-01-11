@@ -21,7 +21,12 @@
         :style="selectsStyle"
         hide-selected
         clearable
-      />
+      >
+        <template v-slot:option="scope">
+           {{scope.index}}
+        </template>
+
+      </q-select>
       <q-select
         filled
         dense

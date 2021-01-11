@@ -15,7 +15,7 @@
       @row-click="(evt, row, index) => $emit('add-row', row)"
       dense
     >
-      <template v-if="false" v-slot:top>
+      <template v-slot:top>
         <q-space/>
         <q-select
           v-model="visibleColumns"
@@ -32,6 +32,12 @@
           style="min-width: 150px"
         />
       </template>
+
+      <template v-slot:body-cell-traits="props">
+        <q-td :props="props">
+          {{props.value.join(", ")}}
+        </q-td>
+      </template>
     </q-table>
   </div>
 </template>
@@ -43,7 +49,7 @@ export default {
 
   data() {
     return {
-      visibleColumns: ['name', 'level', 'size', 'family', 'creature_type'],
+      visibleColumns: ['name', 'level', 'size', 'family', 'traits', 'alignment'],
       columns: [
         {
           name: 'name',
@@ -90,6 +96,13 @@ export default {
           style: 'width:150px'
         },
         {
+          name: 'traits',
+          label: 'Traits',
+          field: 'traits',
+          sortable: false,
+          align: 'left'
+        },
+        {
           name: 'rarity',
           label: 'Rarity',
           field: 'rarity',
@@ -118,6 +131,6 @@ export default {
 
 <style lang="scss">
 tr:nth-child(even) {
-  background-color: $grey-1  !important;
+  background-color: $grey-1 !important;
 }
 </style>
