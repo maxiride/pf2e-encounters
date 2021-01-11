@@ -11,9 +11,9 @@
       :rows-per-page-options="[0]"
       :visible-columns="visibleColumns"
       no-data-label="The current filters didn't yield any result"
-      @row-dblclick="redirectToAON"
-      @row-click="(evt, row, index) => $emit('add-row', row)"
+      @row-dblclick="(evt, row, index) => $emit('add-row', row)"
       dense
+      selection="single"
     >
       <template v-slot:top>
         <q-space/>
@@ -31,6 +31,10 @@
           options-cover
           style="min-width: 150px"
         />
+      </template>
+
+      <template v-slot:body-selection>
+        <q-btn icon="search" size="xs" color="grey-5" round dense unelevated @click="redirectToAON"/>
       </template>
 
       <template v-slot:body-cell-traits="props">
@@ -58,6 +62,7 @@ export default {
           field: 'name',
           sortable: true,
           required: true,
+
         },
         {
           name: 'level',
@@ -71,21 +76,21 @@ export default {
           label: 'Size',
           field: 'size',
           sortable: true,
-          align: 'left'
+          align: 'left',
         },
         {
           name: 'family',
           label: 'Family',
           field: 'family',
           sortable: true,
-          align: 'left'
+          align: 'left',
         },
         {
           name: 'alignment',
           label: 'Alignment',
           field: 'alignment',
           sortable: true,
-          align: 'left'
+          align: 'left',
         },
         {
           name: 'creature_type',
@@ -100,14 +105,14 @@ export default {
           label: 'Traits',
           field: 'traits',
           sortable: false,
-          align: 'left'
+          align: 'left',
         },
         {
           name: 'rarity',
           label: 'Rarity',
           field: 'rarity',
           sortable: true,
-          align: 'left'
+          align: 'left',
         },
 
 
