@@ -104,8 +104,8 @@
 
     <div class="column" style="padding-top: 10px; padding-bottom: 10px">
       <q-linear-progress stripe rounded size="15px" :value="xpPool" color="primary">
-        <div class="absolute-full row justify-between items-start">
-          <q-badge color="light-green" text-color="black" :label="'Trivial ' + xpBudget[1]"/>
+        <div class="absolute-full row justify-around items-start">
+          <q-badge color="light-green" text-color="black" :label="'Trivial ' + xpBudget[0]"/>
           <q-badge color="lime" text-color="black" :label="'Low ' + xpBudget[1]"/>
           <q-badge color="amber" text-color="black" :label="'Moderate ' + xpBudget[2]"/>
           <q-badge color="orange" text-color="black" :label="'Severe ' + xpBudget[3]"/>
@@ -115,48 +115,57 @@
     </div>
 
     <div class="row">
-      <creaturesTable class="col-7" :data="filteredResults" @add-row="addToEncounter($event)"/>
+      <creaturesTable class="col-8" :data="filteredResults" @add-row="addToEncounter($event)"/>
 
       <div class="col">
-        <q-virtual-scroll
-          style="max-height: 78vh;"
-          :items="this.encounter"
-          separator
-        >
-          <template v-slot="{ item, index }">
+        <div class="column">
+          <q-banner dense class="text-white bg-primary">
+            Total Encounter cost: {{ xpCost }}
+          </q-banner>
+          <q-virtual-scroll
+            class="col-12"
+            style="max-height: 78vh;"
+            :items="this.encounter"
+            separator
+          >
+            <template v-slot="{ item, index }">
 
-            <q-item :key="index" dense>
-              <q-item-section avatar v-if="false">
-                <q-avatar><img alt="creature picture" src="https://2e.aonprd.com/Images/Monsters/Ammut.png"></q-avatar>
-              </q-item-section>
+              <q-item :key="index" dense>
+                <q-item-section avatar v-if="false">
+                  <q-avatar><img alt="creature picture" src="https://2e.aonprd.com/Images/Monsters/Ammut.png">
+                  </q-avatar>
+                </q-item-section>
 
-              <q-item-section class="col-3">
-                <q-item-label>{{ item.name }}</q-item-label>
-              </q-item-section>
+                <q-item-section class="col-3">
+                  <q-item-label>{{ item.name }}</q-item-label>
+                </q-item-section>
 
-              <q-item-section side class="col q-pa-sm">
-                <div class="row q-gutter-md justify-around">
-                  <q-btn-group class="column">
-                    <q-btn size="xs" icon="add" @click="counter(item, 'weak', true)"/>
-                    <q-btn size="md" :label="item.weak" color="amber"/>
-                    <q-btn size="xs" icon="remove" @click="counter(item, 'weak', false)"/>
-                  </q-btn-group>
-                  <q-btn-group class="column">
-                    <q-btn size="xs" icon="add" @click="counter(item, 'base', true)"/>
-                    <q-btn size="md" :label="item.base" color="blue"/>
-                    <q-btn size="xs" icon="remove" @click="counter(item, 'base', false)"/>
-                  </q-btn-group>
-                  <q-btn-group class="column">
-                    <q-btn size="xs" icon="add" @click="counter(item, 'elite', true)"/>
-                    <q-btn size="md" :label="item.elite" color="red"/>
-                    <q-btn size="xs" icon="remove" @click="counter(item, 'elite', false)"/>
-                  </q-btn-group>
-                </div>
+                <q-item-section side class="col q-pa-sm">
+                  <div class="row q-gutter-md justify-around">
+                    <q-btn-group class="column">
+                      <q-btn  size="xs" icon="add" @click="counter(item, 'weak', true)"/>
+                      <q-btn  size="md" :label="item.weak" color="amber"/>
+                      <q-btn  size="xs" icon="remove" @click="counter(item, 'weak', false)"/>
+                    </q-btn-group>
 
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-virtual-scroll>
+                    <q-btn-group class="column">
+                      <q-btn  size="xs" icon="add" @click="counter(item, 'base', true)"/>
+                      <q-btn  size="md" :label="item.base" color="blue"/>
+                      <q-btn  size="xs" icon="remove" @click="counter(item, 'base', false)"/>
+                    </q-btn-group>
+
+                    <q-btn-group class="column">
+                      <q-btn size="xs" icon="add" @click="counter(item, 'elite', true)"/>
+                      <q-btn size="md" :label="item.elite" color="red"/>
+                      <q-btn size="xs" icon="remove" @click="counter(item, 'elite', false)"/>
+                    </q-btn-group>
+                  </div>
+
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-virtual-scroll>
+        </div>
       </div>
     </div>
 
@@ -289,8 +298,7 @@ export default {
     },
 
     xpPool() {
-      let extreme = 160 + 40 * Number(this.partySize - 4)
-      return Number(this.xpCost) / extreme
+      return Number(this.xpCost) / this.xpBudget[4]
     },
   }
   ,
