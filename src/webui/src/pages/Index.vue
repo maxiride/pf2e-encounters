@@ -22,10 +22,6 @@
         hide-selected
         clearable
       >
-        <template v-slot:option="scope">
-           {{scope.index}}
-        </template>
-
       </q-select>
       <q-select
         filled
@@ -130,36 +126,25 @@
           >
             <template v-slot="{ item, index }">
 
-              <q-item :key="index" dense>
-                <q-item-section avatar v-if="false">
-                  <q-avatar><img alt="creature picture" src="https://2e.aonprd.com/Images/Monsters/Ammut.png">
-                  </q-avatar>
+              <q-item :key="index" dense >
+                <q-item-section side>
+                  <q-btn round dense ripple="false" size="xs" icon="remove" @click="removeFromEncounter(index)"/>
+                </q-item-section>
+                 <q-item-section>
+                  <q-item-label class="text-body1">{{ item.name }}</q-item-label>
                 </q-item-section>
 
-                <q-item-section class="col-3">
-                  <q-item-label>{{ item.name }}</q-item-label>
-                </q-item-section>
 
-                <q-item-section side class="col q-pa-sm">
-                  <div class="row q-gutter-md justify-around">
-                    <q-btn-group class="column">
-                      <q-btn  size="xs" icon="add" @click="counter(item, 'weak', true)"/>
-                      <q-btn  size="md" :label="item.weak" color="amber"/>
-                      <q-btn  size="xs" icon="remove" @click="counter(item, 'weak', false)"/>
-                    </q-btn-group>
+                <q-item-section side>
 
-                    <q-btn-group class="column">
-                      <q-btn  size="xs" icon="add" @click="counter(item, 'base', true)"/>
-                      <q-btn  size="md" :label="item.base" color="blue"/>
-                      <q-btn  size="xs" icon="remove" @click="counter(item, 'base', false)"/>
-                    </q-btn-group>
-
-                    <q-btn-group class="column">
-                      <q-btn size="xs" icon="add" @click="counter(item, 'elite', true)"/>
-                      <q-btn size="md" :label="item.elite" color="red"/>
-                      <q-btn size="xs" icon="remove" @click="counter(item, 'elite', false)"/>
-                    </q-btn-group>
-                  </div>
+                  <q-btn-group>
+                    <q-btn label="Weak" size="15px" :color="item.variant === 1 ? 'orange' : 'grey-4'"  padding="xs"
+                           @click="makeWeak(item, index)"/>
+                    <q-btn label="Base" size="15px" :color="item.variant === 0 ? 'primary' : 'grey-4'"  padding="xs"
+                           @click="makeBase(item, index)"/>
+                    <q-btn label="Elite" size="15px" :color="item.variant === 2 ? 'deep-orange' : 'grey-4'"  padding="xs"
+                           @click="makeElite(item, index)"/>
+                  </q-btn-group>
 
                 </q-item-section>
               </q-item>
@@ -271,19 +256,19 @@ export default {
         let xpCostWeak = 0
         let xpCostElite = 0
 
-        if (el.base > 0) {
+        if (el.variant === 0) {
           xpCostBase = computeDelta(Number(el.level) - Number(this.partyLevel))
         }
 
-        if (el.weak > 0) {
+        if (el.variant === 1) {
           xpCostWeak = computeDelta(Number(el.level) - 1 - Number(this.partyLevel))
         }
 
-        if (el.elite > 0) {
+        if (el.variant === 2) {
           xpCostElite = computeDelta(Number(el.level) + 1 - Number(this.partyLevel))
         }
 
-        cost += xpCostBase * el.base + xpCostWeak * el.weak + xpCostElite * el.elite
+        cost += xpCostBase + xpCostWeak + xpCostElite
       })
       return cost
     },
@@ -304,34 +289,25 @@ export default {
   ,
 
   methods: {
-    addToEncounter(creature) {
-      let index = this.encounter.findIndex(c => c.id === creature.id)
-      if (index !== -1) {
-        this.counter(creature, 'base', true)
-        return
-      }
-      creature.base = 1
-      creature.weak = 0
-      creature.elite = 0
+    addToEncounter(creature, remove) {
+      creature.variant = 0
       this.encounter.push(creature)
-    }
-    ,
-
-    counter(creature, power, add) {
-      let index = this.encounter.findIndex(c => c.id === creature.id)
-      if (creature[power] === 0 && !add) {
-        creature[power] = 0
-      } else {
-        add ? creature[power] += 1 : creature[power] -= 1
-      }
-
-      if (creature.weak === 0 && creature.base === 0 && creature.elite === 0) {
-        this.encounter.splice(index, 1)
-        return
-      }
-      this.$set(this.encounter, index, creature)
-    }
-    ,
+    },
+    removeFromEncounter(index) {
+      this.encounter.splice(index, 1)
+    },
+    makeBase(c, index) {
+      c.variant = 0
+      this.$set(this.encounter, index, c)
+    },
+    makeWeak(c, index) {
+      c.variant = 1
+      this.$set(this.encounter, index, c)
+    },
+    makeElite(c, index) {
+      c.variant = 2
+      this.$set(this.encounter, index, c)
+    },
   }
   ,
 

@@ -34,8 +34,8 @@
         />
       </template>
 
-      <template v-slot:body-selection>
-        <q-btn icon="search" size="xs" color="grey-5" round dense unelevated @click="redirectToAON"/>
+      <template v-slot:body-selection="scope">
+        <q-btn icon="search" size="xs" color="grey-5" round dense unelevated @click="redirectToAON(scope.row)"/>
       </template>
 
       <template v-slot:body-cell-traits="props">
@@ -128,7 +128,7 @@ export default {
   },
 
   methods: {
-    redirectToAON(evt, row, index) {
+    redirectToAON(row) {
       window.open("https://2e.aonprd.com/Monsters.aspx?ID=" + row.id, "_blank");
     }
   }
