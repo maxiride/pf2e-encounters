@@ -128,22 +128,26 @@
 
               <q-item :key="index" dense>
                 <q-item-section side>
-                  <q-btn round dense :ripple="false" size="xs" icon="remove" @click="removeFromEncounter(index)"/>
+                  <q-btn unelevated :ripple="false" size="xs" class="q-px-xs" icon="add"
+                         @click="addToEncounter(item, index)"/>
+                  <q-btn unelevated :ripple="false" size="xs" class="q-px-xs" icon="remove"
+                         @click="removeFromEncounter(item, index)"/>
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label class="text-body1">{{ item.name }}</q-item-label>
-                  <q-item-label class="text-body1">{{ item.cost }}</q-item-label>
+                  <q-item-label class="text-body1">{{ item.count }} {{ item.name }}</q-item-label>
+                  <q-item-label class="text-body1">XP {{ item.cost }}</q-item-label>
                 </q-item-section>
 
 
                 <q-item-section side>
 
-                  <q-btn-group>
-                    <q-btn label="Weak" size="15px" :color="item.variant === 1 ? 'orange' : 'grey-4'" padding="xs"
+                  <q-btn-group unelevated flat>
+                    <q-btn flat label="Weak" size="15px" :color="item.variant === 1 ? 'orange' : 'grey-4'" padding="xs"
                            @click="makeWeak(item, index)"/>
-                    <q-btn label="Base" size="15px" :color="item.variant === 0 ? 'primary' : 'grey-4'" padding="xs"
+                    <q-btn flat label="Base" size="15px" :color="item.variant === 0 ? 'primary' : 'grey-4'" padding="xs"
                            @click="makeBase(item, index)"/>
-                    <q-btn label="Elite" size="15px" :color="item.variant === 2 ? 'deep-orange' : 'grey-4'" padding="xs"
+                    <q-btn flat label="Elite" size="15px" :color="item.variant === 2 ? 'deep-orange' : 'grey-4'"
+                           padding="xs"
                            @click="makeElite(item, index)"/>
                   </q-btn-group>
 
@@ -253,7 +257,7 @@ export default {
     xpCost() {
       let cost = 0
       this.encounter.forEach(el => {
-        el.cost = computeCost(el, this.partyLevel)
+        el.cost = computeCost(el, this.partyLevel) * el.count
         cost += el.cost
       })
       return cost
@@ -275,25 +279,36 @@ export default {
   ,
 
   methods: {
-    addToEncounter(creature, remove) {
+    addToEncounter(creature, index) {
+      if (index >= 0) {
+        creature.count += 1
+        this.encounter.splice(index, 1, creature)
+        return
+      }
       let newCreature = {...creature}
       newCreature.variant = 0
+      newCreature.count = 1
       this.encounter.push(newCreature)
     },
-    removeFromEncounter(index) {
-      this.encounter.splice(index, 1)
+    removeFromEncounter(creature, index) {
+      if (creature.count === 1) {
+        this.encounter.splice(index, 1)
+        return
+      }
+      creature.count -= 1
+      this.encounter.splice(index, 1, creature)
     },
-    makeBase(c, index) {
-      c.variant = 0
-      this.$set(this.encounter, index, c)
+    makeBase(creature, index) {
+      creature.variant = 0
+      this.encounter.splice(index, 1, creature)
     },
-    makeWeak(c, index) {
-      c.variant = 1
-      this.$set(this.encounter, index, c)
+    makeWeak(creature, index) {
+      creature.variant = 1
+      this.encounter.splice(index, 1, creature)
     },
-    makeElite(c, index) {
-      c.variant = 2
-      this.$set(this.encounter, index, c)
+    makeElite(creature, index) {
+      creature.variant = 2
+      this.encounter.splice(index, 1, creature)
     },
   }
   ,
