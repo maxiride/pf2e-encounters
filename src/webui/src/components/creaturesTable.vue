@@ -11,11 +11,12 @@
       :rows-per-page-options="[0]"
       :visible-columns="visibleColumns"
       no-data-label="The current filters didn't yield any result"
-      @row-dblclick="redirectToAON"
-      @row-click="(evt, row, index) => $emit('add-row', row)"
+      @row-dblclick="(evt, row, index) => $emit('add-row', row)"
       dense
+      selection="single"
     >
-      <template v-if="false" v-slot:top>
+      <template v-slot:top>
+        <span class="q-table__title">Creatures</span>
         <q-space/>
         <q-select
           v-model="visibleColumns"
@@ -32,6 +33,16 @@
           style="min-width: 150px"
         />
       </template>
+
+      <template v-slot:body-selection="scope">
+        <q-btn icon="search" size="xs" color="grey-5" round dense unelevated @click="redirectToAON(scope.row)"/>
+      </template>
+
+      <template v-slot:body-cell-traits="props">
+        <q-td :props="props">
+          {{props.value.join(", ")}}
+        </q-td>
+      </template>
     </q-table>
   </div>
 </template>
@@ -43,7 +54,7 @@ export default {
 
   data() {
     return {
-      visibleColumns: ['name', 'level', 'size', 'family', 'creature_type'],
+      visibleColumns: ['name', 'level', 'size', 'family', 'traits', 'alignment'],
       columns: [
         {
           name: 'name',
@@ -52,6 +63,7 @@ export default {
           field: 'name',
           sortable: true,
           required: true,
+
         },
         {
           name: 'level',
@@ -65,21 +77,21 @@ export default {
           label: 'Size',
           field: 'size',
           sortable: true,
-          align: 'left'
+          align: 'left',
         },
         {
           name: 'family',
           label: 'Family',
           field: 'family',
           sortable: true,
-          align: 'left'
+          align: 'left',
         },
         {
           name: 'alignment',
           label: 'Alignment',
           field: 'alignment',
           sortable: true,
-          align: 'left'
+          align: 'left',
         },
         {
           name: 'creature_type',
@@ -90,11 +102,18 @@ export default {
           style: 'width:150px'
         },
         {
+          name: 'traits',
+          label: 'Traits',
+          field: 'traits',
+          sortable: false,
+          align: 'left',
+        },
+        {
           name: 'rarity',
           label: 'Rarity',
           field: 'rarity',
           sortable: true,
-          align: 'left'
+          align: 'left',
         },
 
 
@@ -109,13 +128,15 @@ export default {
   },
 
   methods: {
-    redirectToAON(evt, row, index) {
+    redirectToAON(row) {
       window.open("https://2e.aonprd.com/Monsters.aspx?ID=" + row.id, "_blank");
     }
   }
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+tr:nth-child(even) {
+  background-color: $grey-1 !important;
+}
 </style>

@@ -21,7 +21,8 @@
         :style="selectsStyle"
         hide-selected
         clearable
-      />
+      >
+      </q-select>
       <q-select
         filled
         dense
@@ -98,60 +99,69 @@
     </div>
 
     <div class="column" style="padding-top: 10px; padding-bottom: 10px">
-      <q-linear-progress stripe rounded size="15px" :value="xpPool" color="primary">
-        <div class="absolute-full row justify-between items-start">
-          <q-badge color="light-green" text-color="black" :label="'Trivial ' + xpBudget[1]"/>
-          <q-badge color="lime" text-color="black" :label="'Low ' + xpBudget[1]"/>
-          <q-badge color="amber" text-color="black" :label="'Moderate ' + xpBudget[2]"/>
-          <q-badge color="orange" text-color="black" :label="'Severe ' + xpBudget[3]"/>
-          <q-badge color="deep-orange" text-color="black" :label="'Extreme ' + xpBudget[4]"/>
+      <q-linear-progress stripe rounded size="20px" :value="xpPool" :color="barColor">
+        <div class="flex-center flex absolute-full">
+          <q-badge style="position: absolute; left: 25%; transform: translate(-50%)" color="light-green"
+                   text-color="black" :label="'Trivial ' + xpBudget[0]"/>
+          <q-badge style="position: absolute; left: 37.5%; transform: translate(-50%)" color="lime" text-color="black"
+                   :label="'Low ' + xpBudget[1]"/>
+          <q-badge style="position: absolute; left: 50%; transform: translate(-50%)" color="amber" text-color="black"
+                   :label="'Moderate ' + xpBudget[2]"/>
+          <q-badge style="position: absolute; left: 75%; transform: translate(-50%)" color="orange" text-color="black"
+                   :label="'Severe ' + xpBudget[3]"/>
+          <q-badge style="position: absolute; left: 100%; transform: translate(-100%)" color="deep-orange"
+                   text-color="black" :label="'Extreme ' + xpBudget[4]"/>
         </div>
       </q-linear-progress>
+
     </div>
 
     <div class="row">
-      <creaturesTable class="col-7" :data="filteredResults" @add-row="addToEncounter($event)"/>
+      <creaturesTable class="col-8" :data="filteredResults" @add-row="addToEncounter($event)"/>
 
       <div class="col">
-        <q-virtual-scroll
-          style="max-height: 78vh;"
-          :items="this.encounter"
-          separator
-        >
-          <template v-slot="{ item, index }">
+        <div class="column">
+          <q-banner dense class="text-white bg-primary">
+            Total Encounter cost: {{ xpCost }}
+          </q-banner>
+          <q-virtual-scroll
+            class="col-12"
+            style="max-height: 78vh;"
+            :items="this.encounter"
+            separator
+          >
+            <template v-slot="{ item, index }">
 
-            <q-item :key="index" dense>
-              <q-item-section avatar v-if="false">
-                <q-avatar><img alt="creature picture" src="https://2e.aonprd.com/Images/Monsters/Ammut.png"></q-avatar>
-              </q-item-section>
+              <q-item :key="index" dense>
+                <q-item-section side>
+                  <q-btn unelevated :ripple="false" size="xs" class="q-px-xs" icon="add"
+                         @click="addToEncounter(item, index)"/>
+                  <q-btn unelevated :ripple="false" size="xs" class="q-px-xs" icon="remove"
+                         @click="removeFromEncounter(item, index)"/>
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label class="text-body1">{{ item.count }} {{ item.name }}</q-item-label>
+                  <q-item-label class="text-body1">XP {{ item.cost }}</q-item-label>
+                </q-item-section>
 
-              <q-item-section class="col-3">
-                <q-item-label>{{ item.name }}</q-item-label>
-              </q-item-section>
 
-              <q-item-section side class="col q-pa-sm">
-                <div class="row q-gutter-md justify-around">
-                  <q-btn-group class="column">
-                    <q-btn size="xs" icon="add" @click="counter(item, 'weak', true)"/>
-                    <q-btn size="md" :label="item.weak" color="amber"/>
-                    <q-btn size="xs" icon="remove" @click="counter(item, 'weak', false)"/>
+                <q-item-section side>
+
+                  <q-btn-group unelevated flat>
+                    <q-btn flat label="Weak" size="15px" :color="item.variant === 1 ? 'orange' : 'grey-4'" padding="xs"
+                           @click="makeWeak(item, index)"/>
+                    <q-btn flat label="Base" size="15px" :color="item.variant === 0 ? 'primary' : 'grey-4'" padding="xs"
+                           @click="makeBase(item, index)"/>
+                    <q-btn flat label="Elite" size="15px" :color="item.variant === 2 ? 'deep-orange' : 'grey-4'"
+                           padding="xs"
+                           @click="makeElite(item, index)"/>
                   </q-btn-group>
-                  <q-btn-group class="column">
-                    <q-btn size="xs" icon="add" @click="counter(item, 'base', true)"/>
-                    <q-btn size="md" :label="item.base" color="blue"/>
-                    <q-btn size="xs" icon="remove" @click="counter(item, 'base', false)"/>
-                  </q-btn-group>
-                  <q-btn-group class="column">
-                    <q-btn size="xs" icon="add" @click="counter(item, 'elite', true)"/>
-                    <q-btn size="md" :label="item.elite" color="red"/>
-                    <q-btn size="xs" icon="remove" @click="counter(item, 'elite', false)"/>
-                  </q-btn-group>
-                </div>
 
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-virtual-scroll>
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-virtual-scroll>
+        </div>
       </div>
     </div>
 
@@ -253,23 +263,8 @@ export default {
     xpCost() {
       let cost = 0
       this.encounter.forEach(el => {
-        let xpCostBase = 0
-        let xpCostWeak = 0
-        let xpCostElite = 0
-
-        if (el.base > 0) {
-          xpCostBase = computeDelta(Number(el.level) - Number(this.partyLevel))
-        }
-
-        if (el.weak > 0) {
-          xpCostWeak = computeDelta(Number(el.level) - 1 - Number(this.partyLevel))
-        }
-
-        if (el.elite > 0) {
-          xpCostElite = computeDelta(Number(el.level) + 1 - Number(this.partyLevel))
-        }
-
-        cost += xpCostBase * el.base + xpCostWeak * el.weak + xpCostElite * el.elite
+        el.cost = computeCost(el, this.partyLevel) * el.count
+        cost += el.cost
       })
       return cost
     },
@@ -284,41 +279,56 @@ export default {
     },
 
     xpPool() {
-      let extreme = 160 + 40 * Number(this.partySize - 4)
-      return Number(this.xpCost) / extreme
+      return Number(this.xpCost) / this.xpBudget[4]
     },
+
+    barColor() {
+      if (this.xpBudget[0] < this.xpCost && this.xpCost <= this.xpBudget[1]) {
+        return "lime"
+      } else if (this.xpBudget[1] < this.xpCost  && this.xpCost <= this.xpBudget[2]) {
+        return "amber"
+      } else if (this.xpBudget[2] < this.xpCost  && this.xpCost <= this.xpBudget[3]) {
+        return "orange"
+      } else if (this.xpBudget[3] < this.xpCost) {
+        return "deep-orange"
+      }
+      return "light-green"
+    }
   }
   ,
 
   methods: {
-    addToEncounter(creature) {
-      let index = this.encounter.findIndex(c => c.id === creature.id)
-      if (index !== -1) {
-        this.counter(creature, 'base', true)
+    addToEncounter(creature, index) {
+      if (index >= 0) {
+        creature.count += 1
+        this.encounter.splice(index, 1, creature)
         return
       }
-      creature.base = 1
-      creature.weak = 0
-      creature.elite = 0
-      this.encounter.push(creature)
-    }
-    ,
-
-    counter(creature, power, add) {
-      let index = this.encounter.findIndex(c => c.id === creature.id)
-      if (creature[power] === 0 && !add) {
-        creature[power] = 0
-      } else {
-        add ? creature[power] += 1 : creature[power] -= 1
-      }
-
-      if (creature.weak === 0 && creature.base === 0 && creature.elite === 0) {
+      let newCreature = {...creature}
+      newCreature.variant = 0
+      newCreature.count = 1
+      this.encounter.push(newCreature)
+    },
+    removeFromEncounter(creature, index) {
+      if (creature.count === 1) {
         this.encounter.splice(index, 1)
         return
       }
-      this.$set(this.encounter, index, creature)
-    }
-    ,
+      creature.count -= 1
+      this.encounter.splice(index, 1, creature)
+    },
+    makeBase(creature, index) {
+      creature.variant = 0
+      this.encounter.splice(index, 1, creature)
+    },
+    makeWeak(creature, index) {
+      creature.variant = 1
+      this.encounter.splice(index, 1, creature)
+    },
+    makeElite(creature, index) {
+      creature.variant = 2
+      this.encounter.splice(index, 1, creature)
+    },
   }
   ,
 
@@ -337,8 +347,22 @@ export default {
   }
 }
 
+export function computeCost(creature, partyLevel) {
+  if (creature.variant === 0) {
+    return computeDelta(Number(creature.level) - Number(partyLevel))
+  }
+
+  if (creature.variant === 1) {
+    return computeDelta(Number(creature.level) - 1 - Number(partyLevel))
+  }
+
+  if (creature.variant === 2) {
+    return computeDelta(Number(creature.level) + 1 - Number(partyLevel))
+  }
+}
+
 export function computeDelta(delta) {
-  console.debug("Delta: ", delta)
+  //console.debug("Delta: ", delta)
   switch (delta) {
     case -3:
       return 15
