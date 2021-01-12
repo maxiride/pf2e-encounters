@@ -99,15 +99,21 @@
     </div>
 
     <div class="column" style="padding-top: 10px; padding-bottom: 10px">
-      <q-linear-progress stripe rounded size="15px" :value="xpPool" color="primary">
-        <div class="absolute-full row justify-around items-start">
-          <q-badge color="light-green" text-color="black" :label="'Trivial ' + xpBudget[0]"/>
-          <q-badge color="lime" text-color="black" :label="'Low ' + xpBudget[1]"/>
-          <q-badge color="amber" text-color="black" :label="'Moderate ' + xpBudget[2]"/>
-          <q-badge color="orange" text-color="black" :label="'Severe ' + xpBudget[3]"/>
-          <q-badge color="deep-orange" text-color="black" :label="'Extreme ' + xpBudget[4]"/>
+      <q-linear-progress stripe rounded size="20px" :value="xpPool" :color="barColor">
+        <div class="flex-center flex absolute-full">
+          <q-badge style="position: absolute; left: 25%; transform: translate(-50%)" color="light-green"
+                   text-color="black" :label="'Trivial ' + xpBudget[0]"/>
+          <q-badge style="position: absolute; left: 37.5%; transform: translate(-50%)" color="lime" text-color="black"
+                   :label="'Low ' + xpBudget[1]"/>
+          <q-badge style="position: absolute; left: 50%; transform: translate(-50%)" color="amber" text-color="black"
+                   :label="'Moderate ' + xpBudget[2]"/>
+          <q-badge style="position: absolute; left: 75%; transform: translate(-50%)" color="orange" text-color="black"
+                   :label="'Severe ' + xpBudget[3]"/>
+          <q-badge style="position: absolute; left: 100%; transform: translate(-100%)" color="deep-orange"
+                   text-color="black" :label="'Extreme ' + xpBudget[4]"/>
         </div>
       </q-linear-progress>
+
     </div>
 
     <div class="row">
@@ -275,6 +281,19 @@ export default {
     xpPool() {
       return Number(this.xpCost) / this.xpBudget[4]
     },
+
+    barColor() {
+      if (this.xpBudget[0] < this.xpCost && this.xpCost <= this.xpBudget[1]) {
+        return "lime"
+      } else if (this.xpBudget[1] < this.xpCost  && this.xpCost <= this.xpBudget[2]) {
+        return "amber"
+      } else if (this.xpBudget[2] < this.xpCost  && this.xpCost <= this.xpBudget[3]) {
+        return "orange"
+      } else if (this.xpBudget[3] < this.xpCost) {
+        return "deep-orange"
+      }
+      return "light-green"
+    }
   }
   ,
 
