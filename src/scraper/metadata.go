@@ -51,5 +51,4 @@ func (d *Data) FillMetadata() {
 		return d.Metadata.Sizes[i] < d.Metadata.Sizes[j]
 	})
 
-
 }

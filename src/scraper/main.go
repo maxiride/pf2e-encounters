@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/davecgh/go-spew/spew"
-	"github.com/helloeave/json"
 	"io"
 	"io/ioutil"
 	"log"
 	"os"
+
+	"github.com/davecgh/go-spew/spew"
+	"github.com/helloeave/json"
 )
 
 // baseURL for creatures pages
@@ -29,6 +30,7 @@ type Creature struct {
 	Rarity       string   `json:"rarity"`
 	Id           string   `json:"id"`
 	Lore         string   `json:"lore"`
+	ImgURL       string   `json:image_url`
 }
 
 type metadata struct {
@@ -75,7 +77,7 @@ func main() {
 
 	// Pretty print the result, DEBUG only
 	if os.Getenv("DEBUG") == "1" {
-		fmt.Printf("Found %i creatures\n", len(d.Creatures))
+		fmt.Printf("Found %d creatures\n", len(d.Creatures))
 		// Just spew a bunch of them, we don't need to check them all!
 		spew.Dump(d.Creatures[:2])
 	}

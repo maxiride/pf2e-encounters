@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
 func getAONCreatures(url string) string {
