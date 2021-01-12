@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md">
-
-    <div class="row justify-start q-gutter-sm">
+    <v-tour name="myTour" :steps="steps" :options="{ highlight: true }" :callbacks="tourCallbacks"></v-tour>
+    <div class="row justify-start q-gutter-sm" data-v-step="2">
       <q-input filled dense style="width: 150px;" v-model="name" label="Name"/>
       <q-input filled dense style="width: 100px;" v-model.number="minLevel" type="number" :min="min" :max="max"
                label="Min level"/>
@@ -99,7 +99,7 @@
     </div>
 
     <div class="column" style="padding-top: 10px; padding-bottom: 10px">
-      <q-linear-progress stripe rounded size="20px" :value="xpPool" :color="barColor">
+      <q-linear-progress stripe rounded size="20px" :value="xpPool" :color="barColor" data-v-step="4">
         <div class="flex-center flex absolute-full">
           <q-badge style="position: absolute; left: 25%; transform: translate(-50%)" color="light-green"
                    text-color="black" :label="'Trivial ' + xpBudget[0]"/>
@@ -117,7 +117,7 @@
     </div>
 
     <div class="row">
-      <creaturesTable class="col-8" :data="filteredResults" @add-row="addToEncounter($event)"/>
+      <creaturesTable data-v-step="1" class="col-8" :data="filteredResults" @add-row="addToEncounter($event)"/>
 
       <div class="col">
         <div class="column">
@@ -125,6 +125,7 @@
             Total Encounter cost: {{ xpCost }}
           </q-banner>
           <q-virtual-scroll
+            data-v-step="3"
             class="col-12"
             style="max-height: 78vh;"
             :items="this.encounter"
@@ -133,7 +134,7 @@
             <template v-slot="{ item, index }">
 
               <q-item :key="index" dense>
-                <q-item-section side>
+                <q-item-section side data-v-step="4">
                   <q-btn unelevated :ripple="false" size="xs" class="q-px-xs" icon="add"
                          @click="addToEncounter(item, index)"/>
                   <q-btn unelevated :ripple="false" size="xs" class="q-px-xs" icon="remove"
@@ -180,6 +181,10 @@ export default {
 
   data() {
     return {
+      tourCallbacks: {
+        onStop: this.stoppedTour
+      },
+
       name: '',
       min: null,
       minLevel: '',
@@ -204,10 +209,39 @@ export default {
       partySize: 4,
       partyLevel: 1,
 
-      selectsStyle: "width: 180px"
+      selectsStyle: "width: 180px",
+
+      steps: [
+        {
+          target: '[data-v-step="0"]',
+          content: `Discover the <strong>Encounter builder</strong>!`,
+          params: {
+            highlight: false
+          }
+        },
+        {
+          target: '[data-v-step="1"]',
+          content: 'Here you can browse all the creatures from the open SRD. ' +
+            'Click on the search icon to open its details on the Archives of Nethys, double click to add the creature to the encounter. '
+        },
+        {
+          target: '[data-v-step="2"]',
+          content: 'You can refine the result with fine grained filters too!'
+        },
+        {
+          target: '[data-v-step="3"]',
+          content: 'Added creatures can be modified by their Weak and Elite <a href=https://2e.aonprd.com/Rules.aspx?ID=789>variants</a>.' +
+            '<br> Increase or decrease the quantity of a given creature and variant to make your encounter more diverse.'
+        },
+        {
+          target: '[data-v-step="4"]',
+          content: 'This bar, along with the total encounter cost will aid you to balance the fight, the threat levels are adjusted according to your party size.'
+        }
+      ]
 
     }
-  },
+  }
+  ,
 
   computed: {
     filteredResults() {
@@ -257,7 +291,8 @@ export default {
       })
 
       return rarityFilter
-    },
+    }
+    ,
 
     // How much XP does the encounter cost
     xpCost() {
@@ -267,7 +302,8 @@ export default {
         cost += el.cost
       })
       return cost
-    },
+    }
+    ,
     xpBudget() {
       let trivial = 40 + 10 * Number(this.partySize - 4)
       let low = 60 + 15 * Number(this.partySize - 4)
@@ -276,18 +312,20 @@ export default {
       let extreme = 160 + 40 * Number(this.partySize - 4)
 
       return [trivial, low, moderate, severe, extreme]
-    },
+    }
+    ,
 
     xpPool() {
       return Number(this.xpCost) / this.xpBudget[4]
-    },
+    }
+    ,
 
     barColor() {
       if (this.xpBudget[0] < this.xpCost && this.xpCost <= this.xpBudget[1]) {
         return "lime"
-      } else if (this.xpBudget[1] < this.xpCost  && this.xpCost <= this.xpBudget[2]) {
+      } else if (this.xpBudget[1] < this.xpCost && this.xpCost <= this.xpBudget[2]) {
         return "amber"
-      } else if (this.xpBudget[2] < this.xpCost  && this.xpCost <= this.xpBudget[3]) {
+      } else if (this.xpBudget[2] < this.xpCost && this.xpCost <= this.xpBudget[3]) {
         return "orange"
       } else if (this.xpBudget[3] < this.xpCost) {
         return "deep-orange"
@@ -298,17 +336,21 @@ export default {
   ,
 
   methods: {
-    addToEncounter(creature, index) {
+    stoppedTour() {
+      this.encounter = []
+    },
+    addToEncounter(creature, index, variant) {
       if (index >= 0) {
         creature.count += 1
         this.encounter.splice(index, 1, creature)
         return
       }
       let newCreature = {...creature}
-      newCreature.variant = 0
+      newCreature.variant = variant || 0
       newCreature.count = 1
       this.encounter.push(newCreature)
-    },
+    }
+    ,
     removeFromEncounter(creature, index) {
       if (creature.count === 1) {
         this.encounter.splice(index, 1)
@@ -316,19 +358,23 @@ export default {
       }
       creature.count -= 1
       this.encounter.splice(index, 1, creature)
-    },
+    }
+    ,
     makeBase(creature, index) {
       creature.variant = 0
       this.encounter.splice(index, 1, creature)
-    },
+    }
+    ,
     makeWeak(creature, index) {
       creature.variant = 1
       this.encounter.splice(index, 1, creature)
-    },
+    }
+    ,
     makeElite(creature, index) {
       creature.variant = 2
       this.encounter.splice(index, 1, creature)
-    },
+    }
+    ,
   }
   ,
 
@@ -344,6 +390,17 @@ export default {
     this.rarities = data.metadata.rarities
     this.sizes = data.metadata.sizes
 
+  }
+  ,
+  mounted: function () {
+    this.$tours['myTour'].start()
+
+    // 18 and 51
+    let dummy1 = this.creaturesDump.creatures[this.creaturesDump.creatures.findIndex(el => el.id == 18)]
+    let dummy2 = this.creaturesDump.creatures[this.creaturesDump.creatures.findIndex(el => el.id == 51)]
+
+    this.addToEncounter(dummy1, -1, 1)
+    this.addToEncounter(dummy2, -1, 2)
   }
 }
 
@@ -400,5 +457,9 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.v-tour__target--highlighted {
+  box-shadow: 0 0 0 99999px rgba(0, 0, 0, .4);
 }
 </style>
