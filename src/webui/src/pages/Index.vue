@@ -162,16 +162,38 @@
               </q-item>
             </template>
           </q-virtual-scroll>
+
         </div>
       </div>
+    </div>
+
+    <!-- License button -->
+    <div class="q-pa-md q-gutter-sm">
+    <q-btn label="License" color="primary" @click="icon = true" flat/>
+
+    <!-- Dialog box with license text -->
+    <q-dialog v-model="icon">
+     <q-card>
+       <q-card-section class="row items-center q-pb-none">
+         <div class="text-h6">License informations</div>
+         <q-space />
+         <q-btn icon="close" flat round dense v-close-popup />
+       </q-card-section>
+
+       <q-card-section>
+           <!-- Insert License text here -->
+           Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+       </q-card-section>
+     </q-card>
+    </q-dialog>
     </div>
 
   </q-page>
 </template>
 
+
 <script>
 import creaturesTable from "components/creaturesTable";
-
 
 export default {
   name: 'PageIndex',
@@ -236,8 +258,9 @@ export default {
         {
           target: '[data-v-step="4"]',
           content: 'This bar, along with the total encounter cost will aid you to balance the fight, the threat levels are adjusted according to your party size.'
-        }
-      ]
+        }],
+
+    icon: false
 
     }
   }
