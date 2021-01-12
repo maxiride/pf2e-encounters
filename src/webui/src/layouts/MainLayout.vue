@@ -3,7 +3,7 @@
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-toolbar-title>
-          <q-avatar>
+          <q-avatar data-v-step="0">
             <!--           Do we need one at all?-->
           </q-avatar>
           Pathfinder 2e Encounter builder
