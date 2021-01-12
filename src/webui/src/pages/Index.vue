@@ -126,23 +126,24 @@
           >
             <template v-slot="{ item, index }">
 
-              <q-item :key="index" dense >
+              <q-item :key="index" dense>
                 <q-item-section side>
-                  <q-btn round dense ripple="false" size="xs" icon="remove" @click="removeFromEncounter(index)"/>
+                  <q-btn round dense :ripple="false" size="xs" icon="remove" @click="removeFromEncounter(index)"/>
                 </q-item-section>
-                 <q-item-section>
+                <q-item-section>
                   <q-item-label class="text-body1">{{ item.name }}</q-item-label>
+                  <q-item-label class="text-body1">{{ item.cost }}</q-item-label>
                 </q-item-section>
 
 
                 <q-item-section side>
 
                   <q-btn-group>
-                    <q-btn label="Weak" size="15px" :color="item.variant === 1 ? 'orange' : 'grey-4'"  padding="xs"
+                    <q-btn label="Weak" size="15px" :color="item.variant === 1 ? 'orange' : 'grey-4'" padding="xs"
                            @click="makeWeak(item, index)"/>
-                    <q-btn label="Base" size="15px" :color="item.variant === 0 ? 'primary' : 'grey-4'"  padding="xs"
+                    <q-btn label="Base" size="15px" :color="item.variant === 0 ? 'primary' : 'grey-4'" padding="xs"
                            @click="makeBase(item, index)"/>
-                    <q-btn label="Elite" size="15px" :color="item.variant === 2 ? 'deep-orange' : 'grey-4'"  padding="xs"
+                    <q-btn label="Elite" size="15px" :color="item.variant === 2 ? 'deep-orange' : 'grey-4'" padding="xs"
                            @click="makeElite(item, index)"/>
                   </q-btn-group>
 
@@ -252,23 +253,8 @@ export default {
     xpCost() {
       let cost = 0
       this.encounter.forEach(el => {
-        let xpCostBase = 0
-        let xpCostWeak = 0
-        let xpCostElite = 0
-
-        if (el.variant === 0) {
-          xpCostBase = computeDelta(Number(el.level) - Number(this.partyLevel))
-        }
-
-        if (el.variant === 1) {
-          xpCostWeak = computeDelta(Number(el.level) - 1 - Number(this.partyLevel))
-        }
-
-        if (el.variant === 2) {
-          xpCostElite = computeDelta(Number(el.level) + 1 - Number(this.partyLevel))
-        }
-
-        cost += xpCostBase + xpCostWeak + xpCostElite
+        el.cost = computeCost(el, this.partyLevel)
+        cost += el.cost
       })
       return cost
     },
@@ -290,8 +276,9 @@ export default {
 
   methods: {
     addToEncounter(creature, remove) {
-      creature.variant = 0
-      this.encounter.push(creature)
+      let newCreature = {...creature}
+      newCreature.variant = 0
+      this.encounter.push(newCreature)
     },
     removeFromEncounter(index) {
       this.encounter.splice(index, 1)
@@ -326,8 +313,22 @@ export default {
   }
 }
 
+export function computeCost(creature, partyLevel) {
+  if (creature.variant === 0) {
+    return computeDelta(Number(creature.level) - Number(partyLevel))
+  }
+
+  if (creature.variant === 1) {
+    return computeDelta(Number(creature.level) - 1 - Number(partyLevel))
+  }
+
+  if (creature.variant === 2) {
+    return computeDelta(Number(creature.level) + 1 - Number(partyLevel))
+  }
+}
+
 export function computeDelta(delta) {
-  console.debug("Delta: ", delta)
+  //console.debug("Delta: ", delta)
   switch (delta) {
     case -3:
       return 15
