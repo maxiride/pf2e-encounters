@@ -1,6 +1,7 @@
 <template>
   <q-page class="q-pa-md">
-    <v-tour name="myTour" :steps="steps" :options="{ highlight: true }" :callbacks="tourCallbacks"></v-tour>
+    <v-tour name="myTour" :steps="steps" :options="{ highlight: true }" :callbacks="tourCallbacks"/>
+
     <div class="row justify-start q-gutter-sm" data-v-step="2">
       <q-input filled dense style="width: 150px;" v-model="name" label="Name"/>
       <q-input filled dense style="width: 100px;" v-model.number="minLevel" type="number" :min="min" :max="max"
@@ -166,28 +167,6 @@
         </div>
       </div>
     </div>
-
-    <!-- License button -->
-    <div class="q-pa-md q-gutter-sm">
-    <q-btn label="License" color="primary" @click="icon = true" flat/>
-
-    <!-- Dialog box with license text -->
-    <q-dialog v-model="icon">
-     <q-card>
-       <q-card-section class="row items-center q-pb-none">
-         <div class="text-h6">License informations</div>
-         <q-space />
-         <q-btn icon="close" flat round dense v-close-popup />
-       </q-card-section>
-
-       <q-card-section>
-           <!-- Insert License text here -->
-           Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
-       </q-card-section>
-     </q-card>
-    </q-dialog>
-    </div>
-
   </q-page>
 </template>
 
@@ -203,10 +182,10 @@ export default {
 
   data() {
     return {
+      tourVisible: true,
       tourCallbacks: {
         onStop: this.stoppedTour
       },
-
       name: '',
       min: null,
       minLevel: '',
@@ -259,9 +238,6 @@ export default {
           target: '[data-v-step="4"]',
           content: 'This bar, along with the total encounter cost will aid you to balance the fight, the threat levels are adjusted according to your party size.'
         }],
-
-    icon: false
-
     }
   }
   ,
@@ -361,7 +337,19 @@ export default {
   methods: {
     stoppedTour() {
       this.encounter = []
+      this.$q.cookies.set('pf2eEncounterBuilder_tour', true, {expires: 14, sameSite: 'Strict', secure: true})
     },
+
+    startTour() {
+      // 18 and 51
+      let dummy1 = this.creaturesDump.creatures[this.creaturesDump.creatures.findIndex(el => el.id == 18)]
+      let dummy2 = this.creaturesDump.creatures[this.creaturesDump.creatures.findIndex(el => el.id == 51)]
+
+      this.addToEncounter(dummy1, -1, 1)
+      this.addToEncounter(dummy2, -1, 2)
+      this.$tours['myTour'].start()
+    },
+
     addToEncounter(creature, index, variant) {
       if (index >= 0) {
         creature.count += 1
@@ -413,17 +401,24 @@ export default {
     this.rarities = data.metadata.rarities
     this.sizes = data.metadata.sizes
 
-  }
-  ,
+    this.$root.$on('start-tour', this.startTour)
+
+  },
+  beforeDestroy () {
+    this.$root.$off('start-tour',)
+  },
+
   mounted: function () {
-    this.$tours['myTour'].start()
+    // Get cookies, we don´t want to present the user with the tour everytime
+    this.$q.cookies.getAll()
 
-    // 18 and 51
-    let dummy1 = this.creaturesDump.creatures[this.creaturesDump.creatures.findIndex(el => el.id == 18)]
-    let dummy2 = this.creaturesDump.creatures[this.creaturesDump.creatures.findIndex(el => el.id == 51)]
+    // Does the cookie exist?
+    if (!this.$q.cookies.has('pf2eEncounterBuilder_tour') || !this.$q.cookies.get('pf2eEncounterBuilder_tour')) {
+      console.debug('Cookie not found or value is false, start tour')
+      this.startTour()
+    }
 
-    this.addToEncounter(dummy1, -1, 1)
-    this.addToEncounter(dummy2, -1, 2)
+
   }
 }
 

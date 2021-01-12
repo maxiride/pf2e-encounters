@@ -20,7 +20,7 @@ module.exports = function (/* ctx */) {
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
       'vue-tour',
-      'axios',
+      'axios'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -99,7 +99,9 @@ cfg.module.rules.push({
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Cookies'
+      ]
     },
 
     // animations: 'all', // --- includes all animations
