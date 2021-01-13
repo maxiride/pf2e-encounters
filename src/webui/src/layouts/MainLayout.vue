@@ -2,7 +2,7 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="text-white" style="background: #581911">
       <q-toolbar>
-        <q-toolbar-title style="font-family: becker-regular, sans-serif; font-size: xx-large; color: #e9c58e">
+        <q-toolbar-title style="font-family: becker-regular, sans-serif; font-size: x-large; color: #e9c58e">
           <q-avatar data-v-step="0" size="lg" square>
             <img src="~assets/stabbed-note.png" alt="logo"/>
           </q-avatar>
