@@ -7,7 +7,7 @@
       :data="data"
       :columns="columns"
       row-key="name"
-      :pagination="{rowsPerPage: 0}"
+      :pagination="{ rowsPerPage: 0 }"
       :rows-per-page-options="[0]"
       :visible-columns="visibleColumns"
       no-data-label="The current filters didn't yield any result"
@@ -17,7 +17,7 @@
     >
       <template v-slot:top>
         <span class="q-table__title">Creatures</span>
-        <q-space/>
+        <q-space />
         <q-select
           v-model="visibleColumns"
           multiple
@@ -35,12 +35,20 @@
       </template>
 
       <template v-slot:body-selection="scope">
-        <q-btn icon="search" size="xs" color="grey-5" round dense unelevated @click="redirectToAON(scope.row)"/>
+        <q-btn
+          icon="search"
+          size="xs"
+          color="grey-5"
+          round
+          dense
+          unelevated
+          @click="redirectToAON(scope.row)"
+        />
       </template>
 
       <template v-slot:body-cell-traits="props">
         <q-td :props="props">
-          {{props.value.join(", ")}}
+          {{ props.value.join(", ") }}
         </q-td>
       </template>
     </q-table>
@@ -50,89 +58,93 @@
 <script>
 export default {
   name: "creaturesTable",
-  props: ['data'],
+  props: ["data"],
 
   data() {
     return {
-      visibleColumns: ['name', 'level', 'size', 'family', 'traits', 'alignment'],
+      visibleColumns: [
+        "name",
+        "level",
+        "size",
+        "family",
+        "traits",
+        "alignment",
+      ],
       columns: [
         {
-          name: 'name',
-          label: 'Name',
-          align: 'left',
-          field: 'name',
-          sortable: true,
-          required: true,
-
-        },
-        {
-          name: 'level',
-          label: 'Level',
-          field: 'level',
+          name: "name",
+          label: "Name",
+          align: "left",
+          field: "name",
           sortable: true,
           required: true,
         },
         {
-          name: 'size',
-          label: 'Size',
-          field: 'size',
+          name: "level",
+          label: "Level",
+          field: "level",
           sortable: true,
-          align: 'left',
+          required: true,
         },
         {
-          name: 'family',
-          label: 'Family',
-          field: 'family',
+          name: "size",
+          label: "Size",
+          field: "size",
           sortable: true,
-          align: 'left',
+          align: "left",
         },
         {
-          name: 'alignment',
-          label: 'Alignment',
-          field: 'alignment',
+          name: "family",
+          label: "Family",
+          field: "family",
           sortable: true,
-          align: 'left',
+          align: "left",
         },
         {
-          name: 'creature_type',
-          label: 'Creature Type',
-          field: 'creature_type',
+          name: "alignment",
+          label: "Alignment",
+          field: "alignment",
           sortable: true,
-          align: 'left',
-          style: 'width:150px'
+          align: "left",
         },
         {
-          name: 'traits',
-          label: 'Traits',
-          field: 'traits',
+          name: "creature_type",
+          label: "Creature Type",
+          field: "creature_type",
+          sortable: true,
+          align: "left",
+          style: "width:150px",
+        },
+        {
+          name: "traits",
+          label: "Traits",
+          field: "traits",
           sortable: false,
-          align: 'left',
+          align: "left",
         },
         {
-          name: 'rarity',
-          label: 'Rarity',
-          field: 'rarity',
+          name: "rarity",
+          label: "Rarity",
+          field: "rarity",
           sortable: true,
-          align: 'left',
+          align: "left",
         },
-
-
       ],
       defaultPagination: {
-        sortBy: 'name',
+        sortBy: "name",
         descending: false,
         page: 1,
-        rowsPerPage: 10
-      }
-    }
+        rowsPerPage: 10,
+      },
+    };
   },
 
   methods: {
     redirectToAON(row) {
       window.open("https://2e.aonprd.com/Monsters.aspx?ID=" + row.id, "_blank");
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">

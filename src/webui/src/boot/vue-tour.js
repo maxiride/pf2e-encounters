@@ -1,6 +1,6 @@
-import Vue from 'vue'
-import VueTour from 'vue-tour'
+import Vue from "vue";
+import VueTour from "vue-tour";
 
-require('vue-tour/dist/vue-tour.css')
+require("vue-tour/dist/vue-tour.css");
 
-Vue.use(VueTour)
+Vue.use(VueTour);
