@@ -1,6 +1,8 @@
 <template>
   <q-page class="q-pa-md">
-    <v-tour name="myTour" :steps="steps" :options="{ highlight: true }" :callbacks="tourCallbacks"></v-tour>
+    <v-tour name="myTour" :steps="steps" :options="{ highlight: true }" :callbacks="tourCallbacks"/>
+
+    <!-- Filters on top -->
     <div class="row justify-start q-gutter-sm" data-v-step="2">
       <q-input filled dense style="width: 150px;" v-model="name" label="Name"/>
       <q-input filled dense style="width: 100px;" v-model.number="minLevel" type="number" :min="min" :max="max"
@@ -98,18 +100,24 @@
       <q-input filled dense style="width: 150px;" type="number" min="1" label="Party level" v-model="partyLevel"/>
     </div>
 
+    <!-- Danger bar -->
     <div class="column" style="padding-top: 10px; padding-bottom: 10px">
-      <q-linear-progress stripe rounded size="20px" :value="xpPool" :color="barColor" data-v-step="4">
+      <q-linear-progress stripe rounded size="20px" :value="xpPool[0]" :color="barColor" data-v-step="4">
         <div class="flex-center flex absolute-full">
-          <q-badge style="position: absolute; left: 25%; transform: translate(-50%)" color="light-green"
+          <q-badge :style="{position: 'absolute', left: 25*xpPool[1]+'%', transform: 'translate(-50%)'}"
+                   color="light-green"
                    text-color="black" :label="'Trivial ' + xpBudget[0]"/>
-          <q-badge style="position: absolute; left: 37.5%; transform: translate(-50%)" color="lime" text-color="black"
+          <q-badge :style="{position: 'absolute', left: 37.5*xpPool[1]+'%', transform: 'translate(-50%)'}" color="lime"
+                   text-color="black"
                    :label="'Low ' + xpBudget[1]"/>
-          <q-badge style="position: absolute; left: 50%; transform: translate(-50%)" color="amber" text-color="black"
+          <q-badge :style="{position: 'absolute', left: 50*xpPool[1]+'%', transform: 'translate(-50%)'}" color="amber"
+                   text-color="black"
                    :label="'Moderate ' + xpBudget[2]"/>
-          <q-badge style="position: absolute; left: 75%; transform: translate(-50%)" color="orange" text-color="black"
+          <q-badge :style="{position: 'absolute', left: 75*xpPool[1]+'%', transform: 'translate(-50%)'}" color="orange"
+                   text-color="black"
                    :label="'Severe ' + xpBudget[3]"/>
-          <q-badge style="position: absolute; left: 100%; transform: translate(-100%)" color="deep-orange"
+          <q-badge :style="{position: 'absolute', left: 100*xpPool[1]+'%', transform: 'translate(-100%)'}"
+                   color="deep-orange"
                    text-color="black" :label="'Extreme ' + xpBudget[4]"/>
         </div>
       </q-linear-progress>
@@ -121,7 +129,7 @@
 
       <div class="col">
         <div class="column">
-          <q-banner dense class="text-white bg-primary">
+          <q-banner dense class="text-white" style="background: #581911">
             Total Encounter cost: {{ xpCost }}
           </q-banner>
           <q-virtual-scroll
@@ -131,23 +139,28 @@
             :items="this.encounter"
             separator
           >
+            <!-- Single element of list -->
             <template v-slot="{ item, index }">
 
               <q-item :key="index" dense>
+                <!-- Add/subtract creature from element -->
                 <q-item-section side data-v-step="4">
                   <q-btn unelevated :ripple="false" size="xs" class="q-px-xs" icon="add"
                          @click="addToEncounter(item, index)"/>
                   <q-btn unelevated :ripple="false" size="xs" class="q-px-xs" icon="remove"
                          @click="removeFromEncounter(item, index)"/>
                 </q-item-section>
+                <!-- Name and counter -->
                 <q-item-section>
+                  <!-- Counter -->
                   <q-item-label class="text-body1">{{ item.count }} {{ item.name }}</q-item-label>
+                  <!-- Name -->
                   <q-item-label class="text-body1">XP {{ item.cost }}</q-item-label>
                 </q-item-section>
 
 
                 <q-item-section side>
-
+                  <!-- Creature strenght selection -->
                   <q-btn-group unelevated flat>
                     <q-btn flat label="Weak" size="15px" :color="item.variant === 1 ? 'orange' : 'grey-4'" padding="xs"
                            @click="makeWeak(item, index)"/>
@@ -162,16 +175,16 @@
               </q-item>
             </template>
           </q-virtual-scroll>
+
         </div>
       </div>
     </div>
-
   </q-page>
 </template>
 
+
 <script>
 import creaturesTable from "components/creaturesTable";
-
 
 export default {
   name: 'PageIndex',
@@ -181,10 +194,10 @@ export default {
 
   data() {
     return {
+      tourVisible: true,
       tourCallbacks: {
         onStop: this.stoppedTour
       },
-
       name: '',
       min: null,
       minLevel: '',
@@ -236,9 +249,7 @@ export default {
         {
           target: '[data-v-step="4"]',
           content: 'This bar, along with the total encounter cost will aid you to balance the fight, the threat levels are adjusted according to your party size.'
-        }
-      ]
-
+        }],
     }
   }
   ,
@@ -316,7 +327,11 @@ export default {
     ,
 
     xpPool() {
-      return Number(this.xpCost) / this.xpBudget[4]
+      if (Number(this.xpCost) / this.xpBudget[4] <= 1) {
+        return [Number(this.xpCost) / this.xpBudget[4], 1]
+      } else {
+        return [Number(this.xpCost) / this.xpBudget[4], 1 / (Number(this.xpCost) / this.xpBudget[4])]
+      }
     }
     ,
 
@@ -327,8 +342,10 @@ export default {
         return "amber"
       } else if (this.xpBudget[2] < this.xpCost && this.xpCost <= this.xpBudget[3]) {
         return "orange"
-      } else if (this.xpBudget[3] < this.xpCost) {
+      } else if (this.xpBudget[3] < this.xpCost && this.xpCost <= this.xpBudget[4]) {
         return "deep-orange"
+      } else if (this.xpBudget[4] < this.xpCost) {
+        return "black"
       }
       return "light-green"
     }
@@ -338,7 +355,19 @@ export default {
   methods: {
     stoppedTour() {
       this.encounter = []
+      this.$q.cookies.set('pf2eEncounterBuilder_tour', true, {expires: 14, sameSite: 'Strict', secure: true})
     },
+
+    startTour() {
+      // 18 and 51
+      let dummy1 = this.creaturesDump.creatures[this.creaturesDump.creatures.findIndex(el => el.id == 18)]
+      let dummy2 = this.creaturesDump.creatures[this.creaturesDump.creatures.findIndex(el => el.id == 51)]
+
+      this.addToEncounter(dummy1, -1, 1)
+      this.addToEncounter(dummy2, -1, 2)
+      this.$tours['myTour'].start()
+    },
+
     addToEncounter(creature, index, variant) {
       if (index >= 0) {
         creature.count += 1
@@ -390,17 +419,24 @@ export default {
     this.rarities = data.metadata.rarities
     this.sizes = data.metadata.sizes
 
-  }
-  ,
+    this.$root.$on('start-tour', this.startTour)
+
+  },
+  beforeDestroy() {
+    this.$root.$off('start-tour',)
+  },
+
   mounted: function () {
-    this.$tours['myTour'].start()
+    // Get cookies, we don´t want to present the user with the tour everytime
+    this.$q.cookies.getAll()
 
-    // 18 and 51
-    let dummy1 = this.creaturesDump.creatures[this.creaturesDump.creatures.findIndex(el => el.id == 18)]
-    let dummy2 = this.creaturesDump.creatures[this.creaturesDump.creatures.findIndex(el => el.id == 51)]
+    // Does the cookie exist?
+    if (!this.$q.cookies.has('pf2eEncounterBuilder_tour') || !this.$q.cookies.get('pf2eEncounterBuilder_tour')) {
+      console.debug('Cookie not found or value is false, start tour')
+      this.startTour()
+    }
 
-    this.addToEncounter(dummy1, -1, 1)
-    this.addToEncounter(dummy2, -1, 2)
+
   }
 }
 
