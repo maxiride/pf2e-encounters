@@ -143,6 +143,15 @@
             <template v-slot="{ item, index }">
 
               <q-item :key="index" dense>
+
+                <!-- Eliminate full stack of creatures -->
+                <q-item-section
+                side
+                style = "width: 20px; transform: translate(-100%)"
+                >
+                    <q-btn unelevated :ripple = "false" size = "xs" class = "q-px-xs" icon = "close"
+                        @click = "eraseFromEncounter(index)"/>
+                </q-item-section>
                 <!-- Add/subtract creature from element -->
                 <q-item-section side data-v-step="4">
                   <q-btn unelevated :ripple="false" size="xs" class="q-px-xs" icon="add"
@@ -387,6 +396,11 @@ export default {
       }
       creature.count -= 1
       this.encounter.splice(index, 1, creature)
+    }
+    ,
+    eraseFromEncounter(index){
+        this.encounter.splice(index, 1)
+        return
     }
     ,
     makeBase(creature, index) {
