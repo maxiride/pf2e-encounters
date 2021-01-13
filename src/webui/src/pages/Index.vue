@@ -124,7 +124,7 @@
 
       <div class="col">
         <div class="column">
-          <q-banner dense class="text-white bg-primary">
+          <q-banner dense class="text-white" style="background: #581911">
             Total Encounter cost: {{ xpCost }}
           </q-banner>
           <q-virtual-scroll
