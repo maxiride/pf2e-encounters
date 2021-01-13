@@ -1,7 +1,7 @@
 <template>
   <!-- Dialog box with license text -->
-  <q-dialog :value="isVisible" full-width @hide="$emit('hide-license')">
-    <q-card>
+  <q-dialog :value="isVisible"  @hide="$emit('hide-license')">
+    <q-card  style="width: 80vw; max-width: 80vw;">
       <q-card-section class="row items-center q-pb-none">
         <div class="text-h6">License information</div>
         <q-space/>
