@@ -21,7 +21,7 @@ type Data struct {
 type Creature struct {
 	Name         string   `json:"name"`
 	Family       string   `json:"family"`
-	Level        string   `json:"level"`
+	Level        int      `json:"level"`
 	Alignment    string   `json:"alignment"`
 	CreatureType string   `json:"creature_type"`
 	Size         string   `json:"size"`

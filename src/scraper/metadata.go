@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/campoy/unique"
-	"strconv"
 )
 
 func (d *Data) FillMetadata() {
@@ -11,7 +10,7 @@ func (d *Data) FillMetadata() {
 
 	for _, k := range d.Creatures {
 
-		level, _ := strconv.Atoi(k.Level)
+		level := k.Level
 
 		if level < d.Metadata.MinLevel {
 			d.Metadata.MinLevel = level

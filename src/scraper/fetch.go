@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
@@ -44,7 +45,11 @@ func (d *Data) parseAONTable(data string) {
 				case 1:
 					c.Family = tablecell.Text()
 				case 2:
-					c.Level = tablecell.Text()
+					level, err := strconv.Atoi(tablecell.Text())
+					if err != nil {
+						level = -999
+					}
+					c.Level = level
 				case 3:
 					c.Alignment = tablecell.Text()
 				case 4:
