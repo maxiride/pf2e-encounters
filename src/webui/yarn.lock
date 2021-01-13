@@ -1045,35 +1045,35 @@
   resolved "https://registry.yarnpkg.com/@quasar/fastclick/-/fastclick-1.1.4.tgz#21ed3e9a4387dcb43022a08af4ef08a5f1abf159"
   integrity sha512-i9wbyV4iT+v4KhtHJynUFhH5LiEPvAEgSnwMqPN4hf/8uRe82nDl5qP5agrp2el1h0HzyBpbvHaW7NB0BPrtvA==
 
-"@quasar/quasar-app-extension-qmarkdown@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@quasar/quasar-app-extension-qmarkdown/-/quasar-app-extension-qmarkdown-1.4.0.tgz#8328bafdf9751d1abe19c993430d95feac8097d3"
-  integrity sha512-lLEy3vQkbpuhqoxhcfnuPST7loXYA+prelTyOFWAwrCreJmGvUc3Yo+MJWLWMvJvw5tjRrYRZuuDmGqSbsUQ5g==
+"@quasar/quasar-app-extension-qmarkdown@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@quasar/quasar-app-extension-qmarkdown/-/quasar-app-extension-qmarkdown-1.4.1.tgz#bb586466345b662d0ee8b752439f427ce6f2ec74"
+  integrity sha512-npHZRV17OrLVrW/QdC94laxFA2VK27+ya16Rm4v0ApCbkVDC7vUBSKV4bNp0o/FJHRRwaC44JByNrgBF6J03Rw==
   dependencies:
-    "@quasar/quasar-ui-qmarkdown" "^1.4.0"
+    "@quasar/quasar-ui-qmarkdown" "^1.4.1"
     front-matter "^4.0.2"
     raw-loader "^4.0.2"
     ware-loader "^0.2.4"
 
-"@quasar/quasar-ui-qmarkdown@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@quasar/quasar-ui-qmarkdown/-/quasar-ui-qmarkdown-1.4.0.tgz#a446f78400089489abf0738325a380ce02b40c59"
-  integrity sha512-RAC0fEKuyLJowN5HFcJCnw+WGwJMP51hO65NRhcmcNmairrjPLrE5m28jC8bsKPaC/x8Osp0B2an88x69IjAmw==
+"@quasar/quasar-ui-qmarkdown@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@quasar/quasar-ui-qmarkdown/-/quasar-ui-qmarkdown-1.4.1.tgz#4ceb1e58f8f56ca8cea2c552d6d256b49247d270"
+  integrity sha512-KLVv6nVSzxyvBEeDoJK+ITE6IfTMTdzU9r23KZzNZE23vpLBRzy/OarATCgRz9xkJGv77q39HPWSKUiue79o4w==
   dependencies:
-    markdown-it "^12.0.3"
+    markdown-it "^12.0.4"
     markdown-it-abbr "^1.0.4"
     markdown-it-container "^3.0.0"
     markdown-it-deflist "^2.1.0"
     markdown-it-emoji "^2.0.0"
     markdown-it-footnote "^3.0.2"
     markdown-it-imsize "^2.0.1"
-    markdown-it-ins "^3.0.0"
-    markdown-it-mark "^3.0.0"
+    markdown-it-ins "^3.0.1"
+    markdown-it-mark "^3.0.1"
     markdown-it-sub "^1.0.0"
     markdown-it-sup "^1.0.0"
     markdown-it-task-lists "^2.1.1"
     markdown-it-toc-and-anchor "^4.2.0"
-    prismjs "^1.22.0"
+    prismjs "^1.23.0"
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
@@ -5446,12 +5446,12 @@ markdown-it-imsize@^2.0.1:
   resolved "https://registry.yarnpkg.com/markdown-it-imsize/-/markdown-it-imsize-2.0.1.tgz#cca0427905d05338a247cb9ca9d968c5cddd5170"
   integrity sha1-zKBCeQXQUziiR8ucqdloxc3dUXA=
 
-markdown-it-ins@^3.0.0:
+markdown-it-ins@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/markdown-it-ins/-/markdown-it-ins-3.0.1.tgz#c09356b917cf1dbf73add0b275d67ab8c73d4b4d"
   integrity sha512-32SSfZqSzqyAmmQ4SHvhxbFqSzPDqsZgMHDwxqPzp+v+t8RsmqsBZRG+RfRQskJko9PfKC2/oxyOs4Yg/CfiRw==
 
-markdown-it-mark@^3.0.0:
+markdown-it-mark@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/markdown-it-mark/-/markdown-it-mark-3.0.1.tgz#51257db58787d78aaf46dc13418d99a9f3f0ebd3"
   integrity sha512-HyxjAu6BRsdt6Xcv6TKVQnkz/E70TdGXEFHRYBGLncRE9lBFwDNLVtFojKxjJWgJ+5XxUwLaHXy+2sGBbDn+4A==
@@ -5479,7 +5479,7 @@ markdown-it-toc-and-anchor@^4.2.0:
     clone "^2.1.0"
     uslug "^1.0.4"
 
-markdown-it@^12.0.3:
+markdown-it@^12.0.4:
   version "12.0.4"
   resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-12.0.4.tgz#eec8247d296327eac3ba9746bdeec9cfcc751e33"
   integrity sha512-34RwOXZT8kyuOJy25oJNJoulO8L0bTHYWXcdZBYZqFnjIy3NgjeoM3FmPXIOFQ26/lSHYMr8oc62B6adxXcb3Q==
@@ -6834,7 +6834,7 @@ printj@~1.1.0:
   resolved "https://registry.yarnpkg.com/printj/-/printj-1.1.2.tgz#d90deb2975a8b9f600fb3a1c94e3f4c53c78a222"
   integrity sha512-zA2SmoLaxZyArQTOPj5LXecR+RagfPSU5Kw1qP+jkWeNlrq+eJZyY2oS68SU1Z/7/myXM4lo9716laOFAVStCQ==
 
-prismjs@^1.22.0:
+prismjs@^1.23.0:
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.23.0.tgz#d3b3967f7d72440690497652a9d40ff046067f33"
   integrity sha512-c29LVsqOaLbBHuIbsTxaKENh1N2EQBOHaWv7gkHN4dgRbxSREqDnDbtFJYdpPauS4YCplMSNCABQ6Eeor69bAA==
