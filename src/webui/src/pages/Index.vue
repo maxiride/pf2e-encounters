@@ -2,6 +2,7 @@
   <q-page class="q-pa-md">
     <v-tour name="myTour" :steps="steps" :options="{ highlight: true }" :callbacks="tourCallbacks"/>
 
+    <!-- Filters on top -->
     <div class="row justify-start q-gutter-sm" data-v-step="2">
       <q-input filled dense style="width: 150px;" v-model="name" label="Name"/>
       <q-input filled dense style="width: 100px;" v-model.number="minLevel" type="number" :min="min" :max="max"
@@ -99,18 +100,19 @@
       <q-input filled dense style="width: 150px;" type="number" min="1" label="Party level" v-model="partyLevel"/>
     </div>
 
+    <!-- Danger bar -->
     <div class="column" style="padding-top: 10px; padding-bottom: 10px">
-      <q-linear-progress stripe rounded size="20px" :value="xpPool" :color="barColor" data-v-step="4">
+      <q-linear-progress stripe rounded size="20px" :value="xpPool[0]" :color="barColor" data-v-step="4">
         <div class="flex-center flex absolute-full">
-          <q-badge style="position: absolute; left: 25%; transform: translate(-50%)" color="light-green"
+          <q-badge :style="{position: 'absolute', left: 25*xpPool[1]+'%', transform: 'translate(-50%)'}" color="light-green"
                    text-color="black" :label="'Trivial ' + xpBudget[0]"/>
-          <q-badge style="position: absolute; left: 37.5%; transform: translate(-50%)" color="lime" text-color="black"
+          <q-badge :style="{position: 'absolute', left: 37.5*xpPool[1]+'%', transform: 'translate(-50%)'}" color="lime" text-color="black"
                    :label="'Low ' + xpBudget[1]"/>
-          <q-badge style="position: absolute; left: 50%; transform: translate(-50%)" color="amber" text-color="black"
+          <q-badge :style="{position: 'absolute', left: 50*xpPool[1]+'%', transform: 'translate(-50%)'}" color="amber" text-color="black"
                    :label="'Moderate ' + xpBudget[2]"/>
-          <q-badge style="position: absolute; left: 75%; transform: translate(-50%)" color="orange" text-color="black"
+          <q-badge :style="{position: 'absolute', left: 75*xpPool[1]+'%', transform: 'translate(-50%)'}" color="orange" text-color="black"
                    :label="'Severe ' + xpBudget[3]"/>
-          <q-badge style="position: absolute; left: 100%; transform: translate(-100%)" color="deep-orange"
+          <q-badge :style="{position: 'absolute', left: 100*xpPool[1]+'%', transform: 'translate(-100%)'}" color="deep-orange"
                    text-color="black" :label="'Extreme ' + xpBudget[4]"/>
         </div>
       </q-linear-progress>
@@ -132,23 +134,28 @@
             :items="this.encounter"
             separator
           >
+            <!-- Single element of list -->
             <template v-slot="{ item, index }">
 
               <q-item :key="index" dense>
+                  <!-- Add/subtract creature from element -->
                 <q-item-section side data-v-step="4">
                   <q-btn unelevated :ripple="false" size="xs" class="q-px-xs" icon="add"
                          @click="addToEncounter(item, index)"/>
                   <q-btn unelevated :ripple="false" size="xs" class="q-px-xs" icon="remove"
                          @click="removeFromEncounter(item, index)"/>
                 </q-item-section>
+                <!-- Name and counter -->
                 <q-item-section>
+                  <!-- Counter -->
                   <q-item-label class="text-body1">{{ item.count }} {{ item.name }}</q-item-label>
+                  <!-- Name -->
                   <q-item-label class="text-body1">XP {{ item.cost }}</q-item-label>
                 </q-item-section>
 
 
                 <q-item-section side>
-
+                    <!-- Creature strenght selection -->
                   <q-btn-group unelevated flat>
                     <q-btn flat label="Weak" size="15px" :color="item.variant === 1 ? 'orange' : 'grey-4'" padding="xs"
                            @click="makeWeak(item, index)"/>
@@ -315,7 +322,12 @@ export default {
     ,
 
     xpPool() {
-      return Number(this.xpCost) / this.xpBudget[4]
+        if(Number(this.xpCost) / this.xpBudget[4] <= 1){
+          return [Number(this.xpCost) / this.xpBudget[4], 1]
+          }
+        else {
+            return [Number(this.xpCost) / this.xpBudget[4], 1/(Number(this.xpCost) / this.xpBudget[4])]
+        }
     }
     ,
 
