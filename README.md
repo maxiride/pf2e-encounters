@@ -8,3 +8,8 @@ There are already several similar tools available, however, none that I found of
 
 I also wanted to improve my Javascript and Quasar skills, thus this tool was born out of necessity and "sport".
 
+
+---
+Do you like my work? Help me dedicate more time to my passion by supporting, no matter the size every cup of coffee brings me to the desk!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F7343J9)
