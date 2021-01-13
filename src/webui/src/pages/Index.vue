@@ -104,15 +104,20 @@
     <div class="column" style="padding-top: 10px; padding-bottom: 10px">
       <q-linear-progress stripe rounded size="20px" :value="xpPool[0]" :color="barColor" data-v-step="4">
         <div class="flex-center flex absolute-full">
-          <q-badge :style="{position: 'absolute', left: 25*xpPool[1]+'%', transform: 'translate(-50%)'}" color="light-green"
+          <q-badge :style="{position: 'absolute', left: 25*xpPool[1]+'%', transform: 'translate(-50%)'}"
+                   color="light-green"
                    text-color="black" :label="'Trivial ' + xpBudget[0]"/>
-          <q-badge :style="{position: 'absolute', left: 37.5*xpPool[1]+'%', transform: 'translate(-50%)'}" color="lime" text-color="black"
+          <q-badge :style="{position: 'absolute', left: 37.5*xpPool[1]+'%', transform: 'translate(-50%)'}" color="lime"
+                   text-color="black"
                    :label="'Low ' + xpBudget[1]"/>
-          <q-badge :style="{position: 'absolute', left: 50*xpPool[1]+'%', transform: 'translate(-50%)'}" color="amber" text-color="black"
+          <q-badge :style="{position: 'absolute', left: 50*xpPool[1]+'%', transform: 'translate(-50%)'}" color="amber"
+                   text-color="black"
                    :label="'Moderate ' + xpBudget[2]"/>
-          <q-badge :style="{position: 'absolute', left: 75*xpPool[1]+'%', transform: 'translate(-50%)'}" color="orange" text-color="black"
+          <q-badge :style="{position: 'absolute', left: 75*xpPool[1]+'%', transform: 'translate(-50%)'}" color="orange"
+                   text-color="black"
                    :label="'Severe ' + xpBudget[3]"/>
-          <q-badge :style="{position: 'absolute', left: 100*xpPool[1]+'%', transform: 'translate(-100%)'}" color="deep-orange"
+          <q-badge :style="{position: 'absolute', left: 100*xpPool[1]+'%', transform: 'translate(-100%)'}"
+                   color="deep-orange"
                    text-color="black" :label="'Extreme ' + xpBudget[4]"/>
         </div>
       </q-linear-progress>
@@ -138,7 +143,7 @@
             <template v-slot="{ item, index }">
 
               <q-item :key="index" dense>
-                  <!-- Add/subtract creature from element -->
+                <!-- Add/subtract creature from element -->
                 <q-item-section side data-v-step="4">
                   <q-btn unelevated :ripple="false" size="xs" class="q-px-xs" icon="add"
                          @click="addToEncounter(item, index)"/>
@@ -155,7 +160,7 @@
 
 
                 <q-item-section side>
-                    <!-- Creature strenght selection -->
+                  <!-- Creature strenght selection -->
                   <q-btn-group unelevated flat>
                     <q-btn flat label="Weak" size="15px" :color="item.variant === 1 ? 'orange' : 'grey-4'" padding="xs"
                            @click="makeWeak(item, index)"/>
@@ -322,12 +327,11 @@ export default {
     ,
 
     xpPool() {
-        if(Number(this.xpCost) / this.xpBudget[4] <= 1){
-          return [Number(this.xpCost) / this.xpBudget[4], 1]
-          }
-        else {
-            return [Number(this.xpCost) / this.xpBudget[4], 1/(Number(this.xpCost) / this.xpBudget[4])]
-        }
+      if (Number(this.xpCost) / this.xpBudget[4] <= 1) {
+        return [Number(this.xpCost) / this.xpBudget[4], 1]
+      } else {
+        return [Number(this.xpCost) / this.xpBudget[4], 1 / (Number(this.xpCost) / this.xpBudget[4])]
+      }
     }
     ,
 
@@ -338,7 +342,7 @@ export default {
         return "amber"
       } else if (this.xpBudget[2] < this.xpCost && this.xpCost <= this.xpBudget[3]) {
         return "orange"
-    } else if (this.xpBudget[3] < this.xpCost && this.xpCost <= this.xpBudget[4]) {
+      } else if (this.xpBudget[3] < this.xpCost && this.xpCost <= this.xpBudget[4]) {
         return "deep-orange"
       } else if (this.xpBudget[4] < this.xpCost) {
         return "black"
@@ -418,7 +422,7 @@ export default {
     this.$root.$on('start-tour', this.startTour)
 
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.$root.$off('start-tour',)
   },
 
