@@ -338,8 +338,10 @@ export default {
         return "amber"
       } else if (this.xpBudget[2] < this.xpCost && this.xpCost <= this.xpBudget[3]) {
         return "orange"
-      } else if (this.xpBudget[3] < this.xpCost) {
+    } else if (this.xpBudget[3] < this.xpCost && this.xpCost <= this.xpBudget[4]) {
         return "deep-orange"
+      } else if (this.xpBudget[4] < this.xpCost) {
+        return "black"
       }
       return "light-green"
     }
