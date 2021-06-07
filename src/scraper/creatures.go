@@ -8,9 +8,9 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-func (d *Data) getCreatureDetails(i int, id string) {
+func (d *Data) getCreatureDetails(i int, id string, anURL string) {
 
-	rawData := getAONCreatures(baseURL + id)
+	rawData := getAONCreatures(anURL + id)
 
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(rawData))
 	if err != nil {
@@ -50,14 +50,16 @@ func (d *Data) getCreatureDetails(i int, id string) {
 				Es: https://2e.aonprd.com/Images/Monsters/Serpentfolk_AapophSerpentfolk.png
 			*/
 
-			selection.Children().Each(func(j int, s *goquery.Selection) {
+			selection.Children().EachWithBreak(func(j int, s *goquery.Selection) bool {
 				if s.HasClass("title") {
 
 					if s.Next().Children().AttrOr("class", "") == "thumbnail" {
 						imageURL, _ := s.Next().Children().Attr("src")
 						d.Creatures[i].ImgURL = imageURL
+						return (false)
 					}
 				}
+				return true
 			})
 
 		}

@@ -43,6 +43,7 @@ func (d *Data) parseAONTable(data string) {
 					str := tablecell.Find("a").AttrOr("href", "")
 					equalIndex := strings.LastIndex(str, "=")
 					c.Id = str[equalIndex+1:]
+					c.Origin = str[:strings.Index(str, ".")]
 				case 1:
 					c.Family = tablecell.Text()
 				case 2:
@@ -64,6 +65,11 @@ func (d *Data) parseAONTable(data string) {
 		})
 	})
 
-	// Drop first entry which is the table header row
-	d.Creatures = d.Creatures[1:]
+	// Drop all empty lines, corresponding to the headers of the tables.
+	for i, v := range d.Creatures {
+		if v.Id == "" {
+			d.Creatures = append(d.Creatures[:i], d.Creatures[i+1:]...)
+		}
+	}
+
 }

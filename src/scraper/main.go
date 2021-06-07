@@ -13,6 +13,7 @@ import (
 
 // baseURL for creatures pages
 const baseURL = "https://2e.aonprd.com/Monsters.aspx?ID="
+const baseURLNPC = "https://2e.aonprd.com/NPCs.aspx?ID="
 
 type Data struct {
 	Creatures []Creature `json:"creatures"`
@@ -31,6 +32,7 @@ type Creature struct {
 	Id           string   `json:"id"`
 	Lore         string   `json:"lore"`
 	ImgURL       string   `json:"image_url"`
+	Origin       string   `json:"origin"`
 }
 
 type metadata struct {
@@ -48,6 +50,7 @@ type metadata struct {
 func main() {
 	// FIXME hardcoded id, should be .env for good practices
 	url := "https://2e.aonprd.com/Monsters.aspx?Letter=All"
+	npcurl := "https://2e.aonprd.com/NPCs.aspx?Letter=All"
 
 	var d Data
 	if file, ok := ioutil.ReadFile("output/creatures.json"); ok == nil {
@@ -61,11 +64,20 @@ func main() {
 	}
 
 	creaturesMainTable := getAONCreatures(url)
+	npcMainTable := getAONCreatures(npcurl)
 
 	d.parseAONTable(creaturesMainTable)
+	d.parseAONTable(npcMainTable)
 
 	for i, c := range d.Creatures {
-		d.getCreatureDetails(i, c.Id)
+		if c.Origin == "Monsters" {
+			d.getCreatureDetails(i, c.Id, baseURL)
+		} else {
+			d.getCreatureDetails(i, c.Id, baseURLNPC)
+		}
+		//Double call for all creatures makes the process very slow
+		//TODO reformat to only call one or the other based on creature. Need a discriminant between the two.
+
 		// If in debug, fetch detailed infos of only three creatures
 		if os.Getenv("DEBUG") == "1" && i == 3 {
 			break
