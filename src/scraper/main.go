@@ -30,7 +30,7 @@ type Creature struct {
 	Rarity       string   `json:"rarity"`
 	Id           string   `json:"id"`
 	Lore         string   `json:"lore"`
-	ImgURL       string   `json:image_url`
+	ImgURL       string   `json:"image_url"`
 }
 
 type metadata struct {
