@@ -12,8 +12,7 @@ import (
 )
 
 // baseURL for creatures pages
-const baseURL = "https://2e.aonprd.com/Monsters.aspx?ID="
-const baseURLNPC = "https://2e.aonprd.com/NPCs.aspx?ID="
+const baseURL = "https://2e.aonprd.com/"
 
 type Data struct {
 	Creatures []Creature `json:"creatures"`
@@ -32,7 +31,6 @@ type Creature struct {
 	Id           string   `json:"id"`
 	Lore         string   `json:"lore"`
 	ImgURL       string   `json:"image_url"`
-	Origin       string   `json:"origin"`
 }
 
 type metadata struct {
@@ -70,12 +68,7 @@ func main() {
 	d.parseAONTable(npcMainTable)
 
 	for i, c := range d.Creatures {
-		if c.Origin == "Monsters" {
-			d.getCreatureDetails(i, c.Id, baseURL)
-		} else {
-			d.getCreatureDetails(i, c.Id, baseURLNPC)
-		}
-		//Double call for all creatures makes the process very slow
+		d.getCreatureDetails(i, c.Id)
 		//TODO reformat to only call one or the other based on creature. Need a discriminant between the two.
 
 		// If in debug, fetch detailed infos of only three creatures

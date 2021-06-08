@@ -8,9 +8,9 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-func (d *Data) getCreatureDetails(i int, id string, anURL string) {
+func (d *Data) getCreatureDetails(i int, id string) {
 
-	rawData := getAONCreatures(anURL + id)
+	rawData := getAONCreatures(baseURL + id)
 
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(rawData))
 	if err != nil {

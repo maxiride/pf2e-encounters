@@ -40,10 +40,8 @@ func (d *Data) parseAONTable(data string) {
 				switch indexth {
 				case 0:
 					c.Name = tablecell.Text()
-					str := tablecell.Find("a").AttrOr("href", "")
-					equalIndex := strings.LastIndex(str, "=")
-					c.Id = str[equalIndex+1:]
-					c.Origin = str[:strings.Index(str, ".")]
+					c.Id = tablecell.Find("a").AttrOr("href", "")
+
 				case 1:
 					c.Family = tablecell.Text()
 				case 2:
