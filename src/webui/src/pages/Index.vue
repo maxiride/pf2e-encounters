@@ -7,8 +7,13 @@
       :callbacks="tourCallbacks"
     />
 
+    <!-- Toolbar -->
+    <q-toolbar class="lt-md">
+      <q-btn flat @click="drawerLeft = !drawerLeft" round dense icon="menu"/>
+    </q-toolbar>
+
     <!-- Filters on top -->
-    <div class="row justify-start q-gutter-sm" data-v-step="2">
+    <div class="row justify-start q-gutter-sm gt-sm" data-v-step="2">
       <q-input filled dense style="width: 150px" v-model="name" label="Name" />
       <q-input
         filled
@@ -136,6 +141,141 @@
       />
     </div>
 
+    <!-- Filter in sidebar -->
+    <q-drawer
+      v-model="drawerLeft"
+      show-if-above="false"
+      :breakpoint="9000"
+      class="lt-md"
+      >
+      <q-input filled dense style="width: 150px" v-model="name" label="Name" />
+      <q-input
+        filled
+        dense
+        style="width: 100px"
+        v-model.number="minLevel"
+        type="number"
+        :min="min"
+        :max="max"
+        label="Min level"
+      />
+      <q-input
+        filled
+        dense
+        style="width: 100px"
+        v-model.number="maxLevel"
+        type="number"
+        :min="min"
+        :max="max"
+        label="Max level"
+      />
+
+      <q-select
+        filled
+        dense
+        options-dense
+        label="Size"
+        v-model="size"
+        multiple
+        input-debounce="0"
+        :options="sizes"
+        :style="selectsStyle"
+        hide-selected
+        clearable
+      >
+      </q-select>
+      <q-select
+        filled
+        dense
+        options-dense
+        label="Family"
+        v-model="family"
+        use-chips
+        multiple
+        input-debounce="0"
+        :options="families"
+        :style="selectsStyle"
+        hide-selected
+        clearable
+      />
+      <q-select
+        filled
+        dense
+        options-dense
+        label="Trait"
+        v-model="trait"
+        use-chips
+        multiple
+        input-debounce="0"
+        :options="traits"
+        :style="selectsStyle"
+        hide-selected
+        clearable
+      />
+      <q-select
+        filled
+        dense
+        options-dense
+        label="Creature type"
+        v-model="creature_type"
+        use-chips
+        multiple
+        input-debounce="0"
+        :options="creature_types"
+        :style="selectsStyle"
+        hide-selected
+        clearable
+      />
+      <q-select
+        filled
+        dense
+        options-dense
+        label="Aligment"
+        v-model="alignment"
+        use-chips
+        multiple
+        input-debounce="0"
+        :options="alignments"
+        :style="selectsStyle"
+        hide-selected
+        clearable
+      />
+      <q-select
+        filled
+        dense
+        options-dense
+        label="Rarity"
+        v-model="rarity"
+        use-chips
+        multiple
+        input-debounce="0"
+        :options="rarities"
+        :style="selectsStyle"
+        hide-selected
+        clearable
+      />
+
+      <q-input
+        filled
+        dense
+        style="width: 150px"
+        type="number"
+        min="1"
+        label="Party size"
+        v-model="partySize"
+      />
+      <q-input
+        filled
+        dense
+        style="width: 150px"
+        type="number"
+        min="1"
+        label="Party level"
+        v-model="partyLevel"
+      />
+
+    </q-drawer>
+
     <!-- Danger bar -->
     <div class="column" style="padding-top: 10px; padding-bottom: 10px">
       <q-linear-progress
@@ -204,12 +344,12 @@
     <div class="row">
       <creaturesTable
         data-v-step="1"
-        class="col-8"
+        class="col-xs-12 col-sm-12 col-md-8 "
         :data="filteredResults"
         @add-row="addToEncounter($event)"
       />
 
-      <div class="col">
+      <div class="col-xs-12 col-sm-12 col-md-4">
         <div class="column">
           <q-banner dense class="text-white" style="background: #581911">
             Total Encounter cost: {{ xpCost }}
@@ -313,6 +453,7 @@ export default {
 
   data() {
     return {
+      drawerLeft: false,
       tourVisible: true,
       tourCallbacks: {
         onStop: this.stoppedTour,

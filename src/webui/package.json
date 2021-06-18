@@ -10,23 +10,23 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.0.0",
+    "@quasar/extras": "^1.10.7",
     "axios": "^0.21.1",
-    "core-js": "^3.6.5",
-    "quasar": "^1.0.0",
-    "vue-tour": "^1.5.0"
+    "core-js": "^3.14.0",
+    "quasar": "^1.15.21",
+    "vue-tour": "^1.6.0"
   },
   "devDependencies": {
-    "@quasar/app": "^2.0.0",
-    "@quasar/quasar-app-extension-qmarkdown": "^1.4.1",
+    "@quasar/app": "^2.2.10",
+    "@quasar/quasar-app-extension-qmarkdown": "^1.4.3",
     "babel-eslint": "^10.0.1",
-    "eslint": "^7.17.0",
-    "eslint-config-prettier": "^7.1.0",
-    "eslint-loader": "^3.0.3",
-    "eslint-plugin-prettier": "^3.3.1",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-quasar": "^1.0.0",
     "eslint-plugin-vue": "^6.1.2",
-    "prettier": "2.2.1"
+    "prettier": "^2.3.1"
   },
   "browserslist": [
     "last 10 Chrome versions",
