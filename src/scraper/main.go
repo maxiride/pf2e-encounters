@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"sync"
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/helloeave/json"
@@ -81,8 +82,13 @@ func main() {
 	d.parseAONTable(creaturesMainTable)
 	d.parseAONTable(npcMainTable)
 
+	var wg sync.WaitGroup
+
 	for i, c := range d.Creatures {
+		wg.Add(1)
+
 		go func ()  {
+			defer wg.Done()
 			d.getCreatureDetails(i, c.Id)
 		} ()
 		//TODO reformat to only call one or the other based on creature. Need a discriminant between the two.
@@ -94,7 +100,15 @@ func main() {
 
 		str := fmt.Sprintf("Fetching creature %d of %d \r", i, len(d.Creatures))
 		_, _ = io.WriteString(io.Writer(os.Stdout), str)
+		
+		// Slow down execution to avoid too many request to website.
+		// Number can be tweeked for better performance: 500 give total time around 35s for me
+		if i % 500 == 0 {
+			wg.Wait()
+		}
+
 	}
+	wg.Wait()
 
 	// Pretty print the result, DEBUG only
 	if os.Getenv("DEBUG") == "1" {
