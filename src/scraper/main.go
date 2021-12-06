@@ -61,14 +61,30 @@ func main() {
 		return
 	}
 
-	creaturesMainTable := getAONCreatures(url)
-	npcMainTable := getAONCreatures(npcurl)
+	creatureCh := make(chan string)
+	npcCh := make(chan string)
+
+	go func(url string) {
+		creatureCh <- getAONCreatures(url)
+	}(url)
+
+	go func(npcurl string) {
+		npcCh <- getAONCreatures(npcurl)
+	}(npcurl)
+
+	/* creaturesMainTable := getAONCreatures(url)
+	npcMainTable := getAONCreatures(npcurl) */
+
+	creaturesMainTable := <- creatureCh
+	npcMainTable := <- npcCh
 
 	d.parseAONTable(creaturesMainTable)
 	d.parseAONTable(npcMainTable)
 
 	for i, c := range d.Creatures {
-		d.getCreatureDetails(i, c.Id)
+		go func ()  {
+			d.getCreatureDetails(i, c.Id)
+		} ()
 		//TODO reformat to only call one or the other based on creature. Need a discriminant between the two.
 
 		// If in debug, fetch detailed infos of only three creatures
