@@ -213,6 +213,11 @@
         <div class="column">
           <q-banner dense class="text-white" style="background: #581911">
             Total Encounter cost: {{ xpCost }}
+            <div class="xp-award" v-if="partySize > 0 && partySize != 4">
+              <small>
+                XP Award: {{ Math.floor((xpCost * 4) / partySize) }}
+              </small>
+            </div>
           </q-banner>
           <q-virtual-scroll
             data-v-step="3"
