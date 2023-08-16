@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
 	"log"
 	"strings"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
 func (d *Data) getCreatureDetails(i int, id string) {
@@ -33,13 +34,34 @@ func (d *Data) getCreatureDetails(i int, id string) {
 			}
 		}
 
-		// Get the the creature's lore
+		// Get the the creature's lore and image URL
 		if selection.AttrOr("id", "") == "ctl00_MainContent_DetailedOutput" {
 			lore := selection.Text()
 			lore = lore[:strings.Index(lore, "Creature ")]
 			d.Creatures[i].Lore = lore
+
+			/*
+				Get the creature's thumbnail image if it is in the expected node,
+				imediately after the name of the creature h,
+				Not all creatures has it.
+				TODO check if it is in the same positions for all creatures.
+
+				Image URL is relative to domain: https://2e.aonprd.com/
+				Es: https://2e.aonprd.com/Images/Monsters/Serpentfolk_AapophSerpentfolk.png
+			*/
+
+			selection.Children().Each(func(j int, s *goquery.Selection) {
+				if s.HasClass("title") {
+
+					if s.Next().Children().AttrOr("class", "") == "thumbnail" {
+						imageURL, _ := s.Next().Children().Attr("src")
+						d.Creatures[i].ImgURL = imageURL
+					}
+				}
+			})
+
 		}
-		// TODO Get the creature's image
+
 	})
 
 }
