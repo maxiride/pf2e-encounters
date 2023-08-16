@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
 func getAONCreatures(url string) string {
@@ -44,7 +46,11 @@ func (d *Data) parseAONTable(data string) {
 				case 1:
 					c.Family = tablecell.Text()
 				case 2:
-					c.Level = tablecell.Text()
+					level, err := strconv.Atoi(tablecell.Text())
+					if err != nil {
+						level = -999
+					}
+					c.Level = level
 				case 3:
 					c.Alignment = tablecell.Text()
 				case 4:
