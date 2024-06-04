@@ -10,6 +10,10 @@ I also wanted to improve my Javascript and Quasar skills, thus this tool was bor
 
 
 ---
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=maxiride/pf2e-encounters&type=Date)](https://star-history.com/#maxiride/pf2e-encounters&Date)
+
 Do you like my work? Help me dedicate more time to my passion by supporting, no matter the size every cup of coffee brings me to the desk!
 
 <a href="https://www.buymeacoffee.com/maxiride" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width=200px ></a>
