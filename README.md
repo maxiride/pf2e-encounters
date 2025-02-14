@@ -8,7 +8,11 @@ There are already several similar tools available, however, none that I found of
 
 I also wanted to improve my Javascript and Quasar skills, thus this tool was born out of necessity and "sport".
 
+# PF2e Rules
 
+All rules are based on
+
+https://2e.aonprd.com/Rules.aspx?ID=2715
 ---
 ## Star History
 

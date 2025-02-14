@@ -1,0 +1,14 @@
+// app global css in SCSS form
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+// Becker font
+@font-face {
+  font-family: "becker-regular";
+  src: url("fonts/becker-regular.woff") format("woff");
+}
+
+
+body {
+  font-family: 'Noto sans', sans-serif;
+}
