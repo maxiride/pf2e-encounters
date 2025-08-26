@@ -140,11 +140,11 @@ export function computeCreatureCost(creature: Creature, partyLevel: number): num
       // If the creature has the base attribute its level is counted as its original value.
       return computeDeltaCost(creature.level - partyLevel)
     case 'weak':
-      // If the creature has the weak attribute its level is counted as one less than its original value.
-      return computeDeltaCost(creature.level - 1 - partyLevel)
+      // Decrease the creature's level by 1; if the creature is level 1, instead decrease its level by 2.
+      return computeDeltaCost(creature.level - (creature.level === 1 ? 2 : 1) - partyLevel)
     case 'elite':
-      // If the creature has the elite attribute its level is counted as one more than its original value.
-      return computeDeltaCost(creature.level + 1 - partyLevel)
+      // Increase the creature’s level by 1; if the creature is level –1 or 0, instead increase its level by 2.
+      return computeDeltaCost(creature.level + (creature.level === -1 || creature.level === 0 ? 2 : 1) - partyLevel)
     default:
       return 0
   }
@@ -153,6 +153,8 @@ export function computeCreatureCost(creature: Creature, partyLevel: number): num
 // computeDeltaCost compute creature cost based on level delta
 function computeDeltaCost(delta: number): number {
   switch (delta) {
+    case -4:
+      return 10
     case -3:
       return 15
     case -2:
@@ -167,6 +169,8 @@ function computeDeltaCost(delta: number): number {
       return 80
     case 3:
       return 120
+    case 4:
+      return 160
   }
 
   if (delta <= -1) {
