@@ -25,6 +25,9 @@ export const useEncounterStore = defineStore('encounter', () => {
   const encounterCreatures: Ref<Creature[]> = ref([])
 
   // getters
+
+  // xpBudget is the upper bound of each threat level based on party size
+  // ref. https://2e.aonprd.com/Rules.aspx?ID=2717
   const xpBudget = computed<XPBudget>(() => ({
     trivial: 40 + 10 * (partySize.value - 4),
     low: 60 + 20 * (partySize.value - 4),
@@ -130,6 +133,7 @@ export const useEncounterStore = defineStore('encounter', () => {
 })
 
 // computeCreatureCost compute the creature cost to the budget
+// ref. https://2e.aonprd.com/Rules.aspx?ID=3262
 export function computeCreatureCost(creature: Creature, partyLevel: number): number {
   switch (creature.kind) {
     case 'base':
