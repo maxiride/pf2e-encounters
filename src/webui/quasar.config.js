@@ -74,7 +74,10 @@ export default defineConfig((/* ctx */) => {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
     devServer: {
       // https: true,
-      open: true // opens browser window automatically
+      open: {
+        app: {name: 'C:\\Program Files\\Firefox Developer Edition\\firefox.exe', arguments: ['--devtools']},
+      }, // opens browser window automatically with devtools
+      vueDevtools: true,
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
