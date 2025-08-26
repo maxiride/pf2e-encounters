@@ -151,6 +151,7 @@ export function computeCreatureCost(creature: Creature, partyLevel: number): num
 }
 
 // computeDeltaCost compute creature cost based on level delta
+// ref. https://2e.aonprd.com/Rules.aspx?ID=2718
 function computeDeltaCost(delta: number): number {
   switch (delta) {
     case -4:
