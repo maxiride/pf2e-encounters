@@ -141,7 +141,14 @@ export default {
 
   methods: {
     redirectToAON(row) {
-      window.open("https://2e.aonprd.com/Monsters.aspx?ID=" + row.id, "_blank");
+      if (row.npc) {
+        window.open("https://2e.aonprd.com/NPCs.aspx?ID=" + row.id, "_blank");
+      } else {
+        window.open(
+          "https://2e.aonprd.com/Monsters.aspx?ID=" + row.id,
+          "_blank"
+        );
+      }
     },
   },
 };
