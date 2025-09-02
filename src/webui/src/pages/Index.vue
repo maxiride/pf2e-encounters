@@ -499,6 +499,7 @@ export default {
     },
 
     addToEncounter(creature, index, variant) {
+      window.umami?.track("encounter-add-creature");
       if (index >= 0) {
         creature.count += 1;
         this.encounter.splice(index, 1, creature);
