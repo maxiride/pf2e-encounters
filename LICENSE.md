@@ -1,7 +1,3 @@
-# Disclaimer
-The following license applies only to the original content of this repository. All material related to Paizo such as creatures, names etc is licenses differently.
-For that see: src/webui/public/LICENSE.md
-                    
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
