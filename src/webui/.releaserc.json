@@ -2,7 +2,7 @@
   "branches": [
     "main",
     {
-      "name": "feature/semantic-release",
+      "name": "next",
       "prerelease": true
     }
   ],
