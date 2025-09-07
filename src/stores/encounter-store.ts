@@ -9,7 +9,7 @@ interface Creature {
   kind: 'base' | 'weak' | 'elite'
 }
 
-// XPBudget represents the upper bounds of each threat level
+// XPBudget represents the upper bounds of each threat level budget
 interface XPBudget {
   trivial: number
   low: number
@@ -24,7 +24,9 @@ export const useEncounterStore = defineStore('encounter', () => {
   const partyLevel: Ref<number> = ref(1) // Party level
   const encounterCreatures: Ref<Creature[]> = ref([])
 
+  //
   // getters
+  //
 
   // xpBudget is the upper bound of each threat level based on party size
   // ref. https://2e.aonprd.com/Rules.aspx?ID=2717
@@ -36,6 +38,7 @@ export const useEncounterStore = defineStore('encounter', () => {
     extreme: 160 + 40 * (partySize.value - 4),
   }))
 
+  // xpCost represents the total cost of the encounter
   const xpCost = computed<number>(() => {
     let cost = 0
     encounterCreatures.value.forEach((c) => {
@@ -46,11 +49,16 @@ export const useEncounterStore = defineStore('encounter', () => {
     return cost
   })
 
+  // xpPool represents a percentage of how much xp points are left in the pool based off the extreme budget
   const xpPool = computed<number>(() => {
     return xpCost.value / xpBudget.value.extreme
   })
 
+  //
   // actions
+  //
+
+  // addCreature adds a creature to the encounter
   function addCreature(name: string, level: number): void {
     encounterCreatures.value.push({
       name,
@@ -60,6 +68,7 @@ export const useEncounterStore = defineStore('encounter', () => {
     })
   }
 
+  // incrementCreatureCount increments the count of a specific creature in the ecounter by 1
   function incrementCreatureCount(index: number): void {
     const creature = encounterCreatures.value.at(index)
     if (creature) {
@@ -67,6 +76,7 @@ export const useEncounterStore = defineStore('encounter', () => {
     }
   }
 
+  // decrementCreatureCount decrements the count of a specific creature in the ecounter by 1
   function decrementCreatureCount(index: number): void {
     const creature = encounterCreatures.value.at(index)
     if (creature && creature.count > 0) {
@@ -74,10 +84,12 @@ export const useEncounterStore = defineStore('encounter', () => {
     }
   }
 
+  // removeCreature removes a creature from the encounter
   function removeCreature(index: number): void {
     encounterCreatures.value.splice(index, 1)
   }
 
+  // makeCreatureBase makes a creature variant base
   function makeCreatureBase(index: number): void {
     const creature = encounterCreatures.value.at(index)
     if (creature) {
@@ -85,6 +97,7 @@ export const useEncounterStore = defineStore('encounter', () => {
     }
   }
 
+  // makeCreatureElite makes a creature variant elite
   function makeCreatureElite(index: number): void {
     const creature = encounterCreatures.value.at(index)
     if (creature) {
@@ -92,6 +105,7 @@ export const useEncounterStore = defineStore('encounter', () => {
     }
   }
 
+  // makeCreatureWeak makes a creature variant weak
   function makeCreatureWeak(index: number): void {
     const creature = encounterCreatures.value.at(index)
     if (creature) {
@@ -99,14 +113,12 @@ export const useEncounterStore = defineStore('encounter', () => {
     }
   }
 
-  function resetEncounter(): void {
-    encounterCreatures.value = []
-  }
-
+  // setPartyLevel sets the party level
   function setPartyLevel(level: number): void {
     partyLevel.value = Math.max(level, 1) // partyLevel can't be less than 1
   }
 
+  // setPartySize sets the party size (number of players)
   function setPartySize(size: number): void {
     partySize.value = Math.max(size, 1) // partySize can't be less than 1
   }
@@ -126,13 +138,17 @@ export const useEncounterStore = defineStore('encounter', () => {
     makeCreatureBase,
     makeCreatureElite,
     makeCreatureWeak,
-    resetEncounter,
     setPartyLevel,
     setPartySize,
+    $reset,
   }
 })
 
-// computeCreatureCost compute the creature cost to the budget
+//
+// Utility functions
+//
+
+// computeCreatureCost compute how much xp the creature cost to the budget
 // ref. https://2e.aonprd.com/Rules.aspx?ID=3262
 export function computeCreatureCost(creature: Creature, partyLevel: number): number {
   switch (creature.kind) {
@@ -150,35 +166,30 @@ export function computeCreatureCost(creature: Creature, partyLevel: number): num
   }
 }
 
-// computeDeltaCost compute creature cost based on level delta
-// ref. https://2e.aonprd.com/Rules.aspx?ID=2718
+/**
+ * Compute creature cost based on level delta from party level
+ * ref. https://2e.aonprd.com/Rules.aspx?ID=2718
+ *
+ * @param {number} delta - The delta value for which the cost is calculated.
+ * @return {number} The computed cost based on the given delta. Returns predefined values for deltas within a specific range and fallback values for deltas outside the range.
+ */
 function computeDeltaCost(delta: number): number {
-  switch (delta) {
-    case -4:
-      return 10
-    case -3:
-      return 15
-    case -2:
-      return 20
-    case -1:
-      return 30
-    case 0:
-      return 40
-    case 1:
-      return 60
-    case 2:
-      return 80
-    case 3:
-      return 120
-    case 4:
-      return 160
+  const costs: Record<number, number> = {
+    [-4]: 10,
+    [-3]: 15,
+    [-2]: 20,
+    [-1]: 30,
+    [0]: 40,
+    [1]: 60,
+    [2]: 80,
+    [3]: 120,
+    [4]: 160,
   }
 
-  if (delta <= -1) {
-    return 10
-  } else if (delta >= 4) {
-    return 160
-  }
+  if (delta <= -4) return costs[-4]
+  if (delta >= 4) return costs[4]
+
+  return costs[delta]
 }
 
 if (import.meta.hot) {
