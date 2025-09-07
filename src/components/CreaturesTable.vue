@@ -8,6 +8,7 @@
     no-data-label="The selected filter does not match any creature."
     dense
     style="height: 100%"
+    @row-dblclick="addCreatureToEncounter"
   >
     <template v-slot:top-right>
       <q-select
@@ -56,14 +57,12 @@
 </template>
 
 <script setup lang="ts">
-import { useCreaturesStore } from 'stores/creatures-store.js';
+import { useCreaturesStore, Creature } from 'stores/creatures-store.js';
 import { computed, ref } from 'vue';
+import { useEncounterStore } from 'stores/encounter-store';
+import { QTableColumn } from 'quasar';
 
-defineProps({
-  rows: Array,
-});
-
-const columns = [
+const columns: QTableColumn[] = [
   {
     name: 'name',
     label: 'Name',
@@ -132,8 +131,8 @@ const columns = [
   },
 ];
 
-const defaultVisibleColumns = ['family', 'traits', 'alignment'];
-const visibleColumns = ref([]);
+const defaultVisibleColumns: string[] = ['family', 'traits', 'alignment'];
+const visibleColumns = ref<string[]>([]);
 visibleColumns.value = defaultVisibleColumns;
 
 // Only columns without the required: true attribute are selectable in the show/hide q-select.
@@ -142,21 +141,17 @@ const showHideColumnOptions = computed(() => {
 });
 
 const isVisibleColumnsDefault = computed(() => {
-  // Assign the arrays to variables explicitly
-  const arr1 = visibleColumns.value;
-  const arr2 = defaultVisibleColumns;
-
   // Step 1: Check the lengths of both arrays
-  if (arr1.length !== arr2.length) {
+  if (visibleColumns.value.length !== defaultVisibleColumns.length) {
     // If the lengths are different, the arrays cannot be equal
     return false;
   }
 
   // Step 2: Check if all elements in arr1 are present in arr2
-  const allInArr2 = arr1.every((item) => arr2.includes(item));
+  const allInArr2 = visibleColumns.value.every((item) => defaultVisibleColumns.includes(item));
 
   // Step 3: Check if all elements in arr2 are present in arr1
-  const allInArr1 = arr2.every((item) => arr1.includes(item));
+  const allInArr1 = defaultVisibleColumns.every((item) => visibleColumns.value.includes(item));
 
   // Step 4: Return true only if both conditions are met
   return allInArr2 && allInArr1;
@@ -171,6 +166,12 @@ const defaultPagination = {
 
 const creaturesStore = useCreaturesStore();
 const creatures = creaturesStore.creatures;
+
+const encounterStore = useEncounterStore();
+
+function addCreatureToEncounter(evt: Event, row: Creature) {
+  encounterStore.addCreature(row.name, Number(row.level));
+}
 </script>
 
 <style lang="scss" scoped>

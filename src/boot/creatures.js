@@ -1,5 +1,5 @@
 import { defineBoot } from '#q-app/wrappers'
-import { useCreaturesStore } from 'stores/creatures-store.js'
+import { useCreaturesStore } from 'stores/creatures-store.ts'
 
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli-vite/boot-files

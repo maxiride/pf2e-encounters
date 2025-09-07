@@ -1,15 +1,11 @@
 <template>
   <q-card style="height: 84vh">
     <p>Encounter cost</p>
-    <p>Party Experience/Plaer experience</p>
-    <q-virtual-scroll
-      :items="list"
-      v-slot="{ item, index }"
-      style="height: 73vh"
-    >
+    <p>Party Experience/Player experience</p>
+    <q-virtual-scroll :items="list" v-slot="{ item, index }" style="height: 73vh">
       <q-item :key="index">
         <q-item-section>
-          Name: {{ item.name}}
+          Name: {{ item.name }}
           <q-item-label>Item with caption</q-item-label>
           <q-item-label caption>Caption</q-item-label>
         </q-item-section>
@@ -19,13 +15,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue';
+import { Creature, useEncounterStore } from 'stores/encounter-store';
 
-const list = ref([])
+const list = ref<Creature[]>([]);
 
-for (let i = 1; i <= 20; i++) {
-  list.value.push({ name: `Item ${i}`, id: i })
-}
+const encounterStore = useEncounterStore();
+
+onMounted(() => {
+  list.value = encounterStore.encounterCreatures;
+});
 </script>
 
 <style scoped>

@@ -11,7 +11,7 @@ export default defineConfig((/* ctx */) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: [],
+    boot: ['axios'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
@@ -50,7 +50,7 @@ export default defineConfig((/* ctx */) => {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      publicPath: '/v2',
+      // publicPath: '/',
       // analyze: true,
       // env: {},
       // rawDefine: {}
@@ -80,8 +80,8 @@ export default defineConfig((/* ctx */) => {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
     devServer: {
       // https: true,
-      open: true, // opens browser window automatically,
-      vueDevtools: true
+      open: { app: { name: 'C:\\Program Files\\Firefox Developer Edition\\firefox.exe', arguments: ['--devtools'] } }, // opens browser window and devtools automatically,
+      vueDevtools: true, // launch Vue Devtools
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
@@ -195,7 +195,7 @@ export default defineConfig((/* ctx */) => {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'update',
+        appId: 'quasar-project',
       },
     },
 

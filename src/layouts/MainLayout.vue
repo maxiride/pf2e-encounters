@@ -2,9 +2,7 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="text-white" style="background: #581911">
       <q-toolbar>
-        <q-toolbar-title
-          style="font-family: becker-regular, sans-serif; font-size: x-large; color: #e9c58e"
-        >
+        <q-toolbar-title style="font-family: becker-regular, sans-serif; font-size: x-large; color: #e9c58e">
           <q-avatar data-v-step="0" size="lg" square>
             <img src="../assets/stabbed-note.png" alt="logo" />
           </q-avatar>
@@ -12,10 +10,10 @@
         </q-toolbar-title>
         <q-space />
         <div style="transform: translate(-55px)">
-          <q-btn unelevated label="donate" @click="showLicense = true" />
-          <q-btn unelevated label="submit a request" @click="showLicense = true" />
-          <q-btn unelevated label="License info" @click="showLicense = true" />
-          <MainMenu/>
+          <q-btn unelevated label="donate" />
+          <q-btn unelevated label="submit a request" />
+          <q-btn unelevated label="License info" />
+          <MainMenu />
         </div>
         <OctocatCorner />
       </q-toolbar>
@@ -30,9 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import OctocatCorner from 'components/OctocatCorner.vue'
-import LicenseDialog from 'components/LicenseDialog.vue'
-import MainMenu from 'components/MainMenu.vue'
+import OctocatCorner from 'components/OctocatCorner.vue';
+import LicenseDialog from 'components/LicenseDialog.vue';
+import MainMenu from 'components/MainMenu.vue';
 
-const showLicense = false
+const showLicense = false;
 </script>

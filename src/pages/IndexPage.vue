@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import CreaturesTable from 'components/CreaturesTable.vue'
 import ThreatBar from 'components/ThreatBar.vue'
-import { useEncounterStore } from 'stores/encounter-store.ts'
+import { useEncounterStore } from 'stores/encounter-store'
 import EncounterList from 'components/EncounterList.vue'
 
 const encounterStore = useEncounterStore()

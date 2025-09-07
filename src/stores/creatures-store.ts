@@ -1,17 +1,40 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
 
+export type Creature = {
+  name: string;
+  creature_family: string;
+  rarity: string;
+  size: string;
+  trait: string;
+  level: string; // note: string in JSON
+  hp: string;
+  ac: string;
+  source: string;
+  url: string;
+  alignment: string;
+};
+
+interface Metadata {
+  total: number;
+  traits: string[];
+  rarities: string[];
+  sizes: string[];
+  sources_normalized: string[];
+}
+
 export const useCreaturesStore = defineStore('creatures', {
   state: () => ({
     isLoading: false,
+    error: null as Error | null,
     // creatures hold the creature data
-    creatures: [],
+    creatures: [] as Creature[],
     // metadata holds the creature metadata like sizes, traits etc
-    metadata: [],
+    metadata: {} as Metadata,
   }),
 
   getters: {
     getCreatures: (state) => state.creatures,
-    getCreature: (state) => (index) => state.creatures.at(index),
+    getCreature: (state) => (index: number) => state.creatures.at(index),
     getCreatureCount: (state) => state.creatures.length,
     getTraits: (state) => state.metadata.traits,
     getRarities: (state) => state.metadata.rarities,
@@ -22,7 +45,6 @@ export const useCreaturesStore = defineStore('creatures', {
   actions: {
     async fetchCreatures() {
       this.isLoading = true;
-      this.error = null;
 
       try {
         const response = await fetch('/v2/creatures.json');
@@ -46,8 +68,11 @@ export const useCreaturesStore = defineStore('creatures', {
 
         console.log('Metadata loaded');
       } catch (err) {
-        // Handle errors (e.g., failed fetch, invalid JSON)
-        this.error = err.message;
+        if (err instanceof Error) {
+          this.error = err;
+        } else {
+          this.error = new Error(String(err));
+        }
         console.error('Error fetching creatures:', err);
       } finally {
         this.isLoading = false;
