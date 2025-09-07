@@ -45,9 +45,7 @@ export const useCreaturesStore = defineStore('creatures', {
       this.error = null
 
       try {
-        const response = await fetch('/table-data_stripped.json', {
-          cache: 'no-store',
-        })
+        const response = await fetch('/creatures.json')
 
         // Validate response
         if (!response.ok) {
