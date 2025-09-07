@@ -11,16 +11,16 @@
   </q-page>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import CreaturesTable from 'components/CreaturesTable.vue'
 import ThreatBar from 'components/ThreatBar.vue'
 import { useEncounterStore } from 'stores/encounter-store.ts'
 import EncounterList from 'components/EncounterList.vue'
 
 const encounterStore = useEncounterStore()
-let xpCost = encounterStore.xpCost
-let xpBudget = encounterStore.xpBudget
-let xpPool = encounterStore.xpPool
+const xpCost = encounterStore.xpCost
+const xpBudget = encounterStore.xpBudget
+const xpPool = encounterStore.xpPool
 </script>
 
 <style scoped>
