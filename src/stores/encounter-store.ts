@@ -123,6 +123,11 @@ export const useEncounterStore = defineStore('encounter', () => {
     partySize.value = Math.max(size, 1) // partySize can't be less than 1
   }
 
+  // resetEncounter resets the encounter to its initial state, clearing all creatures
+  function $reset() {
+    encounterCreatures.value = []
+  }
+
   // Return state, getters, and actions
   return {
     partySize,
