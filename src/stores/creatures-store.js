@@ -1,4 +1,4 @@
-import { defineStore, acceptHMRUpdate } from 'pinia'
+import { defineStore, acceptHMRUpdate } from 'pinia';
 
 export const useCreaturesStore = defineStore('creatures', {
   state: () => ({
@@ -21,41 +21,41 @@ export const useCreaturesStore = defineStore('creatures', {
 
   actions: {
     async fetchCreatures() {
-      this.isLoading = true
-      this.error = null
+      this.isLoading = true;
+      this.error = null;
 
       try {
-        const response = await fetch('/creatures.json')
+        const response = await fetch('/v2/creatures.json');
 
         // Validate response
         if (!response.ok) {
-          throw new Error(`Failed to fetch creatures: HTTP ${response.status}`)
+          throw new Error(`Failed to fetch creatures: HTTP ${response.status}`);
         }
 
         // Parse JSON response and set creatures state
-        this.creatures = await response.json()
+        this.creatures = await response.json();
 
-        console.log('Creatures loaded:', this.creatures.length)
+        console.log('Creatures loaded:', this.creatures.length);
 
-        const metadataResp = await fetch('/metadata.json')
+        const metadataResp = await fetch('/v2/metadata.json');
         if (!metadataResp.ok) {
-          throw new Error(`Failed to fetch metadata: HTTP ${metadataResp.status}`)
+          throw new Error(`Failed to fetch metadata: HTTP ${metadataResp.status}`);
         }
 
-        this.metadata = await metadataResp.json()
+        this.metadata = await metadataResp.json();
 
-        console.log('Metadata loaded')
+        console.log('Metadata loaded');
       } catch (err) {
         // Handle errors (e.g., failed fetch, invalid JSON)
-        this.error = err.message
-        console.error('Error fetching creatures:', err)
+        this.error = err.message;
+        console.error('Error fetching creatures:', err);
       } finally {
-        this.isLoading = false
+        this.isLoading = false;
       }
     },
   },
-})
+});
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useCreaturesStore, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useCreaturesStore, import.meta.hot));
 }

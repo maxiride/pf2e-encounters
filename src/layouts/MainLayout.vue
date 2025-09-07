@@ -29,7 +29,7 @@
   </q-layout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import OctocatCorner from 'components/OctocatCorner.vue'
 import LicenseDialog from 'components/LicenseDialog.vue'
 import MainMenu from 'components/MainMenu.vue'

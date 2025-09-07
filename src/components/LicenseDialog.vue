@@ -15,7 +15,7 @@
   </q-dialog>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // import license from '../../public/LICENSE_AON.md'
 
 const visible = defineModel()

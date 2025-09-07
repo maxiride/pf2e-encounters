@@ -27,7 +27,7 @@
 
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCreaturesStore } from 'stores/creatures-store.js'
 
 const creaturesStore = useCreaturesStore()
