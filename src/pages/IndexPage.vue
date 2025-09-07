@@ -1,0 +1,39 @@
+<template>
+  <q-page class="q-pa-md q-gutter-md">
+    <ThreatBar class="col-12" :xp-cost="xpCost" :xp-budget="xpBudget" :xp-pool="xpPool" />
+
+    <div class="row col-12">
+      <CreaturesTable class="col-9" />
+
+      <EncounterList class="col" />
+    </div>
+
+  </q-page>
+</template>
+
+<script setup lang="ts">
+import CreaturesTable from 'components/CreaturesTable.vue'
+import ThreatBar from 'components/ThreatBar.vue'
+import { useEncounterStore } from 'stores/encounter-store'
+import EncounterList from 'components/EncounterList.vue'
+
+const encounterStore = useEncounterStore()
+const xpCost = encounterStore.xpCost
+const xpBudget = encounterStore.xpBudget
+const xpPool = encounterStore.xpPool
+</script>
+
+<style scoped>
+/* Hide number input arrows */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+</style>
