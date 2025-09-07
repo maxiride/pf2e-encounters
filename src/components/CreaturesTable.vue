@@ -104,7 +104,7 @@ const columns = [
   {
     name: 'creature_type',
     label: 'Creature Type',
-    field: 'type',
+    field: (row) => (row.url.toLowerCase().includes('npc') ? 'NPC' : 'Monster'),
     sortable: true,
     align: 'left',
     style: 'width:150px',
