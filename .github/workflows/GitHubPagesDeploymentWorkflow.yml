@@ -1,0 +1,38 @@
+name: Deploy v2 to GitHub Pages subfolder
+
+on:
+  push:
+    branches: [ v2 ]  # change to your v2 branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Install
+        run: yarn install --frozen-lockfile
+
+      - name: Build v2 (Quasar SPA)
+        env:
+          PUBLIC_BASE: /repo/v2/
+          NODE_OPTIONS: --max_old_space_size=4096
+        run: yarn quasar build
+
+      - name: Deploy dist/spa to gh-pages/v2
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: dist/spa
+          target-folder: v2
+          clean: false  # keep v1 files at root

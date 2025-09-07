@@ -6,8 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 
-## [Unreleased]
-- Added Vue-Tour to showcase the application
+## [v0.5.0] - 2025-08-31
+* Fixed NPCs URL
 
 ## [v0.3.0] - 2020-01-12
-First stable release of the website, from now on changes will be documented here.
+* First stable release of the website, from now on changes will be documented here.

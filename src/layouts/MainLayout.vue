@@ -6,7 +6,7 @@
           style="font-family: becker-regular, sans-serif; font-size: x-large; color: #e9c58e"
         >
           <q-avatar data-v-step="0" size="lg" square>
-            <img src="~assets/stabbed-note.png" alt="logo" />
+            <img src="../assets/stabbed-note.png" alt="logo" />
           </q-avatar>
           Pathfinder 2e Encounter builder
         </q-toolbar-title>

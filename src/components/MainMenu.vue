@@ -18,7 +18,7 @@
         <q-item clickable v-close-popup>
           <q-item-section side>
             <q-icon>
-              <img src="~assets/github-mark/github-mark.svg"/>
+              <img class=".q-item__section--side" src="../assets/github-mark/github-mark.svg" />
             </q-icon>
           </q-item-section>
           <q-item-section>Repository</q-item-section>
@@ -35,7 +35,6 @@
   </q-btn>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style scoped></style>

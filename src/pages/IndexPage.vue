@@ -1,12 +1,13 @@
 <template>
   <q-page class="q-pa-md q-gutter-md">
-    <ThreatBar
-      :xp-cost="xpCost"
-      :xp-budget="xpBudget"
-      :xp-pool="xpPool"
-    />
+    <ThreatBar class="col-12" :xp-cost="xpCost" :xp-budget="xpBudget" :xp-pool="xpPool" />
 
-    <CreaturesTable />
+    <div class="row col-12">
+      <CreaturesTable class="col-9" />
+
+      <EncounterList class="col" />
+    </div>
+
   </q-page>
 </template>
 
@@ -14,6 +15,7 @@
 import CreaturesTable from 'components/CreaturesTable.vue'
 import ThreatBar from 'components/ThreatBar.vue'
 import { useEncounterStore } from 'stores/encounter-store.ts'
+import EncounterList from 'components/EncounterList.vue'
 
 const encounterStore = useEncounterStore()
 let xpCost = encounterStore.xpCost

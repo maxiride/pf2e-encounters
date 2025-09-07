@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-// import license from '../../public/LICENSE.md'
+// import license from '../../public/LICENSE_AON.md'
 
 const visible = defineModel()
 
