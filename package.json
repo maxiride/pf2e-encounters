@@ -11,7 +11,10 @@
     "lint": "eslint -c ./eslint.config.js \"./src*/**/*.{ts,js,cjs,mjs,vue}\"",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
+    "generate:data": "pnpm --filter aon-creatures-downloader run generate",
+    "predev": "pnpm run generate:data",
     "dev": "quasar dev",
+    "prebuild": "pnpm run generate:data",
     "build": "quasar build",
     "postinstall": "quasar prepare"
   },
