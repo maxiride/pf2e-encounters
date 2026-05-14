@@ -565,16 +565,22 @@ export default {
 };
 
 export function computeCost(creature, partyLevel) {
+  const level = Number(creature.level);
+
   if (creature.variant === 0) {
-    return computeDelta(Number(creature.level) - Number(partyLevel));
+    return computeDelta(level - Number(partyLevel));
   }
 
   if (creature.variant === 1) {
-    return computeDelta(Number(creature.level) - 1 - Number(partyLevel));
+    // Weak: decrease level by 1; if the creature is level 1, decrease by 2 instead.
+    const weakAdjustment = level === 1 ? 2 : 1;
+    return computeDelta(level - weakAdjustment - Number(partyLevel));
   }
 
   if (creature.variant === 2) {
-    return computeDelta(Number(creature.level) + 1 - Number(partyLevel));
+    // Elite: increase level by 1; if the creature is level -1 or 0, increase by 2 instead.
+    const eliteAdjustment = level === -1 || level === 0 ? 2 : 1;
+    return computeDelta(level + eliteAdjustment - Number(partyLevel));
   }
 }
 
