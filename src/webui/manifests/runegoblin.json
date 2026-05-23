@@ -1,0 +1,25 @@
+{
+  "name": "Runegoblin",
+  "createdAt": "2026-05-18T18:38:42.743Z",
+  "updatedAt": "2026-05-19T22:01:50.074Z",
+  "theme": "my-theme",
+  "componentConfigs": {
+    "badge": "rg-badge",
+    "button": "rg-button",
+    "callout": "my-callout",
+    "card": "rg-card",
+    "collapsiblesection": "rg-collapsiblesection",
+    "cornerbadge": "default",
+    "dialog": "rg-dialog",
+    "image": "default",
+    "inlineeditactions": "rg-inlineeditactions",
+    "notification": "rg-notification",
+    "progressbar": "rg-progressbar",
+    "radiobutton": "rg-radiobutton",
+    "sectiondivider": "my-section-divider",
+    "segmentedcontrol": "rg-segmentedcontrol",
+    "tabbar": "rg-tabbar",
+    "table": "default",
+    "tooltip": "rg-tooltip"
+  }
+}

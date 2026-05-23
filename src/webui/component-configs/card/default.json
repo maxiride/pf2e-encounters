@@ -1,0 +1,30 @@
+{
+  "name": "default",
+  "component": "card",
+  "createdAt": "2026-05-10T19:26:31.704Z",
+  "updatedAt": "2026-05-18T15:58:43.830Z",
+  "aliases": {
+    "--card-default-surface": "--surface-neutral-high",
+    "--card-default-border": "--border-neutral",
+    "--card-default-border-width": "--border-width-1",
+    "--card-default-radius": "--radius-lg",
+    "--card-default-header-padding": "--space-16",
+    "--card-default-body-padding": "--space-16",
+    "--card-default-shadow": "--shadow-sm",
+    "--card-default-blur": "--blur-none",
+    "--card-default-header-surface": "--color-transparent",
+    "--card-default-title": "--text-primary",
+    "--card-default-title-font-family": "--font-sans",
+    "--card-default-title-font-size": "--font-size-lg",
+    "--card-default-title-font-weight": "--font-weight-normal",
+    "--card-default-title-line-height": "--line-height-sm",
+    "--card-default-icon-size": "--icon-size-lg",
+    "--card-default-body": "--text-secondary",
+    "--card-default-body-font-family": "--font-sans",
+    "--card-default-body-font-size": "--font-size-md",
+    "--card-default-body-font-weight": "--font-weight-normal",
+    "--card-default-body-line-height": "--line-height-md",
+    "--card-hover-border": "--border-neutral-strong",
+    "--card-hover-shadow": "--shadow-md"
+  }
+}

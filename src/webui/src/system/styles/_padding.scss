@@ -1,0 +1,34 @@
+// Themed padding helper.
+//
+// Components that expose a single `--<X>-padding` token but want to support
+// the editor's split-into-sides mode must read four per-side overrides
+// (`--<X>-padding-top|right|bottom|left`) and fall back to the parent token
+// when no override is set. Spelling out that four-line var(...) pattern at
+// every call site is noisy and easy to forget — this mixin emits it once.
+//
+// Optional `$h` / `$v` multipliers preserve the historical "horizontal is
+// N× vertical" formula some components encode in their unsplit form
+// (buttons use 2, notifications use 1.33). Pass `$v: 0` for components like
+// TabBar's bar that hardcode zero vertical padding when unsplit.
+//
+// Usage:
+//   @include themed-padding(--button-primary-padding, $h: 2);
+//   @include themed-padding(--segmentedcontrol-bar-padding);
+//   @include themed-padding(--tabbar-bar-padding, $v: 0);
+
+@function _padding-side($base, $factor) {
+  @if $factor == 1 {
+    @return var(#{$base});
+  }
+  @return calc(var(#{$base}) * #{$factor});
+}
+
+@mixin themed-padding($base, $h: 1, $v: 1) {
+  $h-val: _padding-side($base, $h);
+  $v-val: _padding-side($base, $v);
+  padding:
+    var(#{$base}-top, #{$v-val})
+    var(#{$base}-right, #{$h-val})
+    var(#{$base}-bottom, #{$v-val})
+    var(#{$base}-left, #{$h-val});
+}

@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Pop-bar · linked / unlinked</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-page: #0c0b0f;
+    --bg-panel: #131218;
+    --bg-control: #1c1a22;
+    --bg-control-2: #211e28;
+
+    --line-faint: #26232d;
+    --line-idle: #34303d;
+    --line-strong: #4a4555;
+    --line-focus: #f3f1f7;
+
+    --fg: #ebe8f1;
+    --fg-mute: #8a8497;
+    --fg-dim: #5e5868;
+    --fg-token: #c5bfd2;
+
+    --linked: #6cd0c2;
+    --unlinked: #f0c34a;     /* clean yellow-amber */
+    --unlinked-glow: #f0c34a40;
+
+    --row-h: 30px;
+    --bar-w: 3px;
+    --bar-h: 22px;
+    --gap: 8px;             /* distance the bar pops out */
+    --pop: cubic-bezier(.5, 1.6, .5, 1);  /* slight overshoot */
+    --pop-soft: cubic-bezier(.4, .0, .2, 1);
+
+    --shadow-control: 0 1px 0 rgba(255,255,255,.02), 0 1px 2px rgba(0,0,0,.4);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg-page);
+    color: var(--fg);
+    font-family: 'Geist', system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    font-size: 13px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(1200px 600px at 80% -10%, #1a1622 0%, transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, #14111c 0%, transparent 55%);
+    min-height: 100vh;
+  }
+
+  .doc { max-width: 1000px; margin: 0 auto; padding: 64px 40px 120px; }
+
+  header.doc-head { margin-bottom: 48px; }
+  .eyebrow {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--fg-dim); margin: 0 0 14px;
+  }
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400; font-size: 40px; line-height: 1.05;
+    margin: 0 0 16px; letter-spacing: -0.01em;
+  }
+  h1 em { font-style: italic; color: var(--unlinked); }
+  .lede { color: var(--fg-mute); margin: 0; max-width: 60ch; }
+
+  /* ─── panel ─────────────────────────────────── */
+  .panel {
+    border: 1px solid var(--line-faint);
+    background: var(--bg-panel);
+    border-radius: 10px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .panel-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 16px 22px 14px;
+    border-bottom: 1px dashed var(--line-faint);
+  }
+  .panel-head h3 {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic; font-weight: 400; font-size: 22px;
+    margin: 0;
+  }
+  .panel-head .meta {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10.5px; color: var(--fg-dim);
+    letter-spacing: .14em; text-transform: uppercase;
+  }
+  .panel-body { padding: 18px 22px 22px; }
+
+  /* ─── row ───────────────────────────────────── */
+  .row {
+    display: grid;
+    grid-template-columns: 110px 1fr 130px;
+    align-items: center;
+    column-gap: 12px;
+    padding: 4px 0;
+  }
+  .row .label { color: var(--fg-mute); font-size: 12px; cursor: pointer; user-select: none; }
+  .row .token {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--fg-token);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  /* token slug renders identically in both states — the value is still selected,
+     it's only the linkage to the sibling group that changed */
+
+  /* ─── control + bar ─────────────────────────── */
+  .ctl-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    /* leave room on the left so the bar has somewhere to pop out to */
+    padding-left: calc(var(--gap) + var(--bar-w) + 4px);
+  }
+
+  .bar {
+    position: absolute;
+    top: 50%;
+    width: var(--bar-w);
+    height: var(--bar-h);
+    border-radius: 2px;
+    background: var(--linked);
+    transform: translate(0, -50%);
+    transition:
+      transform .32s var(--pop),
+      background-color .22s var(--pop-soft),
+      box-shadow .22s var(--pop-soft),
+      height .22s var(--pop-soft);
+    /* attached position: flush with the control's left edge */
+    left: calc(var(--gap) + 4px);
+    pointer-events: none;
+  }
+
+  /* unlinked: bar pops off to the left, color shifts to yellow */
+  .row.unlinked .bar {
+    transform: translate(calc(-1 * (var(--gap) + var(--bar-w))), -50%);
+    background: var(--unlinked);
+    box-shadow: 0 0 0 4px var(--unlinked-glow);
+  }
+
+  /* control */
+  .ctl {
+    flex: 1;
+    position: relative;
+    height: var(--row-h);
+    border-radius: 6px;
+    background: var(--bg-control);
+    border: 1px solid var(--line-idle);
+    box-shadow: var(--shadow-control);
+    display: flex; align-items: center;
+    transition: border-color .22s var(--pop-soft);
+  }
+
+  /* ── dropdown shape ── */
+  .ctl.dropdown {
+    padding: 0 30px 0 12px;
+    color: var(--fg);
+    font-size: 12.5px;
+  }
+  .ctl.dropdown::after {
+    content: "";
+    position: absolute;
+    right: 11px; top: 50%;
+    width: 7px; height: 7px;
+    border-right: 1.4px solid var(--fg-mute);
+    border-bottom: 1.4px solid var(--fg-mute);
+    transform: translateY(-70%) rotate(45deg);
+  }
+
+  /* ── swatch shape ── */
+  .ctl.swatch { padding: 0; overflow: hidden; }
+  .ctl.swatch .fill {
+    flex: 1; height: 100%;
+    background: #4a1538;
+  }
+  .ctl.swatch .caret-cell {
+    position: relative;
+    width: 22px; height: 100%;
+    background: var(--bg-control-2);
+    border-left: 1px solid var(--line-idle);
+  }
+  .ctl.swatch .caret-cell::after {
+    content: "";
+    position: absolute;
+    right: 7px; top: 50%;
+    width: 7px; height: 7px;
+    border-right: 1.4px solid var(--fg-mute);
+    border-bottom: 1.4px solid var(--fg-mute);
+    transform: translateY(-70%) rotate(45deg);
+  }
+
+  /* unlinked: control returns to its idle outline (already idle) */
+  /* linked: nothing extra — the bar IS the only chrome change */
+
+  /* ─── controls strip ────────────────────────── */
+  .strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 22px;
+    border-top: 1px dashed var(--line-faint);
+    background: rgba(255,255,255,.012);
+  }
+  .strip button {
+    appearance: none;
+    background: var(--bg-control);
+    color: var(--fg);
+    border: 1px solid var(--line-idle);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font: 500 11.5px 'Geist Mono', ui-monospace, monospace;
+    letter-spacing: .04em;
+    cursor: pointer;
+    transition: border-color .15s, background .15s, color .15s;
+  }
+  .strip button:hover { border-color: var(--line-strong); }
+  .strip button.primary {
+    background: var(--unlinked);
+    color: #1a1404;
+    border-color: var(--unlinked);
+  }
+  .strip button.primary:hover { filter: brightness(1.08); }
+  .strip .hint {
+    color: var(--fg-dim);
+    font-size: 11.5px;
+    margin-left: auto;
+  }
+
+  /* ─── two-up callout ────────────────────────── */
+  .twoup {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 24px 0 8px;
+  }
+  @media (max-width: 720px) { .twoup { grid-template-columns: 1fr; } }
+  .twoup .cell {
+    border: 1px solid var(--line-faint);
+    border-radius: 10px;
+    padding: 18px 20px 22px;
+    background: var(--bg-panel);
+  }
+  .twoup .cell h4 {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--fg-dim); margin: 0 0 14px; font-weight: 500;
+  }
+  .twoup .cell h4 .swatch-pip {
+    display: inline-block; width: 8px; height: 8px;
+    border-radius: 2px; margin-right: 7px; vertical-align: 1px;
+  }
+
+  /* ─── footer reco ───────────────────────────── */
+  .reco {
+    margin-top: 40px; padding: 24px 28px;
+    border: 1px solid var(--line-faint);
+    border-radius: 12px;
+    background:
+      radial-gradient(500px 200px at 90% -50%, var(--unlinked-glow), transparent 60%),
+      var(--bg-panel);
+  }
+  .reco h2 {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic; font-weight: 400; font-size: 22px;
+    margin: 0 0 8px;
+  }
+  .reco p { color: var(--fg-mute); margin: 0 0 10px; max-width: 70ch; }
+  .reco code {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11.5px; color: var(--fg-token);
+    background: rgba(255,255,255,.04); padding: 1px 6px; border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+<header class="doc-head">
+  <p class="eyebrow">Token editor · pop-bar</p>
+  <h1>The border <em>pops off</em>.<br/>Then the control is just a control.</h1>
+  <p class="lede">
+    Linked: a slim teal rail sits flush against the left edge of the control, reading as the link itself.
+    Unlinked: the rail pops off — slides one gap-width to the left and shifts to yellow — leaving the
+    control with its idle outline. Click any row to flip its state, or the auto-demo button to see the
+    bloop, bloop, bloop pattern.
+  </p>
+</header>
+
+<!-- ─── side-by-side reference ─────────────────── -->
+<div class="twoup">
+  <div class="cell">
+    <h4><i class="swatch-pip" style="background:var(--linked)"></i>Linked · attached</h4>
+    <div class="row linked" data-state="linked">
+      <span class="label">corner radius</span>
+      <div class="ctl-wrap">
+        <span class="bar"></span>
+        <div class="ctl dropdown">md</div>
+      </div>
+      <span class="token">radius-md</span>
+    </div>
+    <div class="row linked" data-state="linked">
+      <span class="label">surface color</span>
+      <div class="ctl-wrap">
+        <span class="bar"></span>
+        <div class="ctl swatch"><div class="fill"></div><div class="caret-cell"></div></div>
+      </div>
+      <span class="token">surface-primary</span>
+    </div>
+  </div>
+
+  <div class="cell">
+    <h4><i class="swatch-pip" style="background:var(--unlinked)"></i>Unlinked · detached</h4>
+    <div class="row unlinked" data-state="unlinked">
+      <span class="label">corner radius</span>
+      <div class="ctl-wrap">
+        <span class="bar"></span>
+        <div class="ctl dropdown">None</div>
+      </div>
+      <span class="token">radius-md</span>
+    </div>
+    <div class="row unlinked" data-state="unlinked">
+      <span class="label">surface color</span>
+      <div class="ctl-wrap">
+        <span class="bar"></span>
+        <div class="ctl swatch"><div class="fill"></div><div class="caret-cell"></div></div>
+      </div>
+      <span class="token">surface-primary</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── interactive panel ──────────────────────── -->
+<section class="panel">
+  <div class="panel-head">
+    <h3>Mixed panel — click any row to toggle</h3>
+    <span class="meta">Block · Card.surface</span>
+  </div>
+  <div class="panel-body" id="mix">
+    <div class="row linked"><span class="label">corner radius</span><div class="ctl-wrap"><span class="bar"></span><div class="ctl dropdown">md</div></div><span class="token">radius-md</span></div>
+    <div class="row unlinked"><span class="label">surface color</span><div class="ctl-wrap"><span class="bar"></span><div class="ctl swatch"><div class="fill"></div><div class="caret-cell"></div></div></div><span class="token">surface-primary</span></div>
+    <div class="row linked"><span class="label">padding</span><div class="ctl-wrap"><span class="bar"></span><div class="ctl dropdown">space-3</div></div><span class="token">space-3</span></div>
+    <div class="row linked"><span class="label">elevation</span><div class="ctl-wrap"><span class="bar"></span><div class="ctl dropdown">low</div></div><span class="token">elev-1</span></div>
+    <div class="row unlinked"><span class="label">border width</span><div class="ctl-wrap"><span class="bar"></span><div class="ctl dropdown">1px</div></div><span class="token">border-thin</span></div>
+    <div class="row linked"><span class="label">border color</span><div class="ctl-wrap"><span class="bar"></span><div class="ctl swatch"><div class="fill" style="background:#3a3340"></div><div class="caret-cell"></div></div></div><span class="token">border-subtle</span></div>
+    <div class="row linked"><span class="label">gap</span><div class="ctl-wrap"><span class="bar"></span><div class="ctl dropdown">space-2</div></div><span class="token">space-2</span></div>
+  </div>
+  <div class="strip">
+    <button class="primary" id="cascade">Bloop bloop ↺</button>
+    <button id="all-link">Link all</button>
+    <button id="all-unlink">Unlink all</button>
+    <span class="hint">click any row label or control to toggle just that row</span>
+  </div>
+</section>
+
+<!-- ─── notes ──────────────────────────────────── -->
+<section class="reco">
+  <h2>How the geometry works.</h2>
+  <p>
+    The bar lives in a <code>position: absolute</code> slot inside a wrapper that has
+    <code>padding-left</code> equal to <code>gap + bar-width</code>. In its <em>linked</em> rest
+    position the bar sits at <code>left: 0 + gap</code> — flush with the control's left edge.
+    In its <em>unlinked</em> position it translates by <code>-(gap + bar-width)</code>,
+    which lands it exactly one gap-width to the left of the control. The control itself doesn't
+    move; only the bar slides. That's what gives the "pops off" feel.
+  </p>
+  <p>
+    The transition uses a slight overshoot easing (<code>cubic-bezier(.5, 1.6, .5, 1)</code>) so the
+    bar lands with a tiny bounce — the literal "bloop." Color crossfade from teal to yellow is on a
+    softer curve so it doesn't read as flicker.
+  </p>
+</section>
+
+</div>
+
+<script>
+  // toggle a row's state
+  const flip = (row) => {
+    if (row.classList.contains('linked'))   { row.classList.replace('linked', 'unlinked'); return; }
+    if (row.classList.contains('unlinked')) { row.classList.replace('unlinked', 'linked'); return; }
+    row.classList.add('unlinked');
+  };
+
+  // click any row (label or control) to toggle
+  document.querySelectorAll('.row').forEach(row => {
+    row.addEventListener('click', () => flip(row));
+  });
+
+  // bloop-bloop: cascade-flip every row in the mixed panel, staggered
+  const mix = document.getElementById('mix');
+  document.getElementById('cascade').addEventListener('click', () => {
+    const rows = [...mix.querySelectorAll('.row')];
+    rows.forEach((row, i) => setTimeout(() => flip(row), i * 90));
+  });
+
+  document.getElementById('all-link').addEventListener('click', () => {
+    mix.querySelectorAll('.row').forEach(r => { r.classList.remove('unlinked'); r.classList.add('linked'); });
+  });
+  document.getElementById('all-unlink').addEventListener('click', () => {
+    mix.querySelectorAll('.row').forEach(r => { r.classList.remove('linked'); r.classList.add('unlinked'); });
+  });
+</script>
+</body>
+</html>

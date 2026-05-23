@@ -1,0 +1,36 @@
+name: Verify
+
+# Catches the failure modes that have bitten us right before a publish:
+# lockfile drift (npm ci rejects), type errors, broken plugin build, and
+# packaging regressions. If this is green on main, `publish.yml` will be too.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install (strict — mirrors publish.yml)
+        run: npm ci
+
+      - name: Type-check
+        run: npm run check
+
+      - name: Test
+        run: npm test --if-present
+
+      - name: Build library
+        run: npm run build:lib
+
+      - name: Verify package contents
+        run: npm pack --dry-run

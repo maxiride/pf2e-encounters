@@ -1,0 +1,275 @@
+/*
+ * Decoupled from the design system: pills, knots, strings, balls, and
+ * animations are hardcoded so token edits don't repaint our chrome. The
+ * two exceptions are intentional and ARE the demo: the central box's
+ * surface/radius/border (set inline) and the dropdown (rendered through
+ * <MenuSelect>). File is global; keep selectors `ftt-` prefixed.
+ */
+
+.ftt-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* No overflow clipping: the bottom tag's dropdown must extend past the
+     stage edge. */
+}
+
+/* --- Central box ---------------------------------------------------------- */
+.ftt-box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  box-sizing: border-box;
+  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  width: 12rem;
+  align-items: center;
+  justify-content: center;
+  /* Defaults; overridden inline from the active token bindings. */
+  background: color-mix(in srgb, #264542 50%, transparent);
+  border-style: solid;
+  border-color: #52726e;
+  border-width: 2px;
+  border-radius: 0.25rem;
+  box-shadow: 3px 3px 6px 0px hsla(237, 18%, 3%, 0.9);
+  transition:
+    background    300ms ease,
+    border-color  300ms ease,
+    border-width  300ms ease,
+    border-radius 300ms ease;
+  z-index: 1;
+}
+
+.ftt-box-label {
+  font-family: Manrope, system-ui, -apple-system, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.ftt-box.ftt-bloop {
+  animation: ftt-bloop 480ms ease-out;
+}
+
+@keyframes ftt-bloop {
+  0%   { scale: 1;    filter: brightness(1); }
+  30%  { scale: 1.08; filter: brightness(1.8) saturate(1.4); }
+  100% { scale: 1;    filter: brightness(1); }
+}
+
+/* --- Kite strings --------------------------------------------------------- */
+.ftt-strings {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ftt-string {
+  stroke: #d4ccc6;
+  stroke-width: 2;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.5;
+  transition: opacity 150ms ease, stroke 150ms ease;
+}
+
+.ftt-string.ftt-live {
+  stroke: #ff8eeb;
+  opacity: 1;
+}
+
+/* --- Anchor knots --------------------------------------------------------- */
+.ftt-knot {
+  position: absolute;
+  width: 0.625rem;
+  height: 0.625rem;
+  translate: -50% -50%;
+  border-radius: 9999px;
+  background: #c4bcb6;
+  border: 1px solid #f0eae4;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* --- Energy ball ---------------------------------------------------------- */
+/* Colour must match `.ftt-string.ftt-live` so the beam reads as a continuous
+   trail, not a colour-shifting projectile. */
+.ftt-energy-ball {
+  position: absolute;
+  width: 0.875rem;
+  height: 0.875rem;
+  translate: -50% -50%;
+  border-radius: 9999px;
+  background: #ff8eeb;
+  box-shadow:
+    0 0 8px  2px #ff8eeb,
+    0 0 18px 4px #ff8eeb;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 6;
+}
+
+/* --- Floating tag wrapper ------------------------------------------------- */
+.ftt-float {
+  position: absolute;
+  translate: -50% -50%;
+  rotate: var(--ftt-rot, 0deg);
+  animation: ftt-bob var(--ftt-bob-duration, 7s) ease-in-out infinite;
+  z-index: 4;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  width: 14rem;
+}
+
+/* Lift open tag so its dropdown paints over sibling tags. */
+.ftt-float.ftt-open {
+  z-index: 20;
+}
+
+/* Bottom-placement chips mirror the top arc: chip first, eyebrow on the
+   outer (lower) side. Dropdown opens upward toward the box so the menu
+   doesn't fall off the stage. */
+.ftt-float[data-placement="bottom"] {
+  flex-direction: column-reverse;
+}
+
+/* Pivot the tilt around the chip's right semicircular cap. The chip is
+   ~1.84rem tall so the cap center sits ~0.9rem from the chip's right edge
+   and ~0.9rem above its bottom — which (since the chip is the widest, last
+   in-flow element of the wrapper) coincides with `calc(100% - 0.9rem)` on
+   both axes of the wrapper. */
+.ftt-float[data-pivot="right-cap"] {
+  transform-origin: calc(100% - 0.9rem) calc(100% - 0.9rem);
+}
+
+@keyframes ftt-bob {
+  0%, 100% { translate: -50% -50%; }
+  50%      { translate: -50% calc(-50% + var(--ftt-bob-distance, -8px)); }
+}
+
+/* --- Property label paired with each tag ---------------------------------- */
+/* Sits on the outer side of the chip: above for top-placement chips, below
+   for bottom-placement chips (see `.ftt-float[data-placement="bottom"]`). */
+.ftt-float-property {
+  font-family: Manrope, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #ff8eeb;
+  white-space: nowrap;
+}
+
+/* --- Tag pill ------------------------------------------------------------- */
+/* Hardcoded (not the Badge component) so badge-* token edits don't repaint. */
+.ftt-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  background: linear-gradient(
+    135deg,
+    #cccdcd 0%,
+    #7c7d7d 38%,
+    #b1b2b2 62%,
+    #626363 100%
+  );
+  color: rgba(0, 0, 0, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 9999px;
+  font-family: Manrope, system-ui, -apple-system, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.ftt-tag-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.875em;
+}
+
+.ftt-tag-label {
+  display: inline-block;
+}
+
+/* --- Tag trigger (draggable button wrapping the pill) --------------------- */
+.ftt-tag-trigger {
+  pointer-events: auto;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: grab;
+  touch-action: none;
+  transition: filter 150ms ease, scale 150ms ease;
+}
+.ftt-tag-trigger:hover {
+  filter: brightness(1.2);
+  scale: 1.04;
+}
+.ftt-float.ftt-dragging .ftt-tag-trigger {
+  cursor: grabbing;
+}
+.ftt-float.ftt-dragging {
+  animation: none; /* pause bob while dragging */
+  z-index: 30;
+}
+.ftt-tag-trigger:focus-visible {
+  outline: 2px solid #f31fdb;
+  outline-offset: 3px;
+  border-radius: 9999px;
+}
+
+.ftt-float.ftt-flash .ftt-tag-trigger {
+  animation: ftt-tag-flash 500ms ease-out;
+}
+
+@keyframes ftt-tag-flash {
+  0%   { scale: 1;    filter: brightness(1)   drop-shadow(0 0 0  transparent); }
+  25%  { scale: 1.14; filter: brightness(1.8) drop-shadow(0 0 14px #fff5f0); }
+  100% { scale: 1;    filter: brightness(1)   drop-shadow(0 0 0  transparent); }
+}
+
+/* --- Chip host ------------------------------------------------------------ */
+/* Wraps the chip-trigger and (when open) the dropdown so the dropdown can
+   anchor directly to the chip's edges, not the float wrapper's. Without
+   this, `top: 100%` lands at the wrapper bottom — which is the eyebrow for
+   `data-placement="bottom"` — and the menu drifts off the chip. */
+.ftt-chip-host {
+  position: relative;
+  display: inline-flex;
+}
+
+/* --- Dropdown menu -------------------------------------------------------- */
+/* The wrap handles position/stacking only; the surface lives on
+   <MenuSelect> so menuselect-* token edits reshape the in-flight UI. */
+.ftt-dropdown-wrap {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  left: 50%;
+  translate: -50% 0;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+/* --- Reduced motion ------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .ftt-float {
+    animation: none;
+  }
+  .ftt-box.ftt-bloop,
+  .ftt-float.ftt-flash .ftt-tag-trigger {
+    animation: none;
+  }
+}

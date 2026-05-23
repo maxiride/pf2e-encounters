@@ -1,0 +1,1733 @@
+{
+  "badge": {
+    "blur": [
+      "--badge-accent-blur",
+      "--badge-alternate-blur",
+      "--badge-canvas-blur",
+      "--badge-danger-blur",
+      "--badge-info-blur",
+      "--badge-neutral-blur",
+      "--badge-primary-blur",
+      "--badge-special-blur",
+      "--badge-success-blur",
+      "--badge-warning-blur"
+    ],
+    "border": [
+      "--badge-accent-border",
+      "--badge-alternate-border",
+      "--badge-canvas-border",
+      "--badge-danger-border",
+      "--badge-info-border",
+      "--badge-neutral-border",
+      "--badge-primary-border",
+      "--badge-special-border",
+      "--badge-success-border",
+      "--badge-warning-border"
+    ],
+    "border-width": [
+      "--badge-accent-border-width",
+      "--badge-alternate-border-width",
+      "--badge-canvas-border-width",
+      "--badge-danger-border-width",
+      "--badge-info-border-width",
+      "--badge-neutral-border-width",
+      "--badge-primary-border-width",
+      "--badge-special-border-width",
+      "--badge-success-border-width",
+      "--badge-warning-border-width"
+    ],
+    "font-family": [
+      "--badge-accent-text-font-family",
+      "--badge-alternate-text-font-family",
+      "--badge-canvas-text-font-family",
+      "--badge-danger-text-font-family",
+      "--badge-info-text-font-family",
+      "--badge-neutral-text-font-family",
+      "--badge-primary-text-font-family",
+      "--badge-special-text-font-family",
+      "--badge-success-text-font-family",
+      "--badge-warning-text-font-family"
+    ],
+    "font-size": [
+      "--badge-accent-text-font-size",
+      "--badge-alternate-text-font-size",
+      "--badge-canvas-text-font-size",
+      "--badge-danger-text-font-size",
+      "--badge-info-text-font-size",
+      "--badge-neutral-text-font-size",
+      "--badge-primary-text-font-size",
+      "--badge-special-text-font-size",
+      "--badge-success-text-font-size",
+      "--badge-warning-text-font-size"
+    ],
+    "font-weight": [
+      "--badge-accent-text-font-weight",
+      "--badge-alternate-text-font-weight",
+      "--badge-canvas-text-font-weight",
+      "--badge-danger-text-font-weight",
+      "--badge-info-text-font-weight",
+      "--badge-neutral-text-font-weight",
+      "--badge-primary-text-font-weight",
+      "--badge-special-text-font-weight",
+      "--badge-success-text-font-weight",
+      "--badge-warning-text-font-weight"
+    ],
+    "icon-size": [
+      "--badge-accent-icon-size",
+      "--badge-alternate-icon-size",
+      "--badge-canvas-icon-size",
+      "--badge-danger-icon-size",
+      "--badge-info-icon-size",
+      "--badge-neutral-icon-size",
+      "--badge-primary-icon-size",
+      "--badge-special-icon-size",
+      "--badge-success-icon-size",
+      "--badge-warning-icon-size"
+    ],
+    "line-height": [
+      "--badge-accent-text-line-height",
+      "--badge-alternate-text-line-height",
+      "--badge-canvas-text-line-height",
+      "--badge-danger-text-line-height",
+      "--badge-info-text-line-height",
+      "--badge-neutral-text-line-height",
+      "--badge-primary-text-line-height",
+      "--badge-special-text-line-height",
+      "--badge-success-text-line-height",
+      "--badge-warning-text-line-height"
+    ],
+    "padding": [
+      "--badge-accent-padding",
+      "--badge-alternate-padding",
+      "--badge-canvas-padding",
+      "--badge-danger-padding",
+      "--badge-info-padding",
+      "--badge-neutral-padding",
+      "--badge-primary-padding",
+      "--badge-special-padding",
+      "--badge-success-padding",
+      "--badge-warning-padding"
+    ],
+    "radius": [
+      "--badge-accent-radius",
+      "--badge-alternate-radius",
+      "--badge-canvas-radius",
+      "--badge-danger-radius",
+      "--badge-info-radius",
+      "--badge-neutral-radius",
+      "--badge-primary-radius",
+      "--badge-special-radius",
+      "--badge-success-radius",
+      "--badge-warning-radius"
+    ],
+    "shadow": [
+      "--badge-accent-shadow",
+      "--badge-alternate-shadow",
+      "--badge-canvas-shadow",
+      "--badge-danger-shadow",
+      "--badge-info-shadow",
+      "--badge-neutral-shadow",
+      "--badge-primary-shadow",
+      "--badge-special-shadow",
+      "--badge-success-shadow",
+      "--badge-warning-shadow"
+    ],
+    "surface": [
+      "--badge-accent-surface",
+      "--badge-alternate-surface",
+      "--badge-canvas-surface",
+      "--badge-danger-surface",
+      "--badge-info-surface",
+      "--badge-neutral-surface",
+      "--badge-primary-surface",
+      "--badge-special-surface",
+      "--badge-success-surface",
+      "--badge-warning-surface"
+    ],
+    "text": [
+      "--badge-accent-text",
+      "--badge-alternate-text",
+      "--badge-canvas-text",
+      "--badge-danger-text",
+      "--badge-info-text",
+      "--badge-neutral-text",
+      "--badge-primary-text",
+      "--badge-special-text",
+      "--badge-success-text",
+      "--badge-warning-text"
+    ]
+  },
+  "button": {
+    "border": [
+      "--button-danger-border",
+      "--button-danger-disabled-border",
+      "--button-danger-hover-border",
+      "--button-outline-border",
+      "--button-outline-disabled-border",
+      "--button-outline-hover-border",
+      "--button-primary-border",
+      "--button-primary-disabled-border",
+      "--button-primary-hover-border",
+      "--button-secondary-border",
+      "--button-secondary-disabled-border",
+      "--button-secondary-hover-border",
+      "--button-success-border",
+      "--button-success-disabled-border",
+      "--button-success-hover-border",
+      "--button-warning-border",
+      "--button-warning-disabled-border",
+      "--button-warning-hover-border"
+    ],
+    "border-width": [
+      "--button-danger-border-width",
+      "--button-danger-disabled-border-width",
+      "--button-danger-hover-border-width",
+      "--button-outline-border-width",
+      "--button-outline-disabled-border-width",
+      "--button-outline-hover-border-width",
+      "--button-primary-border-width",
+      "--button-primary-disabled-border-width",
+      "--button-primary-hover-border-width",
+      "--button-secondary-border-width",
+      "--button-secondary-disabled-border-width",
+      "--button-secondary-hover-border-width",
+      "--button-success-border-width",
+      "--button-success-disabled-border-width",
+      "--button-success-hover-border-width",
+      "--button-warning-border-width",
+      "--button-warning-disabled-border-width",
+      "--button-warning-hover-border-width"
+    ],
+    "font-family": [
+      "--button-danger-text-font-family",
+      "--button-outline-text-font-family",
+      "--button-primary-text-font-family",
+      "--button-secondary-text-font-family",
+      "--button-success-text-font-family",
+      "--button-warning-text-font-family"
+    ],
+    "font-size": [
+      "--button-danger-text-font-size",
+      "--button-outline-text-font-size",
+      "--button-primary-text-font-size",
+      "--button-secondary-text-font-size",
+      "--button-success-text-font-size",
+      "--button-warning-text-font-size"
+    ],
+    "font-weight": [
+      "--button-danger-text-font-weight",
+      "--button-outline-text-font-weight",
+      "--button-primary-text-font-weight",
+      "--button-secondary-text-font-weight",
+      "--button-success-text-font-weight",
+      "--button-warning-text-font-weight"
+    ],
+    "icon-size": [
+      "--button-danger-icon-size",
+      "--button-outline-icon-size",
+      "--button-primary-icon-size",
+      "--button-secondary-icon-size",
+      "--button-success-icon-size",
+      "--button-warning-icon-size"
+    ],
+    "line-height": [
+      "--button-danger-text-line-height",
+      "--button-outline-text-line-height",
+      "--button-primary-text-line-height",
+      "--button-secondary-text-line-height",
+      "--button-success-text-line-height",
+      "--button-warning-text-line-height"
+    ],
+    "padding": [
+      "--button-danger-disabled-padding",
+      "--button-danger-hover-padding",
+      "--button-danger-padding",
+      "--button-outline-disabled-padding",
+      "--button-outline-hover-padding",
+      "--button-outline-padding",
+      "--button-primary-disabled-padding",
+      "--button-primary-hover-padding",
+      "--button-primary-padding",
+      "--button-secondary-disabled-padding",
+      "--button-secondary-hover-padding",
+      "--button-secondary-padding",
+      "--button-success-disabled-padding",
+      "--button-success-hover-padding",
+      "--button-success-padding",
+      "--button-warning-disabled-padding",
+      "--button-warning-hover-padding",
+      "--button-warning-padding"
+    ],
+    "radius": [
+      "--button-danger-disabled-radius",
+      "--button-danger-hover-radius",
+      "--button-danger-radius",
+      "--button-outline-disabled-radius",
+      "--button-outline-hover-radius",
+      "--button-outline-radius",
+      "--button-primary-disabled-radius",
+      "--button-primary-hover-radius",
+      "--button-primary-radius",
+      "--button-secondary-disabled-radius",
+      "--button-secondary-hover-radius",
+      "--button-secondary-radius",
+      "--button-success-disabled-radius",
+      "--button-success-hover-radius",
+      "--button-success-radius",
+      "--button-warning-disabled-radius",
+      "--button-warning-hover-radius",
+      "--button-warning-radius"
+    ],
+    "surface": [
+      "--button-danger-disabled-surface",
+      "--button-danger-hover-surface",
+      "--button-danger-surface",
+      "--button-outline-active-surface",
+      "--button-outline-disabled-surface",
+      "--button-outline-hover-surface",
+      "--button-outline-surface",
+      "--button-primary-disabled-surface",
+      "--button-primary-hover-surface",
+      "--button-primary-surface",
+      "--button-secondary-disabled-surface",
+      "--button-secondary-hover-surface",
+      "--button-secondary-surface",
+      "--button-success-disabled-surface",
+      "--button-success-hover-surface",
+      "--button-success-surface",
+      "--button-warning-disabled-surface",
+      "--button-warning-hover-surface",
+      "--button-warning-surface"
+    ],
+    "text": [
+      "--button-danger-disabled-text",
+      "--button-danger-hover-text",
+      "--button-danger-text",
+      "--button-outline-disabled-text",
+      "--button-outline-hover-text",
+      "--button-outline-text",
+      "--button-primary-disabled-text",
+      "--button-primary-hover-text",
+      "--button-primary-text",
+      "--button-secondary-disabled-text",
+      "--button-secondary-hover-text",
+      "--button-secondary-text",
+      "--button-success-disabled-text",
+      "--button-success-hover-text",
+      "--button-success-text",
+      "--button-warning-disabled-text",
+      "--button-warning-hover-text",
+      "--button-warning-text"
+    ]
+  },
+  "callout": {
+    "accent-width": [
+      "--callout-danger-accent-width",
+      "--callout-info-accent-width",
+      "--callout-success-accent-width",
+      "--callout-warning-accent-width"
+    ],
+    "border": [
+      "--callout-danger-border",
+      "--callout-info-border",
+      "--callout-success-border",
+      "--callout-warning-border"
+    ],
+    "border-width": [
+      "--callout-danger-border-width",
+      "--callout-info-border-width",
+      "--callout-success-border-width",
+      "--callout-warning-border-width"
+    ],
+    "label": [
+      "--callout-danger-label",
+      "--callout-info-label",
+      "--callout-success-label",
+      "--callout-warning-label"
+    ],
+    "label-font-family": [
+      "--callout-danger-label-font-family",
+      "--callout-info-label-font-family",
+      "--callout-success-label-font-family",
+      "--callout-warning-label-font-family"
+    ],
+    "label-font-size": [
+      "--callout-danger-label-font-size",
+      "--callout-info-label-font-size",
+      "--callout-success-label-font-size",
+      "--callout-warning-label-font-size"
+    ],
+    "label-font-weight": [
+      "--callout-danger-label-font-weight",
+      "--callout-info-label-font-weight",
+      "--callout-success-label-font-weight",
+      "--callout-warning-label-font-weight"
+    ],
+    "label-line-height": [
+      "--callout-danger-label-line-height",
+      "--callout-info-label-line-height",
+      "--callout-success-label-line-height",
+      "--callout-warning-label-line-height"
+    ],
+    "padding": [
+      "--callout-danger-padding",
+      "--callout-info-padding",
+      "--callout-success-padding",
+      "--callout-warning-padding"
+    ],
+    "radius": [
+      "--callout-danger-radius",
+      "--callout-info-radius",
+      "--callout-success-radius",
+      "--callout-warning-radius"
+    ],
+    "surface": [
+      "--callout-danger-surface",
+      "--callout-info-surface",
+      "--callout-success-surface",
+      "--callout-warning-surface"
+    ],
+    "text": [
+      "--callout-danger-text",
+      "--callout-info-text",
+      "--callout-success-text",
+      "--callout-warning-text"
+    ],
+    "text-font-family": [
+      "--callout-danger-text-font-family",
+      "--callout-info-text-font-family",
+      "--callout-success-text-font-family",
+      "--callout-warning-text-font-family"
+    ],
+    "text-font-size": [
+      "--callout-danger-text-font-size",
+      "--callout-info-text-font-size",
+      "--callout-success-text-font-size",
+      "--callout-warning-text-font-size"
+    ],
+    "text-font-weight": [
+      "--callout-danger-text-font-weight",
+      "--callout-info-text-font-weight",
+      "--callout-success-text-font-weight",
+      "--callout-warning-text-font-weight"
+    ],
+    "text-line-height": [
+      "--callout-danger-text-line-height",
+      "--callout-info-text-line-height",
+      "--callout-success-text-line-height",
+      "--callout-warning-text-line-height"
+    ]
+  },
+  "card": {
+    "blur": [
+      "--card-default-blur"
+    ],
+    "body": [
+      "--card-default-body"
+    ],
+    "body-font-family": [
+      "--card-default-body-font-family"
+    ],
+    "body-font-size": [
+      "--card-default-body-font-size"
+    ],
+    "body-font-weight": [
+      "--card-default-body-font-weight"
+    ],
+    "body-line-height": [
+      "--card-default-body-line-height"
+    ],
+    "body-padding": [
+      "--card-default-body-padding"
+    ],
+    "border": [
+      "--card-default-border",
+      "--card-hover-border"
+    ],
+    "border-width": [
+      "--card-default-border-width"
+    ],
+    "header-padding": [
+      "--card-default-header-padding"
+    ],
+    "icon-size": [
+      "--card-default-icon-size"
+    ],
+    "radius": [
+      "--card-default-radius"
+    ],
+    "shadow": [
+      "--card-default-shadow",
+      "--card-hover-shadow"
+    ],
+    "surface": [
+      "--card-default-header-surface",
+      "--card-default-surface"
+    ],
+    "title": [
+      "--card-default-title"
+    ],
+    "title-font-family": [
+      "--card-default-title-font-family"
+    ],
+    "title-font-size": [
+      "--card-default-title-font-size"
+    ],
+    "title-font-weight": [
+      "--card-default-title-font-weight"
+    ],
+    "title-line-height": [
+      "--card-default-title-line-height"
+    ]
+  },
+  "collapsiblesection": {
+    "border": [
+      "--collapsiblesection-container-frame-border",
+      "--collapsiblesection-divider-active-border",
+      "--collapsiblesection-divider-default-border",
+      "--collapsiblesection-divider-hover-border"
+    ],
+    "border-width": [
+      "--collapsiblesection-container-frame-border-width",
+      "--collapsiblesection-divider-active-border-width",
+      "--collapsiblesection-divider-default-border-width",
+      "--collapsiblesection-divider-hover-border-width"
+    ],
+    "font-family": [
+      "--collapsiblesection-chromeless-active-label-font-family",
+      "--collapsiblesection-chromeless-default-label-font-family",
+      "--collapsiblesection-chromeless-hover-label-font-family",
+      "--collapsiblesection-container-active-label-font-family",
+      "--collapsiblesection-container-default-label-font-family",
+      "--collapsiblesection-container-hover-label-font-family",
+      "--collapsiblesection-divider-active-label-font-family",
+      "--collapsiblesection-divider-default-label-font-family",
+      "--collapsiblesection-divider-hover-label-font-family"
+    ],
+    "font-size": [
+      "--collapsiblesection-chromeless-active-icon-size",
+      "--collapsiblesection-chromeless-active-label-font-size",
+      "--collapsiblesection-chromeless-default-icon-size",
+      "--collapsiblesection-chromeless-default-label-font-size",
+      "--collapsiblesection-chromeless-hover-icon-size",
+      "--collapsiblesection-chromeless-hover-label-font-size",
+      "--collapsiblesection-container-active-icon-size",
+      "--collapsiblesection-container-active-label-font-size",
+      "--collapsiblesection-container-default-icon-size",
+      "--collapsiblesection-container-default-label-font-size",
+      "--collapsiblesection-container-hover-icon-size",
+      "--collapsiblesection-container-hover-label-font-size",
+      "--collapsiblesection-divider-active-icon-size",
+      "--collapsiblesection-divider-active-label-font-size",
+      "--collapsiblesection-divider-default-icon-size",
+      "--collapsiblesection-divider-default-label-font-size",
+      "--collapsiblesection-divider-hover-icon-size",
+      "--collapsiblesection-divider-hover-label-font-size"
+    ],
+    "font-weight": [
+      "--collapsiblesection-chromeless-active-label-font-weight",
+      "--collapsiblesection-chromeless-default-label-font-weight",
+      "--collapsiblesection-chromeless-hover-label-font-weight",
+      "--collapsiblesection-container-active-label-font-weight",
+      "--collapsiblesection-container-default-label-font-weight",
+      "--collapsiblesection-container-hover-label-font-weight",
+      "--collapsiblesection-divider-active-label-font-weight",
+      "--collapsiblesection-divider-default-label-font-weight",
+      "--collapsiblesection-divider-hover-label-font-weight"
+    ],
+    "icon": [
+      "--collapsiblesection-chromeless-active-icon",
+      "--collapsiblesection-chromeless-default-icon",
+      "--collapsiblesection-chromeless-hover-icon",
+      "--collapsiblesection-container-active-icon",
+      "--collapsiblesection-container-default-icon",
+      "--collapsiblesection-container-hover-icon",
+      "--collapsiblesection-divider-active-icon",
+      "--collapsiblesection-divider-default-icon",
+      "--collapsiblesection-divider-hover-icon"
+    ],
+    "label": [
+      "--collapsiblesection-chromeless-active-label",
+      "--collapsiblesection-chromeless-default-label",
+      "--collapsiblesection-chromeless-hover-label",
+      "--collapsiblesection-container-active-label",
+      "--collapsiblesection-container-default-label",
+      "--collapsiblesection-container-hover-label",
+      "--collapsiblesection-divider-active-label",
+      "--collapsiblesection-divider-default-label",
+      "--collapsiblesection-divider-hover-label"
+    ],
+    "line-height": [
+      "--collapsiblesection-chromeless-active-label-line-height",
+      "--collapsiblesection-chromeless-default-label-line-height",
+      "--collapsiblesection-chromeless-hover-label-line-height",
+      "--collapsiblesection-container-active-label-line-height",
+      "--collapsiblesection-container-default-label-line-height",
+      "--collapsiblesection-container-hover-label-line-height",
+      "--collapsiblesection-divider-active-label-line-height",
+      "--collapsiblesection-divider-default-label-line-height",
+      "--collapsiblesection-divider-hover-label-line-height"
+    ],
+    "padding": [
+      "--collapsiblesection-chromeless-active-padding",
+      "--collapsiblesection-chromeless-default-padding",
+      "--collapsiblesection-chromeless-expanded-padding",
+      "--collapsiblesection-chromeless-hover-padding",
+      "--collapsiblesection-container-active-padding",
+      "--collapsiblesection-container-default-padding",
+      "--collapsiblesection-container-expanded-padding",
+      "--collapsiblesection-container-hover-padding",
+      "--collapsiblesection-divider-active-padding",
+      "--collapsiblesection-divider-default-padding",
+      "--collapsiblesection-divider-expanded-padding",
+      "--collapsiblesection-divider-hover-padding"
+    ],
+    "radius": [
+      "--collapsiblesection-container-frame-radius"
+    ],
+    "surface": [
+      "--collapsiblesection-chromeless-active-surface",
+      "--collapsiblesection-chromeless-default-surface",
+      "--collapsiblesection-chromeless-hover-surface",
+      "--collapsiblesection-container-active-surface",
+      "--collapsiblesection-container-default-surface",
+      "--collapsiblesection-container-expanded-surface",
+      "--collapsiblesection-container-hover-surface",
+      "--collapsiblesection-divider-active-surface",
+      "--collapsiblesection-divider-default-surface",
+      "--collapsiblesection-divider-hover-surface"
+    ]
+  },
+  "cornerbadge": {
+    "h-axis-radius": [
+      "--corner-badge-accent-h-axis-radius",
+      "--corner-badge-alternate-h-axis-radius",
+      "--corner-badge-canvas-h-axis-radius",
+      "--corner-badge-danger-h-axis-radius",
+      "--corner-badge-info-h-axis-radius",
+      "--corner-badge-neutral-h-axis-radius",
+      "--corner-badge-primary-h-axis-radius",
+      "--corner-badge-special-h-axis-radius",
+      "--corner-badge-success-h-axis-radius",
+      "--corner-badge-warning-h-axis-radius"
+    ],
+    "inner-radius": [
+      "--corner-badge-accent-inner-radius",
+      "--corner-badge-alternate-inner-radius",
+      "--corner-badge-canvas-inner-radius",
+      "--corner-badge-danger-inner-radius",
+      "--corner-badge-info-inner-radius",
+      "--corner-badge-neutral-inner-radius",
+      "--corner-badge-primary-inner-radius",
+      "--corner-badge-special-inner-radius",
+      "--corner-badge-success-inner-radius",
+      "--corner-badge-warning-inner-radius"
+    ],
+    "margin": [
+      "--corner-badge-accent-margin",
+      "--corner-badge-alternate-margin",
+      "--corner-badge-canvas-margin",
+      "--corner-badge-danger-margin",
+      "--corner-badge-info-margin",
+      "--corner-badge-neutral-margin",
+      "--corner-badge-primary-margin",
+      "--corner-badge-special-margin",
+      "--corner-badge-success-margin",
+      "--corner-badge-warning-margin"
+    ],
+    "outer-radius": [
+      "--corner-badge-accent-outer-radius",
+      "--corner-badge-alternate-outer-radius",
+      "--corner-badge-canvas-outer-radius",
+      "--corner-badge-danger-outer-radius",
+      "--corner-badge-info-outer-radius",
+      "--corner-badge-neutral-outer-radius",
+      "--corner-badge-primary-outer-radius",
+      "--corner-badge-special-outer-radius",
+      "--corner-badge-success-outer-radius",
+      "--corner-badge-warning-outer-radius"
+    ],
+    "padding": [
+      "--corner-badge-accent-padding",
+      "--corner-badge-alternate-padding",
+      "--corner-badge-canvas-padding",
+      "--corner-badge-danger-padding",
+      "--corner-badge-info-padding",
+      "--corner-badge-neutral-padding",
+      "--corner-badge-primary-padding",
+      "--corner-badge-special-padding",
+      "--corner-badge-success-padding",
+      "--corner-badge-warning-padding"
+    ],
+    "padding-bottom": [
+      "--corner-badge-accent-padding-bottom",
+      "--corner-badge-alternate-padding-bottom",
+      "--corner-badge-canvas-padding-bottom",
+      "--corner-badge-danger-padding-bottom",
+      "--corner-badge-info-padding-bottom",
+      "--corner-badge-neutral-padding-bottom",
+      "--corner-badge-primary-padding-bottom",
+      "--corner-badge-special-padding-bottom",
+      "--corner-badge-success-padding-bottom",
+      "--corner-badge-warning-padding-bottom"
+    ],
+    "padding-left": [
+      "--corner-badge-accent-padding-left",
+      "--corner-badge-alternate-padding-left",
+      "--corner-badge-canvas-padding-left",
+      "--corner-badge-danger-padding-left",
+      "--corner-badge-info-padding-left",
+      "--corner-badge-neutral-padding-left",
+      "--corner-badge-primary-padding-left",
+      "--corner-badge-special-padding-left",
+      "--corner-badge-success-padding-left",
+      "--corner-badge-warning-padding-left"
+    ],
+    "padding-right": [
+      "--corner-badge-accent-padding-right",
+      "--corner-badge-alternate-padding-right",
+      "--corner-badge-canvas-padding-right",
+      "--corner-badge-danger-padding-right",
+      "--corner-badge-info-padding-right",
+      "--corner-badge-neutral-padding-right",
+      "--corner-badge-primary-padding-right",
+      "--corner-badge-special-padding-right",
+      "--corner-badge-success-padding-right",
+      "--corner-badge-warning-padding-right"
+    ],
+    "padding-top": [
+      "--corner-badge-accent-padding-top",
+      "--corner-badge-alternate-padding-top",
+      "--corner-badge-canvas-padding-top",
+      "--corner-badge-danger-padding-top",
+      "--corner-badge-info-padding-top",
+      "--corner-badge-neutral-padding-top",
+      "--corner-badge-primary-padding-top",
+      "--corner-badge-special-padding-top",
+      "--corner-badge-success-padding-top",
+      "--corner-badge-warning-padding-top"
+    ],
+    "text-font-family": [
+      "--corner-badge-accent-text-font-family",
+      "--corner-badge-alternate-text-font-family",
+      "--corner-badge-canvas-text-font-family",
+      "--corner-badge-danger-text-font-family",
+      "--corner-badge-info-text-font-family",
+      "--corner-badge-neutral-text-font-family",
+      "--corner-badge-primary-text-font-family",
+      "--corner-badge-special-text-font-family",
+      "--corner-badge-success-text-font-family",
+      "--corner-badge-warning-text-font-family"
+    ],
+    "text-font-size": [
+      "--corner-badge-accent-text-font-size",
+      "--corner-badge-alternate-text-font-size",
+      "--corner-badge-canvas-text-font-size",
+      "--corner-badge-danger-text-font-size",
+      "--corner-badge-info-text-font-size",
+      "--corner-badge-neutral-text-font-size",
+      "--corner-badge-primary-text-font-size",
+      "--corner-badge-special-text-font-size",
+      "--corner-badge-success-text-font-size",
+      "--corner-badge-warning-text-font-size"
+    ],
+    "text-font-weight": [
+      "--corner-badge-accent-text-font-weight",
+      "--corner-badge-alternate-text-font-weight",
+      "--corner-badge-canvas-text-font-weight",
+      "--corner-badge-danger-text-font-weight",
+      "--corner-badge-info-text-font-weight",
+      "--corner-badge-neutral-text-font-weight",
+      "--corner-badge-primary-text-font-weight",
+      "--corner-badge-special-text-font-weight",
+      "--corner-badge-success-text-font-weight",
+      "--corner-badge-warning-text-font-weight"
+    ],
+    "text-line-height": [
+      "--corner-badge-accent-text-line-height",
+      "--corner-badge-alternate-text-line-height",
+      "--corner-badge-canvas-text-line-height",
+      "--corner-badge-danger-text-line-height",
+      "--corner-badge-info-text-line-height",
+      "--corner-badge-neutral-text-line-height",
+      "--corner-badge-primary-text-line-height",
+      "--corner-badge-special-text-line-height",
+      "--corner-badge-success-text-line-height",
+      "--corner-badge-warning-text-line-height"
+    ],
+    "v-axis-radius": [
+      "--corner-badge-accent-v-axis-radius",
+      "--corner-badge-alternate-v-axis-radius",
+      "--corner-badge-canvas-v-axis-radius",
+      "--corner-badge-danger-v-axis-radius",
+      "--corner-badge-info-v-axis-radius",
+      "--corner-badge-neutral-v-axis-radius",
+      "--corner-badge-primary-v-axis-radius",
+      "--corner-badge-special-v-axis-radius",
+      "--corner-badge-success-v-axis-radius",
+      "--corner-badge-warning-v-axis-radius"
+    ]
+  },
+  "dialog": {
+    "body": [
+      "--dialog-body"
+    ],
+    "body-font-family": [
+      "--dialog-body-font-family"
+    ],
+    "body-font-size": [
+      "--dialog-body-font-size"
+    ],
+    "body-font-weight": [
+      "--dialog-body-font-weight"
+    ],
+    "body-line-height": [
+      "--dialog-body-line-height"
+    ],
+    "border": [
+      "--dialog-footer-border",
+      "--dialog-header-border"
+    ],
+    "icon": [
+      "--dialog-close-icon"
+    ],
+    "padding": [
+      "--dialog-body-padding",
+      "--dialog-footer-padding",
+      "--dialog-header-padding"
+    ],
+    "size": [
+      "--dialog-close-icon-size"
+    ],
+    "surface": [
+      "--dialog-header-surface",
+      "--dialog-overlay-surface"
+    ],
+    "title": [
+      "--dialog-title"
+    ],
+    "title-font-family": [
+      "--dialog-title-font-family"
+    ],
+    "title-font-size": [
+      "--dialog-title-font-size"
+    ],
+    "title-font-weight": [
+      "--dialog-title-font-weight"
+    ],
+    "title-line-height": [
+      "--dialog-title-line-height"
+    ],
+    "width": [
+      "--dialog-border-width",
+      "--dialog-footer-border-width",
+      "--dialog-header-border-width"
+    ]
+  },
+  "image": {
+    "border": [
+      "--image-default-border"
+    ],
+    "radius": [
+      "--image-default-radius"
+    ],
+    "shadow": [
+      "--image-default-shadow"
+    ],
+    "width": [
+      "--image-default-border-width"
+    ]
+  },
+  "inlineeditactions": {
+    "border": [
+      "--inlineeditactions-cancel-default-border",
+      "--inlineeditactions-cancel-hover-border",
+      "--inlineeditactions-save-default-border",
+      "--inlineeditactions-save-hover-border"
+    ],
+    "cancel-border-width": [
+      "--inlineeditactions-cancel-default-border-width",
+      "--inlineeditactions-cancel-hover-border-width"
+    ],
+    "cancel-icon-size": [
+      "--inlineeditactions-cancel-default-icon-size",
+      "--inlineeditactions-cancel-hover-icon-size"
+    ],
+    "cancel-padding": [
+      "--inlineeditactions-cancel-default-padding",
+      "--inlineeditactions-cancel-hover-padding"
+    ],
+    "cancel-radius": [
+      "--inlineeditactions-cancel-default-radius",
+      "--inlineeditactions-cancel-hover-radius"
+    ],
+    "save-border-width": [
+      "--inlineeditactions-save-default-border-width",
+      "--inlineeditactions-save-hover-border-width"
+    ],
+    "save-icon-size": [
+      "--inlineeditactions-save-default-icon-size",
+      "--inlineeditactions-save-hover-icon-size"
+    ],
+    "save-padding": [
+      "--inlineeditactions-save-default-padding",
+      "--inlineeditactions-save-hover-padding"
+    ],
+    "save-radius": [
+      "--inlineeditactions-save-default-radius",
+      "--inlineeditactions-save-hover-radius"
+    ],
+    "surface": [
+      "--inlineeditactions-cancel-default-surface",
+      "--inlineeditactions-cancel-hover-surface",
+      "--inlineeditactions-save-default-surface",
+      "--inlineeditactions-save-hover-surface"
+    ],
+    "text": [
+      "--inlineeditactions-cancel-default-text",
+      "--inlineeditactions-cancel-hover-text",
+      "--inlineeditactions-save-default-text",
+      "--inlineeditactions-save-hover-text"
+    ]
+  },
+  "menuselect": {
+    "border": [
+      "--menuselect-menu-border"
+    ],
+    "font-family": [
+      "--menuselect-default-text-font-family",
+      "--menuselect-disabled-text-font-family",
+      "--menuselect-hover-text-font-family",
+      "--menuselect-selected-text-font-family"
+    ],
+    "font-size": [
+      "--menuselect-default-text-font-size",
+      "--menuselect-disabled-text-font-size",
+      "--menuselect-hover-text-font-size",
+      "--menuselect-selected-text-font-size"
+    ],
+    "font-weight": [
+      "--menuselect-default-text-font-weight",
+      "--menuselect-disabled-text-font-weight",
+      "--menuselect-hover-text-font-weight",
+      "--menuselect-selected-text-font-weight"
+    ],
+    "gap": [
+      "--menuselect-menu-gap"
+    ],
+    "icon": [
+      "--menuselect-default-icon",
+      "--menuselect-disabled-icon",
+      "--menuselect-hover-icon",
+      "--menuselect-selected-icon"
+    ],
+    "icon-size": [
+      "--menuselect-default-icon-size",
+      "--menuselect-disabled-icon-size",
+      "--menuselect-hover-icon-size",
+      "--menuselect-selected-icon-size"
+    ],
+    "indicator": [
+      "--menuselect-selected-indicator"
+    ],
+    "item-padding": [
+      "--menuselect-item-padding"
+    ],
+    "item-padding-bottom": [
+      "--menuselect-item-padding-bottom"
+    ],
+    "item-padding-left": [
+      "--menuselect-item-padding-left"
+    ],
+    "item-padding-right": [
+      "--menuselect-item-padding-right"
+    ],
+    "item-padding-top": [
+      "--menuselect-item-padding-top"
+    ],
+    "item-radius": [
+      "--menuselect-item-radius"
+    ],
+    "line-height": [
+      "--menuselect-default-text-line-height",
+      "--menuselect-disabled-text-line-height",
+      "--menuselect-hover-text-line-height",
+      "--menuselect-selected-text-line-height"
+    ],
+    "menu-padding": [
+      "--menuselect-menu-padding"
+    ],
+    "menu-padding-bottom": [
+      "--menuselect-menu-padding-bottom"
+    ],
+    "menu-padding-left": [
+      "--menuselect-menu-padding-left"
+    ],
+    "menu-padding-right": [
+      "--menuselect-menu-padding-right"
+    ],
+    "menu-padding-top": [
+      "--menuselect-menu-padding-top"
+    ],
+    "menu-radius": [
+      "--menuselect-menu-radius"
+    ],
+    "shadow": [
+      "--menuselect-menu-shadow"
+    ],
+    "surface": [
+      "--menuselect-default-surface",
+      "--menuselect-disabled-surface",
+      "--menuselect-hover-surface",
+      "--menuselect-menu-surface",
+      "--menuselect-selected-surface"
+    ],
+    "width": [
+      "--menuselect-menu-border-width"
+    ]
+  },
+  "notification": {
+    "action-surface": [
+      "--notification-danger-action-surface",
+      "--notification-info-action-surface",
+      "--notification-success-action-surface",
+      "--notification-warning-action-surface"
+    ],
+    "border": [
+      "--notification-danger-border",
+      "--notification-info-border",
+      "--notification-success-border",
+      "--notification-warning-border"
+    ],
+    "border-width": [
+      "--notification-danger-border-width",
+      "--notification-info-border-width",
+      "--notification-success-border-width",
+      "--notification-warning-border-width"
+    ],
+    "icon": [
+      "--notification-danger-icon",
+      "--notification-info-icon",
+      "--notification-success-icon",
+      "--notification-warning-icon"
+    ],
+    "icon-size": [
+      "--notification-danger-icon-size",
+      "--notification-info-icon-size",
+      "--notification-success-icon-size",
+      "--notification-warning-icon-size"
+    ],
+    "padding": [
+      "--notification-danger-padding",
+      "--notification-info-padding",
+      "--notification-success-padding",
+      "--notification-warning-padding"
+    ],
+    "radius": [
+      "--notification-danger-radius",
+      "--notification-info-radius",
+      "--notification-success-radius",
+      "--notification-warning-radius"
+    ],
+    "surface": [
+      "--notification-danger-surface",
+      "--notification-info-surface",
+      "--notification-success-surface",
+      "--notification-warning-surface"
+    ],
+    "text": [
+      "--notification-danger-text",
+      "--notification-info-text",
+      "--notification-success-text",
+      "--notification-warning-text"
+    ],
+    "text-font-family": [
+      "--notification-danger-text-font-family",
+      "--notification-info-text-font-family",
+      "--notification-success-text-font-family",
+      "--notification-warning-text-font-family"
+    ],
+    "text-font-size": [
+      "--notification-danger-text-font-size",
+      "--notification-info-text-font-size",
+      "--notification-success-text-font-size",
+      "--notification-warning-text-font-size"
+    ],
+    "text-font-weight": [
+      "--notification-danger-text-font-weight",
+      "--notification-info-text-font-weight",
+      "--notification-success-text-font-weight",
+      "--notification-warning-text-font-weight"
+    ],
+    "text-line-height": [
+      "--notification-danger-text-line-height",
+      "--notification-info-text-line-height",
+      "--notification-success-text-line-height",
+      "--notification-warning-text-line-height"
+    ],
+    "title": [
+      "--notification-danger-title",
+      "--notification-info-title",
+      "--notification-success-title",
+      "--notification-warning-title"
+    ],
+    "title-font-family": [
+      "--notification-danger-title-font-family",
+      "--notification-info-title-font-family",
+      "--notification-success-title-font-family",
+      "--notification-warning-title-font-family"
+    ],
+    "title-font-size": [
+      "--notification-danger-title-font-size",
+      "--notification-info-title-font-size",
+      "--notification-success-title-font-size",
+      "--notification-warning-title-font-size"
+    ],
+    "title-font-weight": [
+      "--notification-danger-title-font-weight",
+      "--notification-info-title-font-weight",
+      "--notification-success-title-font-weight",
+      "--notification-warning-title-font-weight"
+    ],
+    "title-line-height": [
+      "--notification-danger-title-line-height",
+      "--notification-info-title-line-height",
+      "--notification-success-title-line-height",
+      "--notification-warning-title-line-height"
+    ]
+  },
+  "progressbar": {
+    "border": [
+      "--progressbar-danger-track-border",
+      "--progressbar-info-track-border",
+      "--progressbar-primary-track-border",
+      "--progressbar-success-track-border",
+      "--progressbar-warning-track-border"
+    ],
+    "fill": [
+      "--progressbar-danger-fill",
+      "--progressbar-info-fill",
+      "--progressbar-primary-fill",
+      "--progressbar-success-fill",
+      "--progressbar-warning-fill"
+    ],
+    "label": [
+      "--progressbar-danger-label",
+      "--progressbar-info-label",
+      "--progressbar-primary-label",
+      "--progressbar-success-label",
+      "--progressbar-warning-label"
+    ],
+    "label-font-family": [
+      "--progressbar-danger-label-font-family",
+      "--progressbar-info-label-font-family",
+      "--progressbar-primary-label-font-family",
+      "--progressbar-success-label-font-family",
+      "--progressbar-warning-label-font-family"
+    ],
+    "label-font-size": [
+      "--progressbar-danger-label-font-size",
+      "--progressbar-info-label-font-size",
+      "--progressbar-primary-label-font-size",
+      "--progressbar-success-label-font-size",
+      "--progressbar-warning-label-font-size"
+    ],
+    "label-font-weight": [
+      "--progressbar-danger-label-font-weight",
+      "--progressbar-info-label-font-weight",
+      "--progressbar-primary-label-font-weight",
+      "--progressbar-success-label-font-weight",
+      "--progressbar-warning-label-font-weight"
+    ],
+    "label-line-height": [
+      "--progressbar-danger-label-line-height",
+      "--progressbar-info-label-line-height",
+      "--progressbar-primary-label-line-height",
+      "--progressbar-success-label-line-height",
+      "--progressbar-warning-label-line-height"
+    ],
+    "radius": [
+      "--progressbar-danger-radius",
+      "--progressbar-info-radius",
+      "--progressbar-primary-radius",
+      "--progressbar-success-radius",
+      "--progressbar-warning-radius"
+    ],
+    "surface": [
+      "--progressbar-danger-track-surface",
+      "--progressbar-info-track-surface",
+      "--progressbar-primary-track-surface",
+      "--progressbar-success-track-surface",
+      "--progressbar-warning-track-surface"
+    ],
+    "track-border-width": [
+      "--progressbar-danger-track-border-width",
+      "--progressbar-info-track-border-width",
+      "--progressbar-primary-track-border-width",
+      "--progressbar-success-track-border-width",
+      "--progressbar-warning-track-border-width"
+    ],
+    "track-height": [
+      "--progressbar-danger-track-height",
+      "--progressbar-info-track-height",
+      "--progressbar-primary-track-height",
+      "--progressbar-success-track-height",
+      "--progressbar-warning-track-height"
+    ],
+    "value": [
+      "--progressbar-danger-value",
+      "--progressbar-info-value",
+      "--progressbar-primary-value",
+      "--progressbar-success-value",
+      "--progressbar-warning-value"
+    ],
+    "value-font-family": [
+      "--progressbar-danger-value-font-family",
+      "--progressbar-info-value-font-family",
+      "--progressbar-primary-value-font-family",
+      "--progressbar-success-value-font-family",
+      "--progressbar-warning-value-font-family"
+    ],
+    "value-font-size": [
+      "--progressbar-danger-value-font-size",
+      "--progressbar-info-value-font-size",
+      "--progressbar-primary-value-font-size",
+      "--progressbar-success-value-font-size",
+      "--progressbar-warning-value-font-size"
+    ],
+    "value-font-weight": [
+      "--progressbar-danger-value-font-weight",
+      "--progressbar-info-value-font-weight",
+      "--progressbar-primary-value-font-weight",
+      "--progressbar-success-value-font-weight",
+      "--progressbar-warning-value-font-weight"
+    ],
+    "value-line-height": [
+      "--progressbar-danger-value-line-height",
+      "--progressbar-info-value-line-height",
+      "--progressbar-primary-value-line-height",
+      "--progressbar-success-value-line-height",
+      "--progressbar-warning-value-line-height"
+    ]
+  },
+  "radiobutton": {
+    "border-width": [
+      "--radiobutton-active-dot-border-width",
+      "--radiobutton-default-dot-border-width",
+      "--radiobutton-hover-dot-border-width"
+    ],
+    "color": [
+      "--radiobutton-active-dot-border-color",
+      "--radiobutton-default-dot-border-color",
+      "--radiobutton-hover-dot-border-color"
+    ],
+    "fill": [
+      "--radiobutton-active-dot-fill",
+      "--radiobutton-default-dot-fill",
+      "--radiobutton-hover-dot-fill"
+    ],
+    "font-family": [
+      "--radiobutton-active-label-font-family",
+      "--radiobutton-default-label-font-family",
+      "--radiobutton-hover-label-font-family"
+    ],
+    "font-size": [
+      "--radiobutton-active-label-font-size",
+      "--radiobutton-default-label-font-size",
+      "--radiobutton-hover-label-font-size"
+    ],
+    "font-weight": [
+      "--radiobutton-active-label-font-weight",
+      "--radiobutton-default-label-font-weight",
+      "--radiobutton-hover-label-font-weight"
+    ],
+    "label": [
+      "--radiobutton-active-label",
+      "--radiobutton-default-label",
+      "--radiobutton-hover-label"
+    ],
+    "line-height": [
+      "--radiobutton-active-label-line-height",
+      "--radiobutton-default-label-line-height",
+      "--radiobutton-hover-label-line-height"
+    ],
+    "size": [
+      "--radiobutton-active-dot-size",
+      "--radiobutton-default-dot-size",
+      "--radiobutton-hover-dot-size"
+    ]
+  },
+  "sectiondivider": {
+    "background": [
+      "--sectiondivider-lg-background",
+      "--sectiondivider-md-background",
+      "--sectiondivider-sm-background"
+    ],
+    "border": [
+      "--sectiondivider-lg-border",
+      "--sectiondivider-md-border",
+      "--sectiondivider-sm-border"
+    ],
+    "border-width": [
+      "--sectiondivider-lg-border-width",
+      "--sectiondivider-md-border-width",
+      "--sectiondivider-sm-border-width"
+    ],
+    "container-padding": [
+      "--sectiondivider-lg-padding",
+      "--sectiondivider-md-padding",
+      "--sectiondivider-sm-padding"
+    ],
+    "description-color": [
+      "--sectiondivider-lg-description",
+      "--sectiondivider-md-description",
+      "--sectiondivider-sm-description"
+    ],
+    "description-font-family": [
+      "--sectiondivider-lg-description-font-family",
+      "--sectiondivider-md-description-font-family",
+      "--sectiondivider-sm-description-font-family"
+    ],
+    "description-font-weight": [
+      "--sectiondivider-lg-description-font-weight",
+      "--sectiondivider-md-description-font-weight",
+      "--sectiondivider-sm-description-font-weight"
+    ],
+    "description-line-height": [
+      "--sectiondivider-lg-description-line-height",
+      "--sectiondivider-md-description-line-height",
+      "--sectiondivider-sm-description-line-height"
+    ],
+    "description-padding": [
+      "--sectiondivider-lg-description-padding",
+      "--sectiondivider-md-description-padding",
+      "--sectiondivider-sm-description-padding"
+    ],
+    "eyebrow-color": [
+      "--sectiondivider-lg-eyebrow",
+      "--sectiondivider-md-eyebrow",
+      "--sectiondivider-sm-eyebrow"
+    ],
+    "eyebrow-font-family": [
+      "--sectiondivider-lg-eyebrow-font-family",
+      "--sectiondivider-md-eyebrow-font-family",
+      "--sectiondivider-sm-eyebrow-font-family"
+    ],
+    "eyebrow-font-weight": [
+      "--sectiondivider-lg-eyebrow-font-weight",
+      "--sectiondivider-md-eyebrow-font-weight",
+      "--sectiondivider-sm-eyebrow-font-weight"
+    ],
+    "eyebrow-letter-spacing": [
+      "--sectiondivider-lg-eyebrow-letter-spacing",
+      "--sectiondivider-md-eyebrow-letter-spacing",
+      "--sectiondivider-sm-eyebrow-letter-spacing"
+    ],
+    "eyebrow-padding": [
+      "--sectiondivider-lg-eyebrow-padding",
+      "--sectiondivider-md-eyebrow-padding",
+      "--sectiondivider-sm-eyebrow-padding"
+    ],
+    "hairline-color": [
+      "--sectiondivider-lg-hairline-color",
+      "--sectiondivider-md-hairline-color",
+      "--sectiondivider-sm-hairline-color"
+    ],
+    "hairline-thickness": [
+      "--sectiondivider-lg-hairline-thickness",
+      "--sectiondivider-md-hairline-thickness",
+      "--sectiondivider-sm-hairline-thickness"
+    ],
+    "radius": [
+      "--sectiondivider-lg-radius",
+      "--sectiondivider-md-radius",
+      "--sectiondivider-sm-radius"
+    ],
+    "shadow": [
+      "--sectiondivider-lg-shadow",
+      "--sectiondivider-md-shadow",
+      "--sectiondivider-sm-shadow"
+    ],
+    "title-color": [
+      "--sectiondivider-lg-title",
+      "--sectiondivider-md-title",
+      "--sectiondivider-sm-title"
+    ],
+    "title-font-family": [
+      "--sectiondivider-lg-title-font-family",
+      "--sectiondivider-md-title-font-family",
+      "--sectiondivider-sm-title-font-family"
+    ],
+    "title-font-weight": [
+      "--sectiondivider-lg-title-font-weight",
+      "--sectiondivider-md-title-font-weight",
+      "--sectiondivider-sm-title-font-weight"
+    ],
+    "title-letter-spacing": [
+      "--sectiondivider-lg-title-letter-spacing",
+      "--sectiondivider-md-title-letter-spacing",
+      "--sectiondivider-sm-title-letter-spacing"
+    ],
+    "title-line-height": [
+      "--sectiondivider-lg-title-line-height",
+      "--sectiondivider-md-title-line-height",
+      "--sectiondivider-sm-title-line-height"
+    ],
+    "title-outline-color": [
+      "--sectiondivider-lg-title-outline-color",
+      "--sectiondivider-md-title-outline-color",
+      "--sectiondivider-sm-title-outline-color"
+    ],
+    "title-outline-width": [
+      "--sectiondivider-lg-title-outline-width",
+      "--sectiondivider-md-title-outline-width",
+      "--sectiondivider-sm-title-outline-width"
+    ],
+    "title-padding": [
+      "--sectiondivider-lg-title-padding",
+      "--sectiondivider-md-title-padding",
+      "--sectiondivider-sm-title-padding"
+    ]
+  },
+  "segmentedcontrol": {
+    "bar-padding": [
+      "--segmentedcontrol-bar-padding"
+    ],
+    "bar-padding-bottom": [
+      "--segmentedcontrol-bar-padding-bottom"
+    ],
+    "bar-padding-left": [
+      "--segmentedcontrol-bar-padding-left"
+    ],
+    "bar-padding-right": [
+      "--segmentedcontrol-bar-padding-right"
+    ],
+    "bar-padding-top": [
+      "--segmentedcontrol-bar-padding-top"
+    ],
+    "border": [
+      "--segmentedcontrol-bar-border",
+      "--segmentedcontrol-selected-border"
+    ],
+    "color": [
+      "--segmentedcontrol-divider-color"
+    ],
+    "font-family": [
+      "--segmentedcontrol-disabled-text-font-family",
+      "--segmentedcontrol-option-hover-text-font-family",
+      "--segmentedcontrol-option-text-font-family",
+      "--segmentedcontrol-selected-text-font-family"
+    ],
+    "font-size": [
+      "--segmentedcontrol-disabled-text-font-size",
+      "--segmentedcontrol-option-hover-text-font-size",
+      "--segmentedcontrol-option-text-font-size",
+      "--segmentedcontrol-selected-text-font-size"
+    ],
+    "font-weight": [
+      "--segmentedcontrol-disabled-text-font-weight",
+      "--segmentedcontrol-option-hover-text-font-weight",
+      "--segmentedcontrol-option-text-font-weight",
+      "--segmentedcontrol-selected-text-font-weight"
+    ],
+    "gap": [
+      "--segmentedcontrol-bar-gap"
+    ],
+    "height": [
+      "--segmentedcontrol-divider-height"
+    ],
+    "icon": [
+      "--segmentedcontrol-disabled-icon",
+      "--segmentedcontrol-option-hover-icon",
+      "--segmentedcontrol-option-icon",
+      "--segmentedcontrol-selected-icon"
+    ],
+    "icon-size": [
+      "--segmentedcontrol-disabled-icon-size",
+      "--segmentedcontrol-option-hover-icon-size",
+      "--segmentedcontrol-option-icon-size",
+      "--segmentedcontrol-selected-icon-size"
+    ],
+    "line-height": [
+      "--segmentedcontrol-disabled-text-line-height",
+      "--segmentedcontrol-option-hover-text-line-height",
+      "--segmentedcontrol-option-text-line-height",
+      "--segmentedcontrol-selected-text-line-height"
+    ],
+    "radius": [
+      "--segmentedcontrol-bar-radius",
+      "--segmentedcontrol-selected-radius"
+    ],
+    "surface": [
+      "--segmentedcontrol-bar-surface",
+      "--segmentedcontrol-disabled-surface",
+      "--segmentedcontrol-option-hover-surface",
+      "--segmentedcontrol-selected-surface"
+    ],
+    "thickness": [
+      "--segmentedcontrol-divider-thickness"
+    ],
+    "width": [
+      "--segmentedcontrol-bar-border-width",
+      "--segmentedcontrol-selected-border-width"
+    ]
+  },
+  "selectbadge": {
+    "dot-border-color": [
+      "--selectbadge-default-dot-border-color",
+      "--selectbadge-hover-dot-border-color",
+      "--selectbadge-selected-dot-border-color"
+    ],
+    "dot-border-width": [
+      "--selectbadge-default-dot-border-width",
+      "--selectbadge-hover-dot-border-width",
+      "--selectbadge-selected-dot-border-width"
+    ],
+    "dot-fill": [
+      "--selectbadge-default-dot-fill",
+      "--selectbadge-hover-dot-fill",
+      "--selectbadge-selected-dot-fill"
+    ],
+    "dot-size": [
+      "--selectbadge-default-dot-size",
+      "--selectbadge-hover-dot-size",
+      "--selectbadge-selected-dot-size"
+    ],
+    "font-family": [
+      "--selectbadge-default-label-font-family",
+      "--selectbadge-hover-label-font-family",
+      "--selectbadge-selected-label-font-family"
+    ],
+    "font-size": [
+      "--selectbadge-default-label-font-size",
+      "--selectbadge-hover-label-font-size",
+      "--selectbadge-selected-label-font-size"
+    ],
+    "font-weight": [
+      "--selectbadge-default-label-font-weight",
+      "--selectbadge-hover-label-font-weight",
+      "--selectbadge-selected-label-font-weight"
+    ],
+    "frame-border-color": [
+      "--selectbadge-default-frame-border-color",
+      "--selectbadge-hover-frame-border-color",
+      "--selectbadge-selected-frame-border-color"
+    ],
+    "frame-border-width": [
+      "--selectbadge-default-frame-border-width",
+      "--selectbadge-hover-frame-border-width",
+      "--selectbadge-selected-frame-border-width"
+    ],
+    "frame-padding": [
+      "--selectbadge-default-frame-padding",
+      "--selectbadge-hover-frame-padding",
+      "--selectbadge-selected-frame-padding"
+    ],
+    "frame-radius": [
+      "--selectbadge-default-frame-radius",
+      "--selectbadge-hover-frame-radius",
+      "--selectbadge-selected-frame-radius"
+    ],
+    "frame-surface": [
+      "--selectbadge-default-frame-surface",
+      "--selectbadge-hover-frame-surface",
+      "--selectbadge-selected-frame-surface"
+    ],
+    "label": [
+      "--selectbadge-default-label",
+      "--selectbadge-hover-label",
+      "--selectbadge-selected-label"
+    ],
+    "line-height": [
+      "--selectbadge-default-label-line-height",
+      "--selectbadge-hover-label-line-height",
+      "--selectbadge-selected-label-line-height"
+    ]
+  },
+  "tabbar": {
+    "bar-bottom-margin": [
+      "--tabbar-bar-bottom-margin"
+    ],
+    "bar-bottom-padding": [
+      "--tabbar-bar-bottom-padding"
+    ],
+    "bar-divider": [
+      "--tabbar-bar-divider"
+    ],
+    "bar-divider-thickness": [
+      "--tabbar-bar-divider-thickness"
+    ],
+    "bar-indicator-thickness": [
+      "--tabbar-bar-indicator-thickness"
+    ],
+    "bar-top-margin": [
+      "--tabbar-bar-top-margin"
+    ],
+    "font-family": [
+      "--tabbar-active-text-font-family",
+      "--tabbar-default-text-font-family",
+      "--tabbar-disabled-text-font-family",
+      "--tabbar-hover-text-font-family"
+    ],
+    "font-size": [
+      "--tabbar-active-text-font-size",
+      "--tabbar-default-text-font-size",
+      "--tabbar-disabled-text-font-size",
+      "--tabbar-hover-text-font-size"
+    ],
+    "font-weight": [
+      "--tabbar-active-text-font-weight",
+      "--tabbar-default-text-font-weight",
+      "--tabbar-disabled-text-font-weight",
+      "--tabbar-hover-text-font-weight"
+    ],
+    "icon-size": [
+      "--tabbar-active-icon-size",
+      "--tabbar-default-icon-size",
+      "--tabbar-disabled-icon-size",
+      "--tabbar-hover-icon-size"
+    ],
+    "indicator-color": [
+      "--tabbar-active-border"
+    ],
+    "line-height": [
+      "--tabbar-active-text-line-height",
+      "--tabbar-default-text-line-height",
+      "--tabbar-disabled-text-line-height",
+      "--tabbar-hover-text-line-height"
+    ],
+    "padding": [
+      "--tabbar-active-padding",
+      "--tabbar-default-padding",
+      "--tabbar-disabled-padding",
+      "--tabbar-hover-padding"
+    ],
+    "surface": [
+      "--tabbar-active-surface",
+      "--tabbar-default-surface",
+      "--tabbar-disabled-surface",
+      "--tabbar-hover-surface"
+    ],
+    "tab-border-color": [
+      "--tabbar-active-tab-border-color",
+      "--tabbar-default-tab-border-color",
+      "--tabbar-disabled-tab-border-color",
+      "--tabbar-hover-tab-border-color"
+    ],
+    "tab-border-width": [
+      "--tabbar-active-tab-border-width",
+      "--tabbar-default-tab-border-width",
+      "--tabbar-disabled-tab-border-width",
+      "--tabbar-hover-tab-border-width"
+    ],
+    "tab-bottom-radius": [
+      "--tabbar-active-tab-bottom-radius",
+      "--tabbar-default-tab-bottom-radius",
+      "--tabbar-disabled-tab-bottom-radius",
+      "--tabbar-hover-tab-bottom-radius"
+    ],
+    "tab-gap": [
+      "--tabbar-tab-gap"
+    ],
+    "tab-top-radius": [
+      "--tabbar-active-tab-top-radius",
+      "--tabbar-default-tab-top-radius",
+      "--tabbar-disabled-tab-top-radius",
+      "--tabbar-hover-tab-top-radius"
+    ],
+    "text": [
+      "--tabbar-active-text",
+      "--tabbar-default-text",
+      "--tabbar-disabled-text",
+      "--tabbar-hover-text"
+    ]
+  },
+  "table": {
+    "border": [
+      "--table-default-border",
+      "--table-default-column-divider",
+      "--table-default-header-border",
+      "--table-default-row-divider"
+    ],
+    "cell-font-family": [
+      "--table-default-cell-font-family"
+    ],
+    "cell-font-size": [
+      "--table-default-cell-font-size"
+    ],
+    "cell-font-weight": [
+      "--table-default-cell-font-weight"
+    ],
+    "cell-line-height": [
+      "--table-default-cell-line-height"
+    ],
+    "cell-padding": [
+      "--table-default-cell-padding"
+    ],
+    "cell-text": [
+      "--table-default-cell-text"
+    ],
+    "header-font-family": [
+      "--table-default-header-font-family"
+    ],
+    "header-font-size": [
+      "--table-default-header-font-size"
+    ],
+    "header-font-weight": [
+      "--table-default-header-font-weight"
+    ],
+    "header-line-height": [
+      "--table-default-header-line-height"
+    ],
+    "header-padding": [
+      "--table-default-header-padding"
+    ],
+    "header-surface": [
+      "--table-default-header-surface"
+    ],
+    "header-text": [
+      "--table-default-header-text"
+    ],
+    "radius": [
+      "--table-default-radius"
+    ],
+    "row-stripe-surface": [
+      "--table-default-row-stripe-surface"
+    ],
+    "row-surface": [
+      "--table-default-row-surface"
+    ],
+    "shadow": [
+      "--table-default-shadow"
+    ],
+    "width": [
+      "--table-default-border-width",
+      "--table-default-column-divider-width",
+      "--table-default-header-border-width",
+      "--table-default-row-divider-width"
+    ],
+    "wrapper-surface": [
+      "--table-default-surface"
+    ]
+  },
+  "tooltip": {
+    "family": [
+      "--tooltip-text-font-family"
+    ],
+    "height": [
+      "--tooltip-text-line-height"
+    ],
+    "size": [
+      "--tooltip-text-font-size"
+    ],
+    "text": [
+      "--tooltip-text"
+    ],
+    "weight": [
+      "--tooltip-text-font-weight"
+    ],
+    "width": [
+      "--tooltip-border-width"
+    ]
+  }
+}

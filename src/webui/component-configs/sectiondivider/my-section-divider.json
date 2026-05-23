@@ -1,0 +1,192 @@
+{
+  "name": "my-section-divider",
+  "component": "sectiondivider",
+  "createdAt": "2026-05-19T12:01:57.271Z",
+  "updatedAt": "2026-05-22T21:20:59.253Z",
+  "aliases": {
+    "--sectiondivider-lg-padding": "--space-4",
+    "--sectiondivider-md-padding": "--space-4",
+    "--sectiondivider-sm-padding": "--space-4",
+    "--sectiondivider-lg-title": "--text-primary",
+    "--sectiondivider-md-title": "--text-primary",
+    "--sectiondivider-sm-title": "--text-primary",
+    "--sectiondivider-lg-title-font-family": "--font-display",
+    "--sectiondivider-md-title-font-family": "--font-display",
+    "--sectiondivider-sm-title-font-family": "--font-display",
+    "--sectiondivider-lg-title-font-size": "--font-size-5xl",
+    "--sectiondivider-md-title-font-size": "--font-size-4xl",
+    "--sectiondivider-sm-title-font-size": "--font-size-2xl",
+    "--sectiondivider-lg-title-font-weight": "--font-weight-bold",
+    "--sectiondivider-md-title-font-weight": "--font-weight-bold",
+    "--sectiondivider-sm-title-font-weight": "--font-weight-bold",
+    "--sectiondivider-lg-title-line-height": "--line-height-md",
+    "--sectiondivider-md-title-line-height": "--line-height-md",
+    "--sectiondivider-sm-title-line-height": "--line-height-md",
+    "--sectiondivider-lg-title-letter-padding": "--letter-spacing-normal",
+    "--sectiondivider-md-title-letter-padding": "--letter-spacing-normal",
+    "--sectiondivider-sm-title-letter-padding": "--letter-spacing-normal",
+    "--sectiondivider-lg-title-outline-width": "--border-width-4",
+    "--sectiondivider-md-title-outline-width": "--border-width-4",
+    "--sectiondivider-sm-title-outline-width": "--border-width-4",
+    "--sectiondivider-lg-title-outline-color": "--surface-canvas-lowest",
+    "--sectiondivider-md-title-outline-color": "--surface-accent-lowest",
+    "--sectiondivider-sm-title-outline-color": "--surface-canvas-lowest",
+    "--sectiondivider-lg-description": "--text-alternate",
+    "--sectiondivider-md-description": "--text-secondary",
+    "--sectiondivider-sm-description": "--text-secondary",
+    "--sectiondivider-lg-description-font-family": "--font-sans",
+    "--sectiondivider-md-description-font-family": "--font-sans",
+    "--sectiondivider-sm-description-font-family": "--font-sans",
+    "--sectiondivider-lg-description-font-size": "--font-size-lg",
+    "--sectiondivider-md-description-font-size": "--font-size-lg",
+    "--sectiondivider-sm-description-font-size": "--font-size-5xl",
+    "--sectiondivider-lg-description-font-weight": "--font-weight-medium",
+    "--sectiondivider-md-description-font-weight": "--font-weight-medium",
+    "--sectiondivider-sm-description-font-weight": "--font-weight-medium",
+    "--sectiondivider-lg-description-line-height": "--line-height-md",
+    "--sectiondivider-md-description-line-height": "--line-height-md",
+    "--sectiondivider-sm-description-line-height": "--line-height-md",
+    "--sectiondivider-lg-radius": "--radius-lg",
+    "--sectiondivider-md-radius": "--radius-lg",
+    "--sectiondivider-sm-radius": "--radius-lg",
+    "--sectiondivider-lg-border": "transparent",
+    "--sectiondivider-md-border": "transparent",
+    "--sectiondivider-sm-border": "transparent",
+    "--sectiondivider-lg-border-width": "--border-width-1",
+    "--sectiondivider-md-border-width": "--border-width-1",
+    "--sectiondivider-sm-border-width": "--border-width-1",
+    "--sectiondivider-lg-shadow": "--shadow-none",
+    "--sectiondivider-md-shadow": "--shadow-none",
+    "--sectiondivider-sm-shadow": "--shadow-none",
+    "--sectiondivider-sm-hairline-color": "--border-brand-medium",
+    "--sectiondivider-lg-hairline-color": "--border-brand-medium",
+    "--sectiondivider-md-hairline-color": "--border-brand-medium",
+    "--sectiondivider-lg-padding-top": "--space-8",
+    "--sectiondivider-md-padding-top": "--space-8",
+    "--sectiondivider-sm-padding-top": "--space-8",
+    "--sectiondivider-lg-padding-right": "--space-4",
+    "--sectiondivider-md-padding-right": "--space-4",
+    "--sectiondivider-sm-padding-right": "--space-4",
+    "--sectiondivider-lg-padding-bottom": "--space-8",
+    "--sectiondivider-md-padding-bottom": "--space-8",
+    "--sectiondivider-sm-padding-bottom": "--space-8",
+    "--sectiondivider-lg-padding-left": "--space-0",
+    "--sectiondivider-md-padding-left": "--space-0",
+    "--sectiondivider-sm-padding-left": "--space-0",
+    "--sectiondivider-lg-description-padding": "--space-0",
+    "--sectiondivider-md-description-padding": "--space-0",
+    "--sectiondivider-sm-description-padding": "--space-0",
+    "--sectiondivider-lg-description-padding-top": "--space-0",
+    "--sectiondivider-md-description-padding-top": "--space-0",
+    "--sectiondivider-sm-description-padding-top": "--space-0",
+    "--sectiondivider-lg-description-padding-right": "--space-0",
+    "--sectiondivider-md-description-padding-right": "--space-0",
+    "--sectiondivider-sm-description-padding-right": "--space-0",
+    "--sectiondivider-lg-description-padding-bottom": "--space-10",
+    "--sectiondivider-md-description-padding-bottom": "--space-10",
+    "--sectiondivider-sm-description-padding-bottom": "--space-10",
+    "--sectiondivider-lg-description-padding-left": "--space-0",
+    "--sectiondivider-md-description-padding-left": "--space-0",
+    "--sectiondivider-sm-description-padding-left": "--space-0",
+    "--sectiondivider-lg-eyebrow": "--text-brand",
+    "--sectiondivider-lg-align": "start",
+    "--sectiondivider-sm-align": "start",
+    "--sectiondivider-md-align": "start",
+    "--sectiondivider-lg-eyebrow-display": "block",
+    "--sectiondivider-lg-description-display": "flex",
+    "--sectiondivider-lg-hairline": "below-description",
+    "--sectiondivider-lg-eyebrow-text-transform": "none",
+    "--sectiondivider-md-description-display": "none",
+    "--sectiondivider-sm-description-display": "none",
+    "--sectiondivider-sm-hairline": "below-label",
+    "--sectiondivider-lg-background": {
+      "kind": "gradient",
+      "value": {
+        "type": "none",
+        "angle": 120,
+        "stops": [
+          {
+            "position": 0,
+            "color": "--surface-canvas-higher",
+            "opacity": 100
+          },
+          {
+            "position": 50,
+            "color": "--surface-canvas",
+            "opacity": 75
+          },
+          {
+            "position": 100,
+            "color": "--surface-canvas-lower",
+            "opacity": 50
+          }
+        ]
+      }
+    },
+    "--sectiondivider-md-background": {
+      "kind": "gradient",
+      "value": {
+        "type": "none",
+        "angle": 99,
+        "stops": [
+          {
+            "position": 0.8,
+            "color": "--surface-accent-highest",
+            "opacity": 69
+          },
+          {
+            "position": 49.7,
+            "color": "--surface-accent",
+            "opacity": 73
+          },
+          {
+            "position": 100,
+            "color": "--surface-accent-lower",
+            "opacity": 63
+          }
+        ]
+      }
+    },
+    "--sectiondivider-sm-background": {
+      "kind": "gradient",
+      "value": {
+        "type": "none",
+        "angle": 135,
+        "stops": [
+          {
+            "position": 0,
+            "color": "--surface-canvas-highest"
+          },
+          {
+            "position": 50,
+            "color": "--surface-canvas-higher"
+          },
+          {
+            "position": 100,
+            "color": "--surface-canvas"
+          }
+        ]
+      }
+    },
+    "--sectiondivider-md-hairline": "below-label",
+    "--sectiondivider-lg-title-padding": "--space-2",
+    "--sectiondivider-md-title-padding": "--space-2",
+    "--sectiondivider-sm-title-padding": "--space-2",
+    "--sectiondivider-lg-title-padding-top": "--space-2",
+    "--sectiondivider-md-title-padding-top": "--space-2",
+    "--sectiondivider-sm-title-padding-top": "--space-2",
+    "--sectiondivider-lg-title-padding-right": "--space-2",
+    "--sectiondivider-md-title-padding-right": "--space-2",
+    "--sectiondivider-sm-title-padding-right": "--space-2",
+    "--sectiondivider-lg-title-padding-bottom": "--space-2",
+    "--sectiondivider-md-title-padding-bottom": "--space-2",
+    "--sectiondivider-sm-title-padding-bottom": "--space-2",
+    "--sectiondivider-lg-title-padding-left": "--space-2",
+    "--sectiondivider-md-title-padding-left": "--space-0",
+    "--sectiondivider-sm-title-padding-left": "--space-2"
+  },
+  "config": {
+    "--sectiondivider-md-color-family": "accent"
+  },
+  "schemaVersion": 11
+}

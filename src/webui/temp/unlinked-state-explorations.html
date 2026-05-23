@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Unlinked-state explorations · token editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* surface */
+    --bg-page: #0c0b0f;
+    --bg-panel: #131218;
+    --bg-control: #1c1a22;
+    --bg-control-2: #211e28;
+
+    /* lines */
+    --line-faint: #26232d;
+    --line-idle: #34303d;
+    --line-strong: #4a4555;
+    --line-focus: #f3f1f7;
+
+    /* text */
+    --fg: #ebe8f1;
+    --fg-mute: #8a8497;
+    --fg-dim: #5e5868;
+    --fg-token: #c5bfd2;
+
+    /* signals */
+    --linked: #6cd0c2;            /* cool teal — connected, current */
+    --linked-soft: #6cd0c233;
+    --unlinked: #e0a35e;           /* warm amber — disconnected, was-linked */
+    --unlinked-soft: #e0a35e26;
+    --unlinked-strong: #f0b878;
+
+    --shadow-control: 0 1px 0 rgba(255,255,255,.02), 0 1px 2px rgba(0,0,0,.4);
+
+    --radius: 6px;
+    --row-h: 30px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg-page);
+    color: var(--fg);
+    font-family: 'Geist', system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    font-size: 13px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    background-image:
+      radial-gradient(1200px 600px at 80% -10%, #1a1622 0%, transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, #14111c 0%, transparent 55%);
+  }
+
+  /* ─── frame ─────────────────────────────────── */
+  .doc {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 64px 40px 120px;
+  }
+  header.doc-head {
+    margin-bottom: 56px;
+    border-bottom: 1px solid var(--line-faint);
+    padding-bottom: 28px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 24px;
+  }
+  .eyebrow {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin: 0 0 14px;
+  }
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 38px;
+    line-height: 1.05;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--unlinked-strong);
+  }
+  .lede {
+    color: var(--fg-mute);
+    max-width: 38ch;
+    margin: 0;
+    font-size: 12.5px;
+    text-align: right;
+  }
+
+  /* ─── variant card ──────────────────────────── */
+  .variant {
+    border: 1px solid var(--line-faint);
+    background: var(--bg-panel);
+    border-radius: 10px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .variant-head {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    align-items: baseline;
+    padding: 18px 22px 14px;
+    border-bottom: 1px dashed var(--line-faint);
+    gap: 18px;
+  }
+  .variant-num {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    color: var(--fg-dim);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+  .variant-title {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--fg);
+    margin: 0;
+    font-weight: 400;
+  }
+  .variant-tag {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px;
+    color: var(--fg-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid var(--line-idle);
+    border-radius: 999px;
+  }
+  .variant-note {
+    grid-column: 2 / -1;
+    color: var(--fg-mute);
+    font-size: 12.5px;
+    line-height: 1.55;
+    margin: 4px 0 0;
+    max-width: 78ch;
+  }
+
+  /* ─── editor row mock ───────────────────────── */
+  .stage {
+    background:
+      linear-gradient(180deg, #100e15 0%, #0d0b11 100%);
+    padding: 22px 22px 26px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+  @media (max-width: 760px) { .stage { grid-template-columns: 1fr; } }
+  .stage-col {
+    border: 1px solid var(--line-faint);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: rgba(255,255,255,.012);
+  }
+  .stage-col h4 {
+    margin: 0 0 12px;
+    font-size: 10.5px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    font-weight: 500;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 110px 1fr 110px;
+    align-items: center;
+    column-gap: 12px;
+    padding: 5px 0;
+  }
+  .row .label {
+    color: var(--fg-mute);
+    font-size: 12px;
+  }
+  .row .token {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    color: var(--fg-token);
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .row .token.muted {
+    color: var(--fg-dim);
+    text-decoration: line-through;
+    text-decoration-color: var(--unlinked-soft);
+  }
+
+  /* ─── base control shapes ───────────────────── */
+  .ctl {
+    position: relative;
+    height: var(--row-h);
+    border-radius: var(--radius);
+    background: var(--bg-control);
+    display: flex;
+    align-items: center;
+    box-shadow: var(--shadow-control);
+    border: 1px solid var(--line-idle);
+    transition: border-color .14s ease;
+  }
+  .ctl.dropdown {
+    padding: 0 30px 0 12px;
+    color: var(--fg);
+    font-size: 12.5px;
+  }
+  .ctl.dropdown::after {
+    content: "";
+    position: absolute;
+    right: 11px;
+    top: 50%;
+    width: 8px; height: 8px;
+    border-right: 1.4px solid var(--fg-mute);
+    border-bottom: 1.4px solid var(--fg-mute);
+    transform: translateY(-70%) rotate(45deg);
+  }
+  .ctl.swatch {
+    overflow: hidden;
+    padding: 0;
+  }
+  .ctl.swatch .fill {
+    flex: 1;
+    height: 100%;
+    background: #4a1538; /* matches the screenshot purple */
+  }
+  .ctl.swatch::after {
+    content: "";
+    width: 22px; height: 100%;
+    background: var(--bg-control-2);
+    border-left: 1px solid var(--line-idle);
+    position: relative;
+  }
+  .ctl.swatch .caret {
+    position: absolute;
+    right: 6px; top: 50%;
+    width: 7px; height: 7px;
+    border-right: 1.4px solid var(--fg-mute);
+    border-bottom: 1.4px solid var(--fg-mute);
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+  }
+
+  /* current focused style (white outline like the screenshot) */
+  .ctl.is-focus {
+    border-color: var(--line-focus);
+    box-shadow: 0 0 0 1px var(--line-focus), var(--shadow-control);
+  }
+
+  /* ─── linked baseline (for reference) ───────── */
+  .linked-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--linked);
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px;
+  }
+  .icon { width: 12px; height: 12px; flex: none; }
+  .icon path, .icon line, .icon circle, .icon rect { stroke: currentColor; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ─── VARIANT A: open-bracket left edge ─────── */
+  .v-bracket .ctl {
+    border-color: transparent;
+    background:
+      linear-gradient(var(--bg-control), var(--bg-control)) padding-box,
+      conic-gradient(from 0deg, transparent) border-box;
+    border-top: 1px solid var(--unlinked);
+    border-bottom: 1px solid var(--unlinked);
+    border-right: 1px solid var(--unlinked);
+    border-left: 0;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin-left: 6px;
+  }
+  .v-bracket .ctl.swatch::after { background: var(--bg-control-2); }
+  .v-bracket .ctl::before {
+    /* the severed left edge — two short ticks, top + bottom */
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 -6px;
+    width: 6px;
+    background:
+      linear-gradient(var(--unlinked), var(--unlinked)) top left / 6px 1px no-repeat,
+      linear-gradient(var(--unlinked), var(--unlinked)) bottom left / 6px 1px no-repeat;
+  }
+
+  /* ─── VARIANT B: dashed left seam ──────────── */
+  .v-dashed .ctl {
+    border-color: var(--unlinked);
+    border-left-style: dashed;
+    border-left-width: 1.5px;
+  }
+
+  /* ─── VARIANT C: torn edge with glyph ─────── */
+  .v-torn .ctl {
+    border-color: var(--unlinked);
+    padding-left: 26px;
+  }
+  .v-torn .ctl.swatch { padding-left: 0; }
+  .v-torn .ctl.swatch .fill { margin-left: 22px; }
+  .v-torn .glyph {
+    position: absolute;
+    left: 7px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--unlinked-strong);
+    display: inline-flex;
+  }
+
+  /* ─── VARIANT D: notch + glyph in notch ───── */
+  .v-notch .ctl {
+    border-color: var(--unlinked);
+    /* clip a small notch out of the left edge */
+    -webkit-mask: radial-gradient(circle at 0 50%, transparent 7px, #000 7.5px);
+            mask: radial-gradient(circle at 0 50%, transparent 7px, #000 7.5px);
+  }
+  .v-notch .ctl-wrap {
+    position: relative;
+    padding-left: 14px;
+  }
+  .v-notch .glyph {
+    position: absolute;
+    left: -2px; top: 50%;
+    transform: translateY(-50%);
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--bg-page);
+    display: grid; place-items: center;
+    color: var(--unlinked-strong);
+  }
+
+  /* ─── VARIANT E: severed tab metaphor ─────── */
+  .v-tab .ctl-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .v-tab .stub {
+    width: 4px;
+    height: calc(var(--row-h) - 10px);
+    border-radius: 2px;
+    background: var(--unlinked);
+    opacity: .85;
+  }
+  .v-tab .ctl {
+    flex: 1;
+    border-color: var(--unlinked);
+  }
+
+  /* ─── VARIANT F: leading rail (clean, no break) */
+  .v-rail .ctl-wrap { position: relative; padding-left: 10px; }
+  .v-rail .ctl {
+    border-color: var(--line-idle);
+  }
+  .v-rail .ctl-wrap::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 5px; bottom: 5px;
+    width: 2px;
+    border-radius: 2px;
+    background:
+      repeating-linear-gradient(180deg, var(--unlinked) 0 4px, transparent 4px 7px);
+  }
+  .v-rail .glyph {
+    position: absolute;
+    left: -3px; top: 50%;
+    transform: translateY(-50%);
+    width: 14px; height: 14px;
+    background: var(--bg-page);
+    color: var(--unlinked-strong);
+    display: grid; place-items: center;
+  }
+
+  /* ─── VARIANT G: corner cut + persistent badge */
+  .v-badge .ctl-wrap {
+    position: relative;
+    display: inline-block; width: 100%;
+  }
+  .v-badge .ctl {
+    border-color: var(--unlinked);
+  }
+  .v-badge .badge {
+    position: absolute;
+    left: -7px; top: -7px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--bg-page);
+    border: 1px solid var(--unlinked);
+    color: var(--unlinked-strong);
+    display: grid; place-items: center;
+    z-index: 2;
+  }
+
+  /* ─── linked baseline (chain glyph) ────────── */
+  .v-linked .ctl-wrap { position: relative; padding-left: 18px; }
+  .v-linked .ctl { border-color: var(--line-idle); }
+  .v-linked .glyph {
+    position: absolute;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    color: var(--linked);
+  }
+
+  /* ─── recommendation card ───────────────────── */
+  .reco {
+    margin-top: 60px;
+    padding: 28px 32px;
+    border: 1px solid var(--line-faint);
+    border-radius: 12px;
+    background:
+      radial-gradient(600px 200px at 90% -50%, var(--unlinked-soft), transparent 60%),
+      var(--bg-panel);
+  }
+  .reco h2 {
+    margin: 0 0 8px;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 24px;
+  }
+  .reco p {
+    color: var(--fg-mute);
+    margin: 0 0 16px;
+    max-width: 70ch;
+  }
+  .reco ul {
+    padding-left: 18px;
+    color: var(--fg);
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+  .reco li b { color: var(--unlinked-strong); font-weight: 500; }
+  .reco code {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    color: var(--fg-token);
+    background: rgba(255,255,255,.04);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  /* tiny legend at top of stage */
+  .legend {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 18px;
+    color: var(--fg-dim);
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: -4px;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .swatch-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--unlinked);
+  }
+  .swatch-dot.linked { background: var(--linked); }
+</style>
+</head>
+<body>
+<div class="doc">
+
+<header class="doc-head">
+  <div>
+    <p class="eyebrow">Token editor · state language</p>
+    <h1>Speaking the <em>broken-link</em><br/>state without color alone.</h1>
+  </div>
+  <p class="lede">
+    Color-only signaling fails for users with reduced color discrimination
+    and weakens at small sizes. These variants add structural and glyphic
+    cues that survive grayscale and tight rows.
+  </p>
+</header>
+
+<!-- ───────── VARIANT A ───────── -->
+<section class="variant v-bracket">
+  <div class="variant-head">
+    <span class="variant-num">01</span>
+    <h3 class="variant-title">Open-bracket edge</h3>
+    <span class="variant-tag">structural</span>
+    <p class="variant-note">
+      The connection used to attach on the left. Now the left edge is gone — only two short top/bottom ticks remain, like the stubs of a snapped seam. Outline becomes <code>] </code>‑shaped. Reads as physically severed even in grayscale; survives at small sizes.
+    </p>
+  </div>
+  <div class="stage">
+    <div class="legend">
+      <span><i class="swatch-dot"></i>unlinked (was linked)</span>
+      <span><i class="swatch-dot linked"></i>linked (current)</span>
+    </div>
+    <div class="stage-col">
+      <h4>· Unlinked</h4>
+      <div class="row">
+        <span class="label">corner radius</span>
+        <div class="ctl dropdown">None</div>
+        <span class="token muted">radius-md</span>
+      </div>
+      <div class="row">
+        <span class="label">surface color</span>
+        <div class="ctl swatch"><div class="fill"></div><span class="caret"></span></div>
+        <span class="token muted">surface-primary</span>
+      </div>
+    </div>
+    <div class="stage-col">
+      <h4>· For comparison · linked</h4>
+      <div class="row v-linked">
+        <span class="label">corner radius</span>
+        <div class="ctl-wrap">
+          <span class="glyph"><svg class="icon" viewBox="0 0 16 16"><path d="M6.5 9.5 9.5 6.5"/><path d="M5 11a3 3 0 0 1 0-4l1.5-1.5"/><path d="M11 5a3 3 0 0 1 0 4L9.5 10.5"/></svg></span>
+          <div class="ctl dropdown">md</div>
+        </div>
+        <span class="token">radius-md</span>
+      </div>
+      <div class="row v-linked">
+        <span class="label">surface color</span>
+        <div class="ctl-wrap">
+          <span class="glyph"><svg class="icon" viewBox="0 0 16 16"><path d="M6.5 9.5 9.5 6.5"/><path d="M5 11a3 3 0 0 1 0-4l1.5-1.5"/><path d="M11 5a3 3 0 0 1 0 4L9.5 10.5"/></svg></span>
+          <div class="ctl swatch"><div class="fill"></div><span class="caret"></span></div>
+        </div>
+        <span class="token">surface-primary</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── VARIANT B ───────── -->
+<section class="variant v-dashed">
+  <div class="variant-head">
+    <span class="variant-num">02</span>
+    <h3 class="variant-title">Dashed left seam</h3>
+    <span class="variant-tag">linework</span>
+    <p class="variant-note">
+      Left border switches from solid to dashed — a tear-line. Top/right/bottom stay solid, only the connection edge dissolves. Quietest of the structural options; works well if many rows are unlinked at once and the bracket would feel too noisy.
+    </p>
+  </div>
+  <div class="stage">
+    <div class="stage-col">
+      <h4>· Unlinked</h4>
+      <div class="row">
+        <span class="label">corner radius</span>
+        <div class="ctl dropdown">None</div>
+        <span class="token muted">radius-md</span>
+      </div>
+      <div class="row">
+        <span class="label">surface color</span>
+        <div class="ctl swatch"><div class="fill"></div><span class="caret"></span></div>
+        <span class="token muted">surface-primary</span>
+      </div>
+    </div>
+    <div class="stage-col">
+      <h4>· At a glance, in a list</h4>
+      <div class="row">
+        <span class="label">padding</span>
+        <div class="ctl dropdown">12px</div>
+        <span class="token muted">space-3</span>
+      </div>
+      <div class="row">
+        <span class="label">gap</span>
+        <div class="ctl dropdown">8px</div>
+        <span class="token muted">space-2</span>
+      </div>
+      <div class="row">
+        <span class="label">elevation</span>
+        <div class="ctl dropdown">low</div>
+        <span class="token muted">elev-1</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── VARIANT C ───────── -->
+<section class="variant v-torn">
+  <div class="variant-head">
+    <span class="variant-num">03</span>
+    <h3 class="variant-title">Inline broken-chain glyph</h3>
+    <span class="variant-tag">glyphic</span>
+    <p class="variant-note">
+      A small broken-chain mark sits inside the control on the left, with the amber outline retained at full strength. Glyph is the primary signal, color is the secondary. Strongest on its own — but eats 14–18px of horizontal space inside every row.
+    </p>
+  </div>
+  <div class="stage">
+    <div class="stage-col">
+      <h4>· Unlinked</h4>
+      <div class="row">
+        <span class="label">corner radius</span>
+        <div class="ctl dropdown">
+          <span class="glyph">
+            <svg class="icon" viewBox="0 0 16 16">
+              <path d="M5.5 10.5 10.5 5.5" stroke-dasharray="2 1.6"/>
+              <path d="M4.2 11.8a2.4 2.4 0 0 1 0-3.4l1.4-1.4"/>
+              <path d="M11.8 4.2a2.4 2.4 0 0 1 0 3.4l-1.4 1.4"/>
+            </svg>
+          </span>
+          None
+        </div>
+        <span class="token muted">radius-md</span>
+      </div>
+      <div class="row">
+        <span class="label">surface color</span>
+        <div class="ctl swatch">
+          <span class="glyph">
+            <svg class="icon" viewBox="0 0 16 16">
+              <path d="M5.5 10.5 10.5 5.5" stroke-dasharray="2 1.6"/>
+              <path d="M4.2 11.8a2.4 2.4 0 0 1 0-3.4l1.4-1.4"/>
+              <path d="M11.8 4.2a2.4 2.4 0 0 1 0 3.4l-1.4 1.4"/>
+            </svg>
+          </span>
+          <div class="fill"></div><span class="caret"></span>
+        </div>
+        <span class="token muted">surface-primary</span>
+      </div>
+    </div>
+    <div class="stage-col">
+      <h4>· Symmetry — linked equivalent</h4>
+      <div class="row v-linked">
+        <span class="label">corner radius</span>
+        <div class="ctl-wrap">
+          <span class="glyph"><svg class="icon" viewBox="0 0 16 16"><path d="M6.5 9.5 9.5 6.5"/><path d="M5 11a3 3 0 0 1 0-4l1.5-1.5"/><path d="M11 5a3 3 0 0 1 0 4L9.5 10.5"/></svg></span>
+          <div class="ctl dropdown">md</div>
+        </div>
+        <span class="token">radius-md</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── VARIANT D ───────── -->
+<section class="variant v-notch">
+  <div class="variant-head">
+    <span class="variant-num">04</span>
+    <h3 class="variant-title">Punched notch · glyph nested</h3>
+    <span class="variant-tag">structural + glyphic</span>
+    <p class="variant-note">
+      A circular notch is carved out of the left edge — like a puzzle-piece with the connector removed — and a tiny unlock glyph sits in the void. Most distinctive silhouette. More CSS work, slightly heavier visually; reserve for editors where this is the central state language.
+    </p>
+  </div>
+  <div class="stage">
+    <div class="stage-col">
+      <h4>· Unlinked</h4>
+      <div class="row">
+        <span class="label">corner radius</span>
+        <div class="v-notch"><div class="ctl-wrap">
+          <span class="glyph">
+            <svg class="icon" viewBox="0 0 16 16" style="width:9px;height:9px">
+              <rect x="3.5" y="7" width="9" height="6" rx="1"/>
+              <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0"/>
+              <path d="M11 4l1.5-1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <div class="ctl dropdown">None</div>
+        </div></div>
+        <span class="token muted">radius-md</span>
+      </div>
+      <div class="row">
+        <span class="label">surface color</span>
+        <div class="v-notch"><div class="ctl-wrap">
+          <span class="glyph">
+            <svg class="icon" viewBox="0 0 16 16" style="width:9px;height:9px">
+              <rect x="3.5" y="7" width="9" height="6" rx="1"/>
+              <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0"/>
+              <path d="M11 4l1.5-1.5"/>
+            </svg>
+          </span>
+          <div class="ctl swatch"><div class="fill"></div><span class="caret"></span></div>
+        </div></div>
+        <span class="token muted">surface-primary</span>
+      </div>
+    </div>
+    <div class="stage-col">
+      <h4>· Mixed list — linked + unlinked</h4>
+      <div class="row v-linked">
+        <span class="label">padding</span>
+        <div class="ctl-wrap">
+          <span class="glyph"><svg class="icon" viewBox="0 0 16 16"><path d="M6.5 9.5 9.5 6.5"/><path d="M5 11a3 3 0 0 1 0-4l1.5-1.5"/><path d="M11 5a3 3 0 0 1 0 4L9.5 10.5"/></svg></span>
+          <div class="ctl dropdown">space-3</div>
+        </div>
+        <span class="token">space-3</span>
+      </div>
+      <div class="row">
+        <span class="label">gap</span>
+        <div class="v-notch"><div class="ctl-wrap">
+          <span class="glyph"><svg class="icon" viewBox="0 0 16 16" style="width:9px;height:9px"><rect x="3.5" y="7" width="9" height="6" rx="1"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0"/><path d="M11 4l1.5-1.5"/></svg></span>
+          <div class="ctl dropdown">8px</div>
+        </div></div>
+        <span class="token muted">space-2</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── VARIANT E ───────── -->
+<section class="variant v-tab">
+  <div class="variant-head">
+    <span class="variant-num">05</span>
+    <h3 class="variant-title">Severed stub</h3>
+    <span class="variant-tag">structural</span>
+    <p class="variant-note">
+      A tiny amber lozenge sits to the left of the control with a clear gap — like a snapped tether still attached to where the link <em>used</em> to plug in. Reads as "something was here." Subtle, doesn't change control geometry, scales to any control type.
+    </p>
+  </div>
+  <div class="stage">
+    <div class="stage-col">
+      <h4>· Unlinked</h4>
+      <div class="row">
+        <span class="label">corner radius</span>
+        <div class="ctl-wrap"><span class="stub"></span><div class="ctl dropdown">None</div></div>
+        <span class="token muted">radius-md</span>
+      </div>
+      <div class="row">
+        <span class="label">surface color</span>
+        <div class="ctl-wrap"><span class="stub"></span><div class="ctl swatch"><div class="fill"></div><span class="caret"></span></div></div>
+        <span class="token muted">surface-primary</span>
+      </div>
+    </div>
+    <div class="stage-col">
+      <h4>· Pairs cleanly with a linked rail</h4>
+      <div class="row v-linked">
+        <span class="label">corner radius</span>
+        <div class="ctl-wrap">
+          <span class="glyph"><svg class="icon" viewBox="0 0 16 16"><path d="M6.5 9.5 9.5 6.5"/><path d="M5 11a3 3 0 0 1 0-4l1.5-1.5"/><path d="M11 5a3 3 0 0 1 0 4L9.5 10.5"/></svg></span>
+          <div class="ctl dropdown">md</div>
+        </div>
+        <span class="token">radius-md</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── VARIANT F ───────── -->
+<section class="variant v-rail">
+  <div class="variant-head">
+    <span class="variant-num">06</span>
+    <h3 class="variant-title">Dashed leading rail</h3>
+    <span class="variant-tag">marginalia</span>
+    <p class="variant-note">
+      The control itself is untouched — visual difference lives in a 2px rail to the left of the control, dashed for unlinked, solid for linked, absent for never-linked. Cleanest body, strongest column-scan affordance: you can read the link state of an entire panel by glancing at the gutter.
+    </p>
+  </div>
+  <div class="stage">
+    <div class="stage-col">
+      <h4>· Unlinked rows</h4>
+      <div class="row">
+        <span class="label">corner radius</span>
+        <div class="ctl-wrap">
+          <span class="glyph"><svg class="icon" viewBox="0 0 16 16" style="width:8px;height:8px"><rect x="3.5" y="7" width="9" height="6" rx="1"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0"/></svg></span>
+          <div class="ctl dropdown">None</div>
+        </div>
+        <span class="token muted">radius-md</span>
+      </div>
+      <div class="row">
+        <span class="label">surface color</span>
+        <div class="ctl-wrap">
+          <span class="glyph"><svg class="icon" viewBox="0 0 16 16" style="width:8px;height:8px"><rect x="3.5" y="7" width="9" height="6" rx="1"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0"/></svg></span>
+          <div class="ctl swatch"><div class="fill"></div><span class="caret"></span></div>
+        </div>
+        <span class="token muted">surface-primary</span>
+      </div>
+    </div>
+    <div class="stage-col">
+      <h4>· Mixed panel — gutter does the talking</h4>
+      <!-- linked -->
+      <div class="row" style="position:relative;padding-left:0;">
+        <span class="label">padding</span>
+        <div style="position:relative;padding-left:10px;">
+          <span style="position:absolute;left:0;top:5px;bottom:5px;width:2px;border-radius:2px;background:var(--linked);"></span>
+          <div class="ctl dropdown">space-3</div>
+        </div>
+        <span class="token">space-3</span>
+      </div>
+      <!-- unlinked -->
+      <div class="row">
+        <span class="label">gap</span>
+        <div class="ctl-wrap">
+          <div class="ctl dropdown">8px</div>
+        </div>
+        <span class="token muted">space-2</span>
+      </div>
+      <!-- never linked -->
+      <div class="row">
+        <span class="label">elevation</span>
+        <div class="ctl dropdown">low</div>
+        <span class="token" style="color:var(--fg-dim);">—</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── VARIANT G ───────── -->
+<section class="variant v-badge">
+  <div class="variant-head">
+    <span class="variant-num">07</span>
+    <h3 class="variant-title">Persistent corner badge</h3>
+    <span class="variant-tag">marker</span>
+    <p class="variant-note">
+      A small unlock badge floats off the top-left corner of the control. Survives focus, hover, and color changes (sits outside the border). Most "noisy" option in dense panels — best when broken-link is rare and ought to feel like an alert.
+    </p>
+  </div>
+  <div class="stage">
+    <div class="stage-col">
+      <h4>· Unlinked</h4>
+      <div class="row" style="padding-top:12px;">
+        <span class="label">corner radius</span>
+        <div class="ctl-wrap" style="position:relative;">
+          <span class="badge">
+            <svg class="icon" viewBox="0 0 16 16" style="width:9px;height:9px"><rect x="3.5" y="7" width="9" height="6" rx="1"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0"/></svg>
+          </span>
+          <div class="ctl dropdown">None</div>
+        </div>
+        <span class="token muted">radius-md</span>
+      </div>
+      <div class="row" style="padding-top:12px;">
+        <span class="label">surface color</span>
+        <div class="ctl-wrap" style="position:relative;">
+          <span class="badge">
+            <svg class="icon" viewBox="0 0 16 16" style="width:9px;height:9px"><rect x="3.5" y="7" width="9" height="6" rx="1"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0"/></svg>
+          </span>
+          <div class="ctl swatch"><div class="fill"></div><span class="caret"></span></div>
+        </div>
+        <span class="token muted">surface-primary</span>
+      </div>
+    </div>
+    <div class="stage-col">
+      <h4>· Doesn't fight focus ring</h4>
+      <div class="row" style="padding-top:12px;">
+        <span class="label">corner radius</span>
+        <div class="ctl-wrap" style="position:relative;">
+          <span class="badge">
+            <svg class="icon" viewBox="0 0 16 16" style="width:9px;height:9px"><rect x="3.5" y="7" width="9" height="6" rx="1"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0"/></svg>
+          </span>
+          <div class="ctl dropdown is-focus">None</div>
+        </div>
+        <span class="token muted">radius-md</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── recommendation ───────── -->
+<section class="reco">
+  <h2>If you want one to ship.</h2>
+  <p>
+    Combining structural + glyphic gives you a state language that survives grayscale, small sizes, focus rings, and dense panels. The strongest pair from these explorations is:
+  </p>
+  <ul>
+    <li><b>01 — Open-bracket edge</b> as the unlinked treatment, because the broken-seam metaphor matches the underlying mental model (the link <em>was here</em>, it isn't anymore) and the silhouette change reads even at 50% opacity. Pair with the existing amber.</li>
+    <li><b>03 — Inline broken-chain glyph</b> if you also want a positive signal for <em>linked</em> rows (a solid chain glyph in the same slot). This makes the linked/unlinked distinction symmetrical instead of "absence of linked = unlinked".</li>
+    <li>Reserve <b>07 — corner badge</b> for cases where the broken link is <em>actionable urgency</em> (e.g. the referenced token was deleted), so the badge isn't blown by routine "user opted out of the link" state.</li>
+  </ul>
+  <p style="margin-top:14px;">
+    Re: your specific question about breaking the outline on the left only — variant <b>01</b> is exactly that, and adding the two short ticks at the top/bottom of the gap (instead of a clean removal) is what stops it from looking like a rendering bug. Variant <b>02</b> is the same idea executed as a dashed line — softer, less expressive.
+  </p>
+</section>
+
+</div>
+</body>
+</html>

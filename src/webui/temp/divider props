@@ -1,0 +1,34 @@
+Justification Left/Center
+
+surface
+    Gradiant
+    color
+    None
+
+Eyebrow Text (yes/no)
+(large/med/Small)
+    font properties + letterspacing
+    padding
+    Size large/med/Small
+
+Label Text
+(large/med/Small)
+    font properties + letterspacing
+    padding
+    Size 
+
+Description Text (yes/no)
+(large/med/Small)
+    font properties
+    padding
+
+Hairline (yes/no)
+    Solid/gradient
+    thickness
+    position
+        vertical centered Label
+        Under Label
+        vertical centered description
+        Under description
+
+

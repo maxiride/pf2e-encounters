@@ -1,0 +1,25 @@
+{
+  "name": "Default Preset",
+  "createdAt": "2026-05-10T18:15:30.815Z",
+  "updatedAt": "2026-05-14T18:44:53.653Z",
+  "theme": "default",
+  "componentConfigs": {
+    "badge": "default",
+    "button": "default",
+    "callout": "default",
+    "card": "default",
+    "collapsiblesection": "default",
+    "cornerbadge": "default",
+    "dialog": "default",
+    "image": "default",
+    "inlineeditactions": "default",
+    "notification": "default",
+    "progressbar": "default",
+    "radiobutton": "default",
+    "sectiondivider": "default",
+    "segmentedcontrol": "default",
+    "tabbar": "default",
+    "table": "default",
+    "tooltip": "default"
+  }
+}

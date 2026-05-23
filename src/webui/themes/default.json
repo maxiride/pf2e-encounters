@@ -1,0 +1,2688 @@
+{
+  "name": "Default Theme",
+  "createdAt": "2026-04-01T11:00:38.342Z",
+  "updatedAt": "2026-05-13T20:55:06.879Z",
+  "editorConfigs": {
+    "Neutral": {
+      "baseColor": "#808080",
+      "tintHue": 236,
+      "tintChroma": 0.067,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 95,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 59.98708017071177,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 8,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 100,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 47,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 80,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 172,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 25,
+              "y": 130,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 61,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 15,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Alternate": {
+      "baseColor": "#808080",
+      "tintHue": 53,
+      "tintChroma": 0.041,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 95,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 59.98708017071177,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 8,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 100,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 8,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 47,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 80,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 120,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 55,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 15,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Background": {
+      "baseColor": "#3c3c53",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 95,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 36.60639980313516,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 8,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 100,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 47,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 80,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 120,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 55,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 15,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true,
+      "emptyMode": "solid",
+      "emptyStep": "850",
+      "gradientStyle": "linear",
+      "gradientAngle": 180,
+      "gradientReverse": false,
+      "gradientStops": [
+        {
+          "position": 0,
+          "paletteLabel": "800"
+        },
+        {
+          "position": 100,
+          "paletteLabel": "950"
+        }
+      ],
+      "gradientSize": "page"
+    },
+    "Brand": {
+      "baseColor": "#fb2898",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 95,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 65.72274549769725,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 8,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 100,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 63,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 108,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 58,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 80,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 110,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 50,
+              "y": 83,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 60,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 120,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 50,
+              "y": 72,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 10,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Accent": {
+      "baseColor": "#008582",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 94,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 55.724652427861876,
+          "inDx": -0.15005988575639861,
+          "inDy": 0.8375145169699039,
+          "outDx": 13.207918739635154,
+          "outDy": -32.162485483030096
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 93,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 100,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 130,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 47,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 80,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 120,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 55,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 15,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Special": {
+      "baseColor": "#8b5cf6",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 95,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 60.56307524243788,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 8,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 100,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 47,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 80,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 120,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 55,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 15,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Success": {
+      "baseColor": "#009c45",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 95,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 60.519069637156484,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 8,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 100,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 47,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 80,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 120,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 55,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 15,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Warning": {
+      "baseColor": "#f09c00",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 95,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 75.8883165260383,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 8,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 100,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 47,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 80,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 120,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 55,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 15,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Info": {
+      "baseColor": "#0080ff",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 84,
+          "inDx": -6.190346352639773,
+          "inDy": 3,
+          "outDx": 6.190346352639773,
+          "outDy": -3
+        },
+        {
+          "x": 100,
+          "y": 19,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 68,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 146,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 47,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 27,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 73,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 151,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 185,
+              "inDx": 0,
+              "inDy": -3,
+              "outDx": 0,
+              "outDy": 3
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 133,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 60,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 179,
+              "inDx": -7.209619573895974,
+              "inDy": 13,
+              "outDx": 7.209619573895974,
+              "outDy": -13
+            },
+            {
+              "x": 100,
+              "y": 9,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0,
+        "Surfaces-lightness": 0,
+        "Surfaces-saturation": -44
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Danger": {
+      "baseColor": "#d10023",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 95,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 54.23382641733694,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 8,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 40,
+          "y": 100,
+          "inDx": -15,
+          "inDy": 0,
+          "outDx": 15,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 100,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 47,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 80,
+              "inDx": -5,
+              "inDy": 0,
+              "outDx": 5,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 120,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 55,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 15,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    }
+  },
+  "cssVariables": {
+    "--color-neutral-100": "#ece3dd",
+    "--color-neutral-200": "#d3cac4",
+    "--color-neutral-300": "#b6ada8",
+    "--color-neutral-400": "#99918c",
+    "--color-neutral-500": "#7d7570",
+    "--color-neutral-600": "#625a56",
+    "--color-neutral-700": "#48413d",
+    "--color-neutral-800": "#302925",
+    "--color-neutral-850": "#1a1410",
+    "--color-neutral-900": "#070302",
+    "--surface-neutral-lowest": "#0f0a07",
+    "--surface-neutral-lower": "#1a1410",
+    "--surface-neutral-low": "#28211d",
+    "--surface-neutral": "#362f2a",
+    "--surface-neutral-high": "#443d39",
+    "--surface-neutral-higher": "#534c47",
+    "--surface-neutral-highest": "#615954",
+    "--border-neutral-faint": "#27201c",
+    "--border-neutral-subtle": "#48413c",
+    "--border-neutral-medium": "#9b938e",
+    "--border-neutral-strong": "#c4bcb6",
+    "--text-primary": "#fff5f0",
+    "--text-secondary": "#b0a9a4",
+    "--text-tertiary": "#86817e",
+    "--text-muted": "#5e5c5b",
+    "--text-disabled": "#3a3939",
+    "--color-alternate-100": "#e3e5e4",
+    "--color-alternate-200": "#cccdcd",
+    "--color-alternate-300": "#b1b2b2",
+    "--color-alternate-400": "#969797",
+    "--color-alternate-500": "#7c7d7d",
+    "--color-alternate-600": "#626363",
+    "--color-alternate-700": "#4a4b4b",
+    "--color-alternate-800": "#333434",
+    "--color-alternate-850": "#1e1f1e",
+    "--color-alternate-900": "#0b0c0c",
+    "--color-alternate-950": "#010202",
+    "--surface-alternate-lowest": "#0b0b0b",
+    "--surface-alternate-lower": "#151616",
+    "--surface-alternate-low": "#222323",
+    "--surface-alternate": "#303030",
+    "--surface-alternate-high": "#3e3f3f",
+    "--surface-alternate-higher": "#4d4d4d",
+    "--surface-alternate-highest": "#5a5b5b",
+    "--border-alternate-faint": "#212222",
+    "--border-alternate-subtle": "#424343",
+    "--border-alternate": "#696a6a",
+    "--border-alternate-medium": "#949595",
+    "--border-alternate-strong": "#bdbebe",
+    "--text-alternate": "#9fa1a1",
+    "--text-alternate-secondary": "#8c8d8d",
+    "--text-alternate-tertiary": "#676868",
+    "--text-alternate-muted": "#444444",
+    "--text-alternate-disabled": "#343434",
+    "--color-canvas-100": "#d3f7f3",
+    "--color-canvas-200": "#b6d9d4",
+    "--color-canvas-300": "#94b6b2",
+    "--color-canvas-400": "#7a9b97",
+    "--color-canvas-500": "#6f908c",
+    "--color-canvas-600": "#62827e",
+    "--color-canvas-700": "#496966",
+    "--color-canvas-800": "#2e4d49",
+    "--color-canvas-850": "#10302d",
+    "--color-canvas-900": "#001412",
+    "--color-canvas-950": "#000202",
+    "--surface-canvas-lowest": "#000f0d",
+    "--surface-canvas-lower": "#001b18",
+    "--surface-canvas-low": "#082826",
+    "--surface-canvas": "#173633",
+    "--surface-canvas-high": "#264542",
+    "--surface-canvas-higher": "#355451",
+    "--surface-canvas-highest": "#42625e",
+    "--border-canvas-faint": "#072725",
+    "--border-canvas-subtle": "#2a4946",
+    "--border-canvas": "#52726e",
+    "--border-canvas-medium": "#7b9d99",
+    "--border-canvas-strong": "#a3c6c2",
+    "--text-canvas": "#95b7b3",
+    "--text-canvas-secondary": "#84a09d",
+    "--text-canvas-tertiary": "#647673",
+    "--text-canvas-muted": "#454d4c",
+    "--text-canvas-disabled": "#363a3a",
+    "--color-brand-100": "#ffe6f9",
+    "--color-brand-200": "#ffb7f0",
+    "--color-brand-300": "#ff74e9",
+    "--color-brand-400": "#f828e0",
+    "--color-brand-500": "#eb0ad4",
+    "--color-brand-600": "#d500c0",
+    "--color-brand-700": "#ac009b",
+    "--color-brand-800": "#7d0070",
+    "--color-brand-850": "#4e0046",
+    "--color-brand-900": "#23001f",
+    "--color-brand-950": "#060005",
+    "--surface-brand-lowest": "#1a0017",
+    "--surface-brand-lower": "#2b0026",
+    "--surface-brand-low": "#400038",
+    "--surface-brand": "#55004c",
+    "--surface-brand-high": "#6c0061",
+    "--surface-brand-higher": "#840076",
+    "--surface-brand-highest": "#99008a",
+    "--border-brand-faint": "#3e0037",
+    "--border-brand-subtle": "#730067",
+    "--border-brand": "#b200a0",
+    "--border-brand-medium": "#f31fdb",
+    "--border-brand-strong": "#ff90eb",
+    "--text-brand": "#ff8eeb",
+    "--text-brand-secondary": "#fe5be7",
+    "--text-brand-tertiary": "#b753a7",
+    "--text-brand-muted": "#7a4b71",
+    "--text-brand-disabled": "#5a4355",
+    "--color-accent-100": "#ffeaab",
+    "--color-accent-200": "#f1d479",
+    "--color-accent-300": "#d6b95c",
+    "--color-accent-400": "#bb9d38",
+    "--color-accent-500": "#9d7f00",
+    "--color-accent-600": "#685300",
+    "--color-accent-700": "#4b3c00",
+    "--color-accent-800": "#382c00",
+    "--color-accent-850": "#2b2100",
+    "--color-accent-900": "#221900",
+    "--color-accent-950": "#1d1500",
+    "--surface-accent-lowest": "#100a00",
+    "--surface-accent-lower": "#1c1500",
+    "--surface-accent-low": "#2c2100",
+    "--surface-accent": "#3c2f00",
+    "--surface-accent-high": "#4d3d00",
+    "--surface-accent-higher": "#5e4b00",
+    "--surface-accent-highest": "#6e5800",
+    "--border-accent-faint": "#2a2000",
+    "--border-accent-subtle": "#514100",
+    "--border-accent": "#816800",
+    "--border-accent-medium": "#b09227",
+    "--border-accent-strong": "#dabb57",
+    "--text-accent": "#c3a43e",
+    "--text-accent-secondary": "#aa913e",
+    "--text-accent-tertiary": "#7b6b39",
+    "--text-accent-muted": "#4f4731",
+    "--text-accent-disabled": "#3a362c",
+    "--color-special-100": "#efecff",
+    "--color-special-200": "#cfc5ff",
+    "--color-special-300": "#ae96ff",
+    "--color-special-400": "#966cff",
+    "--color-special-500": "#8b5cf6",
+    "--color-special-600": "#7f4de7",
+    "--color-special-700": "#6830ca",
+    "--color-special-800": "#4f00a6",
+    "--color-special-850": "#30006a",
+    "--color-special-900": "#130033",
+    "--color-special-950": "#03000d",
+    "--surface-special-lowest": "#0f002b",
+    "--surface-special-lower": "#1b0042",
+    "--surface-special-low": "#2a005e",
+    "--surface-special": "#39007d",
+    "--surface-special-high": "#4a009d",
+    "--surface-special-higher": "#5915b6",
+    "--surface-special-highest": "#662cc7",
+    "--border-special-faint": "#29005c",
+    "--border-special-subtle": "#4e00a6",
+    "--border-special": "#7441da",
+    "--border-special-medium": "#9c77ff",
+    "--border-special-strong": "#c0b0ff",
+    "--text-special": "#ab92ff",
+    "--text-special-secondary": "#9976f9",
+    "--text-special-tertiary": "#6f5bad",
+    "--text-special-muted": "#484167",
+    "--text-special-disabled": "#363346",
+    "--color-success-100": "#c7ffd1",
+    "--color-success-200": "#73ec91",
+    "--color-success-300": "#49c66d",
+    "--color-success-400": "#21a951",
+    "--color-success-500": "#009c45",
+    "--color-success-600": "#008d3e",
+    "--color-success-700": "#007130",
+    "--color-success-800": "#005221",
+    "--color-success-850": "#003211",
+    "--color-success-900": "#001404",
+    "--color-success-950": "#000300",
+    "--surface-success-lowest": "#001003",
+    "--surface-success-lower": "#001c07",
+    "--surface-success-low": "#002b0e",
+    "--surface-success": "#003c16",
+    "--surface-success-high": "#004d1e",
+    "--surface-success-higher": "#005e27",
+    "--surface-success-highest": "#006e2e",
+    "--border-success-faint": "#002a0d",
+    "--border-success-subtle": "#005120",
+    "--border-success": "#008037",
+    "--border-success-medium": "#2eb058",
+    "--border-success-strong": "#61db80",
+    "--text-success": "#46c36a",
+    "--text-success-secondary": "#44aa60",
+    "--text-success-tertiary": "#3e7b4c",
+    "--text-success-muted": "#344f39",
+    "--text-success-disabled": "#2d3a2f",
+    "--color-warning-100": "#ffeadf",
+    "--color-warning-200": "#ffbe9c",
+    "--color-warning-300": "#fa8640",
+    "--color-warning-400": "#db691c",
+    "--color-warning-500": "#cd5d00",
+    "--color-warning-600": "#b95300",
+    "--color-warning-700": "#964200",
+    "--color-warning-800": "#6d2e00",
+    "--color-warning-850": "#441a00",
+    "--color-warning-900": "#1f0700",
+    "--color-warning-950": "#060000",
+    "--surface-warning-lowest": "#190500",
+    "--surface-warning-lower": "#280c00",
+    "--surface-warning-low": "#3c1600",
+    "--surface-warning": "#512000",
+    "--surface-warning-high": "#662b00",
+    "--surface-warning-higher": "#7d3600",
+    "--surface-warning-highest": "#914000",
+    "--border-warning-faint": "#3a1500",
+    "--border-warning-subtle": "#6c2e00",
+    "--border-warning": "#a84b00",
+    "--border-warning-medium": "#e27026",
+    "--border-warning-strong": "#ffa473",
+    "--text-warning": "#f7833d",
+    "--text-warning-secondary": "#d7763d",
+    "--text-warning-tertiary": "#985b39",
+    "--text-warning-muted": "#5d4031",
+    "--text-warning-disabled": "#41332b",
+    "--color-info-100": "#cff7ff",
+    "--color-info-200": "#8ad4e3",
+    "--color-info-300": "#5ca6b4",
+    "--color-info-400": "#388391",
+    "--color-info-500": "#277482",
+    "--color-info-600": "#196977",
+    "--color-info-700": "#005562",
+    "--color-info-800": "#003d47",
+    "--color-info-850": "#00252c",
+    "--color-info-900": "#000f13",
+    "--color-info-950": "#000203",
+    "--surface-info-lowest": "#000e12",
+    "--surface-info-lower": "#001a1f",
+    "--surface-info-low": "#02282e",
+    "--surface-info": "#12363d",
+    "--surface-info-high": "#21454c",
+    "--surface-info-higher": "#30545b",
+    "--surface-info-highest": "#3e6169",
+    "--border-info-faint": "#00272e",
+    "--border-info-subtle": "#004c57",
+    "--border-info": "#297684",
+    "--border-info-medium": "#58a2b0",
+    "--border-info-strong": "#82cbda",
+    "--text-info": "#bef4ff",
+    "--text-info-secondary": "#60c8dc",
+    "--text-info-tertiary": "#5092a0",
+    "--text-info-muted": "#3e6067",
+    "--text-info-disabled": "#203438",
+    "--color-danger-100": "#ffe8e8",
+    "--color-danger-200": "#ffbabb",
+    "--color-danger-300": "#ff7a83",
+    "--color-danger-400": "#f63f59",
+    "--color-danger-500": "#e72e4e",
+    "--color-danger-600": "#d71641",
+    "--color-danger-700": "#b00031",
+    "--color-danger-800": "#810021",
+    "--color-danger-850": "#520012",
+    "--color-danger-900": "#260004",
+    "--color-danger-950": "#080000",
+    "--surface-danger-lowest": "#1f0003",
+    "--surface-danger-lower": "#310007",
+    "--surface-danger-low": "#48000e",
+    "--surface-danger": "#600016",
+    "--surface-danger-high": "#7a001f",
+    "--surface-danger-higher": "#930028",
+    "--surface-danger-highest": "#ab002f",
+    "--border-danger-faint": "#46000e",
+    "--border-danger-subtle": "#800021",
+    "--border-danger": "#c70039",
+    "--border-danger-medium": "#fe4860",
+    "--border-danger-strong": "#ff9fa2",
+    "--text-danger": "#ff757e",
+    "--text-danger-secondary": "#ef5766",
+    "--text-danger-tertiary": "#a84950",
+    "--text-danger-muted": "#65393b",
+    "--text-danger-disabled": "#463030",
+    "--page-bg": "#10302d",
+    "--color-neutral-950": "#000000",
+    "--page-bg-attachment": "scroll",
+    "--gradient-1": "linear-gradient(90deg, var(--color-brand-500) 0%, var(--color-accent-500) 100%)",
+    "--gradient-2": "linear-gradient(135deg, var(--color-brand-500) 0%, var(--color-special-500) 100%)",
+    "--gradient-3": "linear-gradient(90deg, var(--color-success-500) 0%, var(--color-info-500) 100%)",
+    "--gradient-4": "linear-gradient(45deg, var(--color-danger-500) 0%, var(--color-warning-500) 100%)",
+    "--border-neutral": "#656b6f",
+    "--badge-trait-surface": "var(--surface-brand)",
+    "--badge-trait-text": "var(--text-brand)",
+    "--badge-trait-text-font-family": "var(--font-sans)",
+    "--badge-trait-text-font-size": "var(--font-size-sm)",
+    "--badge-trait-text-font-weight": "var(--font-weight-light)",
+    "--badge-trait-text-line-height": "var(--line-height-xs)",
+    "--badge-trait-border": "var(--border-brand-medium)",
+    "--badge-trait-border-width": "var(--border-width-1)",
+    "--badge-trait-radius": "var(--radius-full)",
+    "--badge-trait-padding": "var(--space-6)",
+    "--badge-trait-shadow": "transparent",
+    "--sectiondivider-padding": "var(--space-16)",
+    "--sectiondivider-title": "var(--text-primary)",
+    "--sectiondivider-title-font-family": "var(--font-display)",
+    "--sectiondivider-title-font-size": "var(--font-size-5xl)",
+    "--sectiondivider-title-font-weight": "var(--font-weight-normal)",
+    "--sectiondivider-title-line-height": "var(--line-height-xs)",
+    "--sectiondivider-title-border-width": "var(--border-width-4)",
+    "--sectiondivider-title-stroke-color": "var(--surface-canvas-lowest)",
+    "--sectiondivider-description": "var(--text-secondary)",
+    "--sectiondivider-description-font-family": "var(--font-sans)",
+    "--sectiondivider-description-font-size": "var(--font-size-md)",
+    "--sectiondivider-description-font-weight": "var(--font-weight-normal)",
+    "--sectiondivider-description-line-height": "var(--line-height-md)",
+    "--dialog-primary-default-surface": "var(--surface-neutral-high)",
+    "--dialog-primary-default-text": "var(--text-primary)",
+    "--dialog-primary-default-border": "var(--border-neutral-medium)",
+    "--dialog-primary-default-border-width": "var(--border-width-1)",
+    "--dialog-primary-default-radius": "var(--radius-md)",
+    "--dialog-primary-default-padding": "var(--space-8)",
+    "--dialog-primary-hover-surface": "var(--surface-neutral-higher)",
+    "--dialog-primary-hover-text": "var(--text-primary)",
+    "--dialog-primary-hover-border": "var(--border-neutral-strong)",
+    "--dialog-primary-hover-border-width": "var(--border-width-1)",
+    "--dialog-primary-hover-radius": "var(--radius-md)",
+    "--dialog-primary-hover-padding": "var(--space-8)",
+    "--dialog-secondary-default-text": "var(--text-primary)",
+    "--dialog-secondary-default-border": "var(--border-neutral-medium)",
+    "--dialog-secondary-default-border-width": "var(--border-width-1)",
+    "--dialog-secondary-default-radius": "var(--radius-md)",
+    "--dialog-secondary-default-padding": "var(--space-8)",
+    "--dialog-secondary-hover-surface": "var(--surface-neutral-lower)",
+    "--dialog-secondary-hover-text": "var(--text-primary)",
+    "--dialog-secondary-hover-border": "var(--border-neutral-strong)",
+    "--dialog-secondary-hover-border-width": "var(--border-width-1)",
+    "--dialog-secondary-hover-radius": "var(--radius-md)",
+    "--dialog-secondary-hover-padding": "var(--space-8)",
+    "--overlay-lowest": "rgba(20, 3, 0, 0.12)",
+    "--overlay-lower": "rgba(20, 3, 0, 0.25)",
+    "--overlay-low": "rgba(20, 3, 0, 0.38)",
+    "--overlay": "rgba(20, 3, 0, 0.51)",
+    "--overlay-high": "rgba(20, 3, 0, 0.64)",
+    "--overlay-higher": "rgba(20, 3, 0, 0.77)",
+    "--overlay-highest": "rgba(20, 3, 0, 0.9)",
+    "--hover-low": "rgba(255, 255, 255, 0.05)",
+    "--hover": "rgba(255, 255, 255, 0.1)",
+    "--hover-high": "rgba(255, 255, 255, 0.15)",
+    "--shadow-sm": "1px 1px 2px 0px hsla(237, 18%, 3%, 0.9)",
+    "--shadow-md": "3px 3px 6px 0px hsla(237, 18%, 3%, 0.9)",
+    "--shadow-lg": "5px 5px 9px 0px hsla(237, 18%, 3%, 0.9)",
+    "--shadow-xl": "6px 7px 13px 0px hsla(237, 18%, 3%, 0.9)",
+    "--shadow-2xl": "8px 9px 16px 0px hsla(237, 18%, 3%, 0.9)"
+  },
+  "fontSources": [
+    {
+      "id": "src_typekit_jes8oow",
+      "kind": "typekit",
+      "url": "https://use.typekit.net/jes8oow.css",
+      "label": "Adobe Typekit",
+      "families": [
+        {
+          "id": "src_typekit_jes8oow:fira-code",
+          "name": "fira-code",
+          "cssName": "\"fira-code\""
+        }
+      ]
+    },
+    {
+      "id": "src_fraunces_local",
+      "kind": "font-face",
+      "cssText": "@font-face {\n  font-family: \"Fraunces\";\n  src: url('/src/system/styles/fonts/Fraunces/Fraunces-roman-latin.woff2') format('woff2');\n  font-weight: 100 900;\n  font-style: normal;\n  font-display: swap;\n}\n@font-face {\n  font-family: \"Fraunces\";\n  src: url('/src/system/styles/fonts/Fraunces/Fraunces-italic-latin.woff2') format('woff2');\n  font-weight: 100 900;\n  font-style: italic;\n  font-display: swap;\n}",
+      "label": "Local",
+      "families": [
+        {
+          "id": "src_fraunces_local:fraunces",
+          "name": "Fraunces",
+          "cssName": "\"Fraunces\"",
+          "weights": [
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "id": "src_manrope_local",
+      "kind": "font-face",
+      "cssText": "@font-face {\n  font-family: \"Manrope\";\n  src: url('/src/system/styles/fonts/Manrope/Manrope-latin.woff2') format('woff2');\n  font-weight: 200 800;\n  font-style: normal;\n  font-display: swap;\n}",
+      "label": "Local",
+      "families": [
+        {
+          "id": "src_manrope_local:manrope",
+          "name": "Manrope",
+          "cssName": "\"Manrope\"",
+          "weights": [
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800
+          ]
+        }
+      ]
+    },
+    {
+      "id": "src_google_arvo",
+      "kind": "google",
+      "url": "https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap",
+      "label": "Google Fonts",
+      "families": [
+        {
+          "id": "src_google_arvo:arvo",
+          "name": "Arvo",
+          "cssName": "\"Arvo\"",
+          "weights": [
+            400,
+            700
+          ]
+        }
+      ]
+    }
+  ],
+  "fontStacks": [
+    {
+      "variable": "--font-display",
+      "slots": [
+        {
+          "kind": "project",
+          "familyId": "src_google_arvo:arvo"
+        },
+        {
+          "kind": "project",
+          "familyId": "src_fraunces_local:fraunces"
+        },
+        {
+          "kind": "generic",
+          "value": "serif"
+        }
+      ]
+    },
+    {
+      "variable": "--font-sans",
+      "slots": [
+        {
+          "kind": "project",
+          "familyId": "src_manrope_local:manrope"
+        },
+        {
+          "kind": "system",
+          "preset": "system-ui-sans"
+        },
+        {
+          "kind": "generic",
+          "value": "sans-serif"
+        }
+      ]
+    },
+    {
+      "variable": "--font-serif",
+      "slots": [
+        {
+          "kind": "project",
+          "familyId": "src_fraunces_local:fraunces"
+        },
+        {
+          "kind": "generic",
+          "value": "serif"
+        }
+      ]
+    },
+    {
+      "variable": "--font-mono",
+      "slots": [
+        {
+          "kind": "project",
+          "familyId": "src_typekit_jes8oow:fira-code"
+        },
+        {
+          "kind": "system",
+          "preset": "system-ui-mono"
+        },
+        {
+          "kind": "generic",
+          "value": "monospace"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 2
+}

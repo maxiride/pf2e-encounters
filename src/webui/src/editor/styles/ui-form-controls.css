@@ -1,0 +1,185 @@
+/* Editor form controls — `--ui-*` tokens only. Theme-immune; see CONVENTIONS.md. */
+
+/* ========================================
+   Form Field Layouts
+   ======================================== */
+
+/* Vertical Layout - Label Above Input/Select */
+/* Usage: Add .ui-form-field-vertical to container div wrapping label + input/select */
+.ui-form-field-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--ui-space-4);
+}
+
+.ui-form-label {
+  margin-bottom: 0;
+  font-size: var(--ui-font-size-md);
+  color: var(--ui-text-primary);
+  font-weight: var(--ui-font-weight-normal);
+}
+
+/* Horizontal Layout - Label Beside Input/Select */
+/* Usage: Add .ui-form-field-horizontal to container div wrapping label + input/select */
+.ui-form-field-horizontal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ui-space-8);
+}
+
+.ui-form-field-horizontal .ui-form-label {
+  white-space: nowrap;
+}
+
+/* Inline Layout - Label and Input/Select Close Together */
+/* Usage: Add .ui-form-field-inline to container div wrapping label + input/select */
+.ui-form-field-inline {
+  display: flex;
+  align-items: center;
+  gap: var(--ui-space-12);
+}
+
+.ui-form-field-inline .ui-form-label {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ui-form-field-inline .ui-form-select,
+.ui-form-field-inline .ui-form-input {
+  flex-shrink: 0;
+}
+
+/* ========================================
+   Form Control Styling
+   ======================================== */
+
+/* Select/Dropdown Styling */
+.ui-form-select {
+  /* No vertical padding - let min-height and line-height center text naturally */
+  padding: 0 var(--ui-space-16);
+  padding-right: var(--ui-space-32);
+  min-height: 2.375rem;  /* ~38px to match button height */
+  background-color: var(--ui-surface-lowest);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-md);
+  color: var(--ui-text-primary);
+  font-family: var(--ui-font-sans);
+  font-size: var(--ui-font-size-md);
+  font-weight: var(--ui-font-weight-normal);
+  line-height: var(--ui-line-height-normal);
+  vertical-align: middle;
+  cursor: pointer;
+  transition: all var(--ui-transition-fast);
+  overflow: visible;
+  box-sizing: border-box;
+  /* Reset browser defaults */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Custom dropdown arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--ui-space-12) center;
+}
+
+.ui-form-select:hover:not(:disabled) {
+  background-color: var(--ui-surface-low);
+  border-color: var(--ui-border-high);
+}
+
+.ui-form-select:focus {
+  outline: none;
+  border-color: var(--ui-border-higher);
+  box-shadow: 0 0 0 2px hsla(0, 58%, 50%, 0.2);
+}
+
+.ui-form-select:focus-visible {
+  outline: 2px solid var(--ui-highlight);
+  outline-offset: 2px;
+}
+
+.ui-form-select:active:not(:disabled) {
+  background-color: var(--ui-surface);
+}
+
+.ui-form-select:disabled {
+  background-color: var(--ui-surface-lowest);
+  border-color: var(--ui-border-low);
+  color: var(--ui-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Option Styling - Critical for Legibility */
+/* Note: Most option styling is controlled by browser/OS and cannot be fully overridden */
+/* These styles apply where browsers allow (limited support in Chrome/Firefox) */
+.ui-form-select option {
+  background-color: var(--ui-surface-lowest);
+  color: var(--ui-text-primary);
+  padding: var(--ui-space-8) var(--ui-space-12);
+  min-height: 2rem;
+  font-size: var(--ui-font-size-md);
+  font-family: var(--ui-font-sans);
+  line-height: var(--ui-line-height-normal);
+}
+
+/* Disabled options */
+.ui-form-select option:disabled {
+  color: var(--ui-text-disabled);
+}
+
+/* Input Field Styling */
+.ui-form-input {
+  padding: var(--ui-space-8);
+  background: var(--ui-surface-lowest);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-md);
+  color: var(--ui-text-primary);
+  font-family: var(--ui-font-sans);
+  font-size: var(--ui-font-size-md);
+  transition: border-color var(--ui-transition-fast);
+}
+
+.ui-form-input:hover:not(:disabled) {
+  border-color: var(--ui-border-higher);
+  background: var(--ui-surface-low);
+}
+
+.ui-form-input:focus {
+  outline: none;
+  border-color: var(--ui-border-higher);
+  box-shadow: 0 0 0 3px hsla(240, 5%, 38%, 0.2);
+}
+
+.ui-form-input:disabled {
+  background: var(--ui-surface-lowest);
+  border-color: var(--ui-border-low);
+  color: var(--ui-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Placeholder text styling */
+.ui-form-input::placeholder {
+  color: var(--ui-text-muted);
+}
+
+/* Number input spinner buttons */
+.ui-form-input[type="number"]::-webkit-inner-spin-button,
+.ui-form-input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+/* Checkbox and Radio Styling */
+.ui-form-checkbox,
+.ui-form-radio {
+  cursor: pointer;
+  width: var(--ui-space-16);
+  height: var(--ui-space-16);
+  accent-color: var(--ui-gray-600);
+}
+
+.ui-form-checkbox:disabled,
+.ui-form-radio:disabled {
+  cursor: not-allowed;
+}

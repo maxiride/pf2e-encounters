@@ -1,0 +1,2279 @@
+{
+  "name": "My Theme",
+  "createdAt": "2026-05-19T15:35:49.317Z",
+  "updatedAt": "2026-05-23T01:07:47.807Z",
+  "editorConfigs": {
+    "Neutral": {
+      "baseColor": "#808080",
+      "tintHue": 236,
+      "tintChroma": 0.067,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 86,
+          "inDx": -16.188139217854378,
+          "inDy": 19,
+          "outDx": 16.188139217854378,
+          "outDy": -19
+        },
+        {
+          "x": 100,
+          "y": 11,
+          "inDx": -45.49158094126201,
+          "inDy": 19,
+          "outDx": 45.49158094126201,
+          "outDy": -19
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 76,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 123,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 67,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 156,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 65,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 73,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 197,
+              "inDx": -13.415374991989074,
+              "inDy": 34,
+              "outDx": 13.415374991989074,
+              "outDy": -34
+            },
+            {
+              "x": 100,
+              "y": 60,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 127,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 2,
+              "inDx": -37.749916095522494,
+              "inDy": 2,
+              "outDx": 37.749916095522494,
+              "outDy": -2
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Alternate": {
+      "baseColor": "#808080",
+      "tintHue": 53,
+      "tintChroma": 0.041,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 86,
+          "inDx": -16.188139217854378,
+          "inDy": 19,
+          "outDx": 16.188139217854378,
+          "outDy": -19
+        },
+        {
+          "x": 100,
+          "y": 11,
+          "inDx": -45.49158094126201,
+          "inDy": 19,
+          "outDx": 45.49158094126201,
+          "outDy": -19
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 76,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 123,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 8,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 67,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 156,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 65,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 73,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 197,
+              "inDx": -13.415374991989074,
+              "inDy": 34,
+              "outDx": 13.415374991989074,
+              "outDy": -34
+            },
+            {
+              "x": 100,
+              "y": 60,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 127,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 2,
+              "inDx": -37.749916095522494,
+              "inDy": 2,
+              "outDx": 37.749916095522494,
+              "outDy": -2
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0,
+        "Text-lightness": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Background": {
+      "baseColor": "#3c3c53",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 86,
+          "inDx": -16.188139217854378,
+          "inDy": 19,
+          "outDx": 16.188139217854378,
+          "outDy": -19
+        },
+        {
+          "x": 100,
+          "y": 11,
+          "inDx": -45.49158094126201,
+          "inDy": 19,
+          "outDx": 45.49158094126201,
+          "outDy": -19
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 76,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 123,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 67,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 156,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 65,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 73,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 188,
+              "inDx": -25.05119014113117,
+              "inDy": 50,
+              "outDx": 25.05119014113117,
+              "outDy": -50
+            },
+            {
+              "x": 100,
+              "y": 89,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 180,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 2,
+              "inDx": -37.749916095522494,
+              "inDy": 2,
+              "outDx": 37.749916095522494,
+              "outDy": -2
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true,
+      "emptyMode": "solid",
+      "emptyStep": "850",
+      "gradientStyle": "linear",
+      "gradientAngle": 180,
+      "gradientReverse": false,
+      "gradientStops": [
+        {
+          "position": 0,
+          "paletteLabel": "800"
+        },
+        {
+          "position": 100,
+          "paletteLabel": "950"
+        }
+      ],
+      "gradientSize": "page"
+    },
+    "Brand": {
+      "baseColor": "#73ba40",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 86,
+          "inDx": -16.188139217854378,
+          "inDy": 19,
+          "outDx": 16.188139217854378,
+          "outDy": -19
+        },
+        {
+          "x": 100,
+          "y": 11,
+          "inDx": -45.49158094126201,
+          "inDy": 19,
+          "outDx": 45.49158094126201,
+          "outDy": -19
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 76,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 123,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 67,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 156,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 65,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 73,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 113,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 51,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 127,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 2,
+              "inDx": -37.749916095522494,
+              "inDy": 2,
+              "outDx": 37.749916095522494,
+              "outDy": -2
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0,
+        "Text-saturation": 6,
+        "Text-lightness": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Accent": {
+      "baseColor": "#008582",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 86,
+          "inDx": -16.188139217854378,
+          "inDy": 19,
+          "outDx": 16.188139217854378,
+          "outDy": -19
+        },
+        {
+          "x": 100,
+          "y": 11,
+          "inDx": -45.49158094126201,
+          "inDy": 19,
+          "outDx": 45.49158094126201,
+          "outDy": -19
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 76,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 123,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 67,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 156,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 65,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 73,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 113,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 51,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 127,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 2,
+              "inDx": -37.749916095522494,
+              "inDy": 2,
+              "outDx": 37.749916095522494,
+              "outDy": -2
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Special": {
+      "baseColor": "#8b5cf6",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 86,
+          "inDx": -16.188139217854378,
+          "inDy": 19,
+          "outDx": 16.188139217854378,
+          "outDy": -19
+        },
+        {
+          "x": 100,
+          "y": 11,
+          "inDx": -45.49158094126201,
+          "inDy": 19,
+          "outDx": 45.49158094126201,
+          "outDy": -19
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 76,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 123,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 67,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 156,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 65,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 73,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 129,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 25,
+              "y": 99,
+              "inDx": -14.487522876292367,
+              "inDy": 14.232211785417547,
+              "outDx": 23.120259446385028,
+              "outDy": -22.712815143382414
+            },
+            {
+              "x": 100,
+              "y": 51,
+              "inDx": -18.443198204040527,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 127,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 2,
+              "inDx": -37.749916095522494,
+              "inDy": 2,
+              "outDx": 37.749916095522494,
+              "outDy": -2
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Success": {
+      "baseColor": "#009c45",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 86,
+          "inDx": -16.188139217854378,
+          "inDy": 19,
+          "outDx": 16.188139217854378,
+          "outDy": -19
+        },
+        {
+          "x": 100,
+          "y": 11,
+          "inDx": -45.49158094126201,
+          "inDy": 19,
+          "outDx": 45.49158094126201,
+          "outDy": -19
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 76,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 123,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 67,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 156,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 65,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 73,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 145,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 25,
+              "y": 99,
+              "inDx": -14.487522876292367,
+              "inDy": 14.232211785417547,
+              "outDx": 23.120259446385028,
+              "outDy": -22.712815143382414
+            },
+            {
+              "x": 100,
+              "y": 51,
+              "inDx": -18.443198204040527,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 90,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 26,
+              "y": 84,
+              "inDx": -14.661871885761727,
+              "inDy": 21.608076543058374,
+              "outDx": 21.5348071795068,
+              "outDy": -31.73713189559838
+            },
+            {
+              "x": 100,
+              "y": 16,
+              "inDx": -22.458888084560982,
+              "inDy": 1.1898775100708008,
+              "outDx": 37.749916095522494,
+              "outDy": -2
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0,
+        "Text-lightness": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Warning": {
+      "baseColor": "#ffb01f",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 86,
+          "inDx": -16.188139217854378,
+          "inDy": 19,
+          "outDx": 16.188139217854378,
+          "outDy": -19
+        },
+        {
+          "x": 100,
+          "y": 11,
+          "inDx": -45.49158094126201,
+          "inDy": 19,
+          "outDx": 45.49158094126201,
+          "outDy": -19
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 76,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 123,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 89,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 116,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 180,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 73,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 117,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 51,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 137,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 2,
+              "inDx": -37.749916095522494,
+              "inDy": 2,
+              "outDx": 37.749916095522494,
+              "outDy": -2
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Info": {
+      "baseColor": "#0080ff",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 86,
+          "inDx": -16.188139217854378,
+          "inDy": 19,
+          "outDx": 16.188139217854378,
+          "outDy": -19
+        },
+        {
+          "x": 100,
+          "y": 11,
+          "inDx": -45.49158094126201,
+          "inDy": 19,
+          "outDx": 45.49158094126201,
+          "outDy": -19
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 76,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 123,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 67,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 156,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 65,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 73,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 129,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 25,
+              "y": 99,
+              "inDx": -14.487522876292367,
+              "inDy": 14.232211785417547,
+              "outDx": 23.120259446385028,
+              "outDy": -22.712815143382414
+            },
+            {
+              "x": 100,
+              "y": 51,
+              "inDx": -18.443198204040527,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 127,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 2,
+              "inDx": -37.749916095522494,
+              "inDy": 2,
+              "outDx": 37.749916095522494,
+              "outDy": -2
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0,
+        "Surfaces-lightness": 0,
+        "Surfaces-saturation": -44,
+        "Text-lightness": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    },
+    "Danger": {
+      "baseColor": "#d10023",
+      "tintHue": 240,
+      "tintChroma": 0.04,
+      "lightnessCurve": [
+        {
+          "x": 0,
+          "y": 86,
+          "inDx": -16.188139217854378,
+          "inDy": 19,
+          "outDx": 16.188139217854378,
+          "outDy": -19
+        },
+        {
+          "x": 100,
+          "y": 11,
+          "inDx": -45.49158094126201,
+          "inDy": 19,
+          "outDx": 45.49158094126201,
+          "outDy": -19
+        }
+      ],
+      "saturationCurve": [
+        {
+          "x": 0,
+          "y": 76,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 123,
+          "inDx": 0,
+          "inDy": 0,
+          "outDx": 0,
+          "outDy": 0
+        }
+      ],
+      "grayLightnessCurve": [
+        {
+          "x": 0,
+          "y": 92,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 3,
+          "inDx": -5,
+          "inDy": 0,
+          "outDx": 5,
+          "outDy": 0
+        }
+      ],
+      "graySaturationCurve": [
+        {
+          "x": 0,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        },
+        {
+          "x": 100,
+          "y": 20,
+          "inDx": -30,
+          "inDy": 0,
+          "outDx": 30,
+          "outDy": 0
+        }
+      ],
+      "scaleCurves": {
+        "Surfaces": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 15,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 67,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 156,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 65,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ]
+        },
+        "Borders": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 25,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 73,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            },
+            {
+              "x": 100,
+              "y": 100,
+              "inDx": -30,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ]
+        },
+        "Text": {
+          "lightness": [
+            {
+              "x": 0,
+              "y": 129,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 25,
+              "y": 96,
+              "inDx": -14.781845559453089,
+              "inDy": 9.099491159608732,
+              "outDx": 23.09903042218575,
+              "outDy": -14.21943033275673
+            },
+            {
+              "x": 100,
+              "y": 64,
+              "inDx": -18.293423652648926,
+              "inDy": 0,
+              "outDx": 30,
+              "outDy": 0
+            }
+          ],
+          "saturation": [
+            {
+              "x": 0,
+              "y": 149,
+              "inDx": 0,
+              "inDy": 0,
+              "outDx": 0,
+              "outDy": 0
+            },
+            {
+              "x": 26,
+              "y": 81,
+              "inDx": -15.114526584781416,
+              "inDy": 24.757692026976258,
+              "outDx": 21.497894286580312,
+              "outDy": -35.2136894920381
+            },
+            {
+              "x": 100,
+              "y": 2,
+              "inDx": -22.165802922461467,
+              "inDy": 1.1743497848510742,
+              "outDx": 37.749916095522494,
+              "outDy": -2
+            }
+          ]
+        }
+      },
+      "curveOffset": {
+        "lightness": 0,
+        "saturation": 0
+      },
+      "overrides": {},
+      "snappedScales": [],
+      "anchorToBase": true
+    }
+  },
+  "cssVariables": {
+    "--gradient-1": "linear-gradient(90deg, var(--color-brand-500) 0%, var(--color-accent-500) 100%)",
+    "--gradient-2": "linear-gradient(135deg, var(--color-brand-500) 0%, var(--color-special-500) 100%)",
+    "--gradient-3": "linear-gradient(90deg, var(--color-success-500) 0%, var(--color-info-500) 100%)",
+    "--gradient-4": "linear-gradient(45deg, var(--color-danger-500) 0%, var(--color-warning-500) 100%)",
+    "--badge-trait-surface": "var(--surface-brand)",
+    "--badge-trait-text": "var(--text-brand)",
+    "--badge-trait-text-font-family": "var(--font-sans)",
+    "--badge-trait-text-font-size": "var(--font-size-sm)",
+    "--badge-trait-text-font-weight": "var(--font-weight-light)",
+    "--badge-trait-text-line-height": "var(--line-height-xs)",
+    "--badge-trait-border": "var(--border-brand-medium)",
+    "--badge-trait-border-width": "var(--border-width-1)",
+    "--badge-trait-radius": "var(--radius-full)",
+    "--badge-trait-padding": "var(--space-6)",
+    "--badge-trait-shadow": "transparent",
+    "--sectiondivider-padding": "var(--space-16)",
+    "--sectiondivider-title": "var(--text-primary)",
+    "--sectiondivider-title-font-family": "var(--font-display)",
+    "--sectiondivider-title-font-size": "var(--font-size-5xl)",
+    "--sectiondivider-title-font-weight": "var(--font-weight-normal)",
+    "--sectiondivider-title-line-height": "var(--line-height-xs)",
+    "--sectiondivider-title-border-width": "var(--border-width-4)",
+    "--sectiondivider-title-stroke-color": "var(--surface-canvas-lowest)",
+    "--sectiondivider-description": "var(--text-secondary)",
+    "--sectiondivider-description-font-family": "var(--font-sans)",
+    "--sectiondivider-description-font-size": "var(--font-size-md)",
+    "--sectiondivider-description-font-weight": "var(--font-weight-normal)",
+    "--sectiondivider-description-line-height": "var(--line-height-md)",
+    "--dialog-primary-default-surface": "var(--surface-neutral-high)",
+    "--dialog-primary-default-text": "var(--text-primary)",
+    "--dialog-primary-default-border": "var(--border-neutral-medium)",
+    "--dialog-primary-default-border-width": "var(--border-width-1)",
+    "--dialog-primary-default-radius": "var(--radius-md)",
+    "--dialog-primary-default-padding": "var(--space-8)",
+    "--dialog-primary-hover-surface": "var(--surface-neutral-higher)",
+    "--dialog-primary-hover-text": "var(--text-primary)",
+    "--dialog-primary-hover-border": "var(--border-neutral-strong)",
+    "--dialog-primary-hover-border-width": "var(--border-width-1)",
+    "--dialog-primary-hover-radius": "var(--radius-md)",
+    "--dialog-primary-hover-padding": "var(--space-8)",
+    "--dialog-secondary-default-text": "var(--text-primary)",
+    "--dialog-secondary-default-border": "var(--border-neutral-medium)",
+    "--dialog-secondary-default-border-width": "var(--border-width-1)",
+    "--dialog-secondary-default-radius": "var(--radius-md)",
+    "--dialog-secondary-default-padding": "var(--space-8)",
+    "--dialog-secondary-hover-surface": "var(--surface-neutral-lower)",
+    "--dialog-secondary-hover-text": "var(--text-primary)",
+    "--dialog-secondary-hover-border": "var(--border-neutral-strong)",
+    "--dialog-secondary-hover-border-width": "var(--border-width-1)",
+    "--dialog-secondary-hover-radius": "var(--radius-md)",
+    "--dialog-secondary-hover-padding": "var(--space-8)",
+    "--overlay-lowest": "rgba(20, 3, 0, 0.12)",
+    "--overlay-lower": "rgba(20, 3, 0, 0.25)",
+    "--overlay-low": "rgba(20, 3, 0, 0.38)",
+    "--overlay": "rgba(20, 3, 0, 0.51)",
+    "--overlay-high": "rgba(20, 3, 0, 0.64)",
+    "--overlay-higher": "rgba(20, 3, 0, 0.77)",
+    "--overlay-highest": "rgba(20, 3, 0, 0.9)",
+    "--hover-low": "rgba(255, 255, 255, 0.05)",
+    "--hover": "rgba(255, 255, 255, 0.1)",
+    "--hover-high": "rgba(255, 255, 255, 0.15)",
+    "--shadow-sm": "1px 1px 2px 0px hsla(237, 18%, 3%, 0.9)",
+    "--shadow-md": "3px 3px 6px 0px hsla(237, 18%, 3%, 0.9)",
+    "--shadow-lg": "5px 5px 9px 0px hsla(237, 18%, 3%, 0.9)",
+    "--shadow-xl": "6px 7px 13px 0px hsla(237, 18%, 3%, 0.9)",
+    "--shadow-2xl": "8px 9px 16px 0px hsla(237, 18%, 3%, 0.9)"
+  },
+  "fontSources": [
+    {
+      "id": "src_typekit_jes8oow",
+      "kind": "typekit",
+      "url": "https://use.typekit.net/jes8oow.css",
+      "label": "Adobe Typekit",
+      "families": [
+        {
+          "id": "src_typekit_jes8oow:fira-code",
+          "name": "fira-code",
+          "cssName": "\"fira-code\""
+        }
+      ]
+    },
+    {
+      "id": "src_manrope_local",
+      "kind": "font-face",
+      "cssText": "@font-face {\n  font-family: \"Manrope\";\n  src: url('/src/system/styles/fonts/Manrope/Manrope-latin.woff2') format('woff2');\n  font-weight: 200 800;\n  font-style: normal;\n  font-display: swap;\n}",
+      "label": "Local",
+      "families": [
+        {
+          "id": "src_manrope_local:manrope",
+          "name": "Manrope",
+          "cssName": "\"Manrope\"",
+          "weights": [
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800
+          ]
+        }
+      ]
+    },
+    {
+      "id": "src_google_arvo",
+      "kind": "google",
+      "url": "https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap",
+      "label": "Google Fonts",
+      "families": [
+        {
+          "id": "src_google_arvo:arvo",
+          "name": "Arvo",
+          "cssName": "\"Arvo\"",
+          "weights": [
+            400,
+            700
+          ]
+        }
+      ]
+    },
+    {
+      "id": "src_google_eck6qp6s",
+      "kind": "google",
+      "url": "https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap",
+      "label": "Google Fonts",
+      "families": [
+        {
+          "id": "src_google_eck6qp6s:gfs-didot",
+          "name": "GFS Didot",
+          "cssName": "\"GFS Didot\"",
+          "weights": [
+            400
+          ]
+        }
+      ]
+    }
+  ],
+  "fontStacks": [
+    {
+      "variable": "--font-display",
+      "slots": [
+        {
+          "kind": "project",
+          "familyId": "src_google_arvo:arvo"
+        },
+        {
+          "kind": "generic",
+          "value": "serif"
+        }
+      ]
+    },
+    {
+      "variable": "--font-sans",
+      "slots": [
+        {
+          "kind": "project",
+          "familyId": "src_manrope_local:manrope"
+        },
+        {
+          "kind": "system",
+          "preset": "system-ui-sans"
+        },
+        {
+          "kind": "generic",
+          "value": "sans-serif"
+        }
+      ]
+    },
+    {
+      "variable": "--font-serif",
+      "slots": [
+        {
+          "kind": "project",
+          "familyId": "src_google_eck6qp6s:gfs-didot"
+        },
+        {
+          "kind": "generic",
+          "value": "serif"
+        }
+      ]
+    },
+    {
+      "variable": "--font-mono",
+      "slots": [
+        {
+          "kind": "project",
+          "familyId": "src_typekit_jes8oow:fira-code"
+        },
+        {
+          "kind": "system",
+          "preset": "system-ui-mono"
+        },
+        {
+          "kind": "generic",
+          "value": "monospace"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 2
+}

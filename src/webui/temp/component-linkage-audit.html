@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Component linkage audit</title>
+<style>
+  :root {
+    --bg: #0e1116;
+    --panel: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --link: #79c0ff;
+    --linked-fg: #0d1117;
+    --warn: #d29922;
+    --good: #3fb950;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--bg); color: var(--text); font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; }
+  body { padding: 32px max(24px, calc(50% - 720px)); }
+  h1 { font-size: 28px; margin: 0 0 8px; }
+  h2 { font-size: 20px; margin: 32px 0 8px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  h2 .status { font-size: 13px; font-weight: 400; padding: 2px 8px; border-radius: 999px; }
+  h2 .status.reviewed { background: rgba(63,185,80,.12); color: var(--good); }
+  h2 .status.pending { background: rgba(210,153,34,.12); color: var(--warn); }
+  h2 .status.decision { background: rgba(248,81,73,.12); color: #f85149; }
+  h2 .file { font-size: 12px; color: var(--muted); font-weight: 400; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  h3 { font-size: 15px; margin: 20px 0 8px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+  p, li { color: var(--text); }
+  p.summary { color: var(--muted); margin: 4px 0 16px; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; background: var(--panel); padding: 1px 6px; border-radius: 4px; }
+  ul.legend { list-style: none; padding: 0; margin: 12px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px 16px; }
+  ul.legend li { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  ul.legend .swatch { width: 20px; height: 20px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 12px; color: var(--linked-fg); flex-shrink: 0; }
+  ul.legend .count { color: var(--muted); font-size: 12px; }
+  nav.toc { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin: 16px 0 8px; }
+  nav.toc ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 4px 12px; }
+  nav.toc a { color: var(--link); text-decoration: none; font-size: 13px; }
+  nav.toc a:hover { text-decoration: underline; }
+  details.front { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+  details.front summary { cursor: pointer; font-weight: 600; }
+  details.front[open] summary { margin-bottom: 8px; }
+
+  /* Matrix table */
+  .matrix-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--panel); }
+  table.matrix { border-collapse: separate; border-spacing: 0; font-size: 13px; }
+  table.matrix th, table.matrix td { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0; text-align: center; vertical-align: middle; }
+  table.matrix thead th { position: sticky; top: 0; background: var(--panel); z-index: 2; vertical-align: bottom; }
+  table.matrix thead th.col {
+    height: 140px;
+    width: 36px;
+    min-width: 36px;
+    padding: 6px 0 8px;
+    color: var(--text);
+    font-weight: 500;
+    font-size: 12px;
+  }
+  table.matrix thead th.col span {
+    display: inline-block;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    padding: 0 2px;
+  }
+  table.matrix tbody th.row {
+    text-align: right;
+    padding: 6px 12px;
+    background: var(--panel);
+    color: var(--text);
+    font-weight: 500;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    white-space: nowrap;
+    min-width: 180px;
+    border-right: 1px solid var(--border);
+  }
+  table.matrix tbody tr:hover th.row,
+  table.matrix tbody tr:hover td { background: rgba(88,166,255,.04); }
+  table.matrix thead th.corner {
+    z-index: 3;
+    background: var(--panel);
+    position: sticky;
+    left: 0;
+    min-width: 180px;
+    border-right: 1px solid var(--border);
+  }
+  table.matrix td {
+    width: 36px;
+    height: 32px;
+    font-weight: 600;
+    color: var(--linked-fg);
+    cursor: help;
+  }
+  table.matrix td.unlinked { background: transparent; color: var(--muted); font-weight: 400; }
+  table.matrix td.missing { background: repeating-linear-gradient(135deg, transparent 0 4px, rgba(139,148,158,.08) 4px 5px); color: rgba(139,148,158,.4); font-weight: 400; }
+  table.matrix td.inherits { opacity: 0.5; font-weight: 400; font-size: 16px; }
+
+  /* Group color classes — A..P with rotating hue */
+  .g-A { background: hsl(  0, 70%, 78%); }
+  .g-B { background: hsl( 22, 80%, 75%); }
+  .g-C { background: hsl( 45, 80%, 72%); }
+  .g-D { background: hsl( 68, 60%, 70%); }
+  .g-E { background: hsl( 95, 50%, 70%); }
+  .g-F { background: hsl(135, 45%, 70%); }
+  .g-G { background: hsl(165, 50%, 70%); }
+  .g-H { background: hsl(190, 60%, 75%); }
+  .g-I { background: hsl(210, 70%, 78%); }
+  .g-J { background: hsl(235, 60%, 80%); }
+  .g-K { background: hsl(260, 55%, 80%); }
+  .g-L { background: hsl(285, 55%, 80%); }
+  .g-M { background: hsl(310, 60%, 80%); }
+  .g-N { background: hsl(335, 65%, 80%); }
+  .g-O { background: hsl(  8, 40%, 65%); }
+  .g-P { background: hsl(180, 40%, 65%); }
+
+  .changes { background: rgba(210,153,34,.06); border: 1px solid rgba(210,153,34,.25); border-radius: 6px; padding: 10px 14px; margin-top: 12px; }
+  .changes h4 { margin: 0 0 6px; font-size: 13px; color: var(--warn); text-transform: uppercase; letter-spacing: .04em; }
+  .changes ul { margin: 4px 0 0 20px; padding: 0; }
+  .changes li { font-size: 13px; }
+
+  .opt-pair { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 12px; }
+  @media (min-width: 1100px) { .opt-pair { grid-template-columns: 1fr 1fr; } }
+  .opt { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+  .opt h4 { margin: 0 0 8px; font-size: 14px; }
+  .opt h4 .tag { font-size: 11px; padding: 2px 6px; border-radius: 4px; margin-left: 6px; background: rgba(88,166,255,.15); color: var(--accent); }
+
+  hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  /* Decision panel */
+  section.decisions { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; margin: 16px 0 24px; }
+  section.decisions h2 { border: 0; padding: 0; margin: 0 0 4px; font-size: 18px; }
+  section.decisions > p { margin: 0 0 16px; color: var(--muted); font-size: 13px; }
+  .decision { border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; margin-bottom: 12px; background: rgba(13,17,23,.4); }
+  .decision h4 { margin: 0 0 6px; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+  .decision .indicator { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+  .decision.answered .indicator { background: var(--good); }
+  .decision .prompt { color: var(--muted); font-size: 13px; margin: 4px 0 10px; }
+  .decision .opts { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+  .decision .opts label { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; font-size: 13px; padding: 6px 10px; border-radius: 4px; }
+  .decision .opts label:hover { background: rgba(88,166,255,.06); }
+  .decision .opts input { margin-top: 3px; flex-shrink: 0; cursor: pointer; }
+  .decision .opts label.checked { background: rgba(88,166,255,.08); }
+  .decision textarea { width: 100%; min-height: 56px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px; background: var(--bg); color: var(--text); font: 13px/1.45 inherit; font-family: inherit; resize: vertical; box-sizing: border-box; }
+  .decision textarea::placeholder { color: var(--muted); }
+  .actions { display: flex; gap: 8px; align-items: center; margin-top: 12px; }
+  button.btn { background: var(--accent); color: var(--bg); border: 0; border-radius: 6px; padding: 8px 16px; font: 600 13px/1 inherit; font-family: inherit; cursor: pointer; }
+  button.btn:hover { filter: brightness(1.1); }
+  button.btn.secondary { background: var(--panel); color: var(--text); border: 1px solid var(--border); }
+  button.btn.secondary:hover { background: rgba(88,166,255,.08); }
+  .actions .toast { font-size: 13px; color: var(--good); opacity: 0; transition: opacity .2s; }
+  .actions .toast.show { opacity: 1; }
+  .progress { font-size: 12px; color: var(--muted); margin-left: auto; }
+</style>
+</head>
+<body>
+
+<h1>Component linkage audit</h1>
+<p class="summary">Working doc for revising linked property groups across all 14 component editors. Component order matches the editor sidebar (alphabetical by registry label).</p>
+
+<details class="front" open>
+<summary>Reference pattern (from Button)</summary>
+<ul>
+  <li><strong>Link shape props</strong> (border-width, radius, padding, similar geometry) across all variant×state cells.</li>
+  <li><strong>Link typography props</strong> (font-family, font-size, font-weight, line-height) across whatever axis varies.</li>
+  <li><strong>Don't link colors</strong> — surface, border, text, fill. They're meant to vary.</li>
+  <li><strong>Wrap text color + typography</strong> in a <code>TypeGroupConfig</code> so they read as one fieldset.</li>
+</ul>
+</details>
+
+<details class="front" open>
+<summary>GroupKey naming convention (resolved 2026-05-07)</summary>
+<ul>
+  <li>Drop component-level prefixes (<code>card-</code>, <code>tab-</code>) — linkage is already scoped per-component slice; the prefix is redundant.</li>
+  <li>Keep part-level prefixes when multiple parts coexist (e.g. <code>title-</code> vs <code>body-</code> in Card; <code>label-</code> vs <code>value-</code> in Progress Bar).</li>
+  <li>Drop part-level prefixes when only one part exists (e.g. <code>label-</code> in Collapsible Section, <code>tab-</code> in Tab Bar).</li>
+</ul>
+</details>
+
+<details class="front">
+<summary>Cross-cutting decisions — all resolved (2026-05-07)</summary>
+<ul>
+  <li><strong>Inline Edit Actions</strong> — keep split: save and cancel keep separate <code>save-*</code>/<code>cancel-*</code> linked groups (cancel allowed to differ from save).</li>
+  <li><strong>Segmented Control radius pair</strong> — keep distinct, unlinked: <code>bar-radius</code> and <code>selected-radius</code> stay separate.</li>
+  <li><strong>Tab Bar bar-level tokens</strong> — <code>--tabbar-bar-radius</code>, <code>--tabbar-bar-divider</code>, <code>--tabbar-bar-divider-thickness</code>, and <code>--tabbar-bar-padding</code> are all surfaced in the schema as unlinked single tokens.</li>
+  <li><strong>Section Divider</strong> — skip: no linkage, editor stays as-is.</li>
+</ul>
+</details>
+
+<details class="front" open>
+<summary>Reading the matrix</summary>
+<p>Properties on the left (rows). Variant/state/part cells across the top (columns). Hover any cell for its CSS variable name.</p>
+<p>The four cell states distinguish <em>does this cell have its own editable variable</em>, and <em>is it linked to others</em>:</p>
+<ul>
+  <li><strong>A / B / C …</strong> (colored letter) — has its own variable, and it's a member of a linked group. Same letter elsewhere = same group; editing any one cell propagates to every cell with that letter.</li>
+  <li><strong>·</strong> (dot) — has its own variable, but is unlinked. Editing it changes only that one cell. Use this when the property is meant to vary per cell (e.g. surface/border/text colors that differ across states by design).</li>
+  <li><strong>→</strong> (faded letter color) — has <em>no</em> variable of its own. The value cascades in from another cell in the same row (typically the per-variant cell carrying that property). Cell can't be edited directly, but the value visually matches the rest of the group.</li>
+  <li><strong>—</strong> (striped) — property genuinely doesn't apply here (e.g. Dialog's overlay row has no border or title typography at all).</li>
+</ul>
+</details>
+
+<section class="decisions" id="decisions">
+  <h2>Decisions</h2>
+  <p>Answer inline. Auto-saved to your browser's local storage; click <strong>Copy answers</strong> when you're ready to share or paste them somewhere.</p>
+  <div id="decisions-list"></div>
+  <div class="actions">
+    <button class="btn" id="copy-btn">Copy answers</button>
+    <button class="btn secondary" id="clear-btn">Reset</button>
+    <span class="toast" id="toast"></span>
+    <span class="progress" id="progress"></span>
+  </div>
+</section>
+
+<nav class="toc">
+<ul>
+  <li><a href="#button">Button</a></li>
+  <li><a href="#card">Card</a></li>
+  <li><a href="#collapsible-section">Collapsible Section</a></li>
+  <li><a href="#dialog">Dialog</a></li>
+  <li><a href="#image">Image</a></li>
+  <li><a href="#inline-edit-actions">Inline Edit Actions</a></li>
+  <li><a href="#notification">Notification</a></li>
+  <li><a href="#progress-bar">Progress Bar</a></li>
+  <li><a href="#radio-button">Radio Button</a></li>
+  <li><a href="#section-divider">Section Divider</a></li>
+  <li><a href="#segmented-control">Segmented Control</a></li>
+  <li><a href="#tab-bar">Tab Bar</a></li>
+  <li><a href="#tooltip">Tooltip</a></li>
+  <li><a href="#trait-badge">Trait Badge</a></li>
+</ul>
+</nav>
+
+<div id="components"></div>
+
+<script>
+// =========================================================================
+// Component data — drives the matrices below. Each component declares:
+//   members: column headers (variant/state/part cells, in display order)
+//   props:   row entries; each has rows of cell statuses keyed by member
+//            cell status: { g: 'A' } linked to group A
+//                          { unlinked: true }
+//                          { missing: true }
+//                          all carry an optional `var` for the hover tooltip
+//   groups:  map from group letter → { groupKey, label, count }
+//   changes / option blocks: free-form HTML rendered after the matrix
+// =========================================================================
+
+const data = {
+  button: {
+    label: 'Button',
+    anchor: 'button',
+    file: 'StandardButtonsEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ reviewed — reference shape',
+    summary: 'Shape props (border-width, radius, padding) link across all 18 variant×state cells. Typography links per variant only — the runtime CSS doesn\'t declare per-state typography vars.',
+    members: ((vs=['primary','secondary','outline','success','danger','warning'], ss=['default','hover','disabled']) =>
+      vs.flatMap(v => ss.map(s => `${v} ${s}`)))(),
+    props: (() => {
+      const vs = ['primary','secondary','outline','success','danger','warning'];
+      const ss = ['default','hover','disabled'];
+      const cells = (fn) => Object.fromEntries(vs.flatMap(v => ss.map(s => [`${v} ${s}`, fn(v, s)])));
+      const px = (v, s) => s === 'default' ? `--button-${v}` : `--button-${v}-${s}`;
+      return [
+        { label: 'surface color',  cells: cells((v,s) => ({ unlinked: true, var: `${px(v,s)}-surface` })) },
+        { label: 'text color',     cells: cells((v,s) => ({ unlinked: true, var: `${px(v,s)}-text` })) },
+        { label: 'border color',   cells: cells((v,s) => ({ unlinked: true, var: `${px(v,s)}-border` })) },
+        { label: 'border-width',   cells: cells((v,s) => ({ g: 'A', var: `${px(v,s)}-border-width` })) },
+        { label: 'corner radius',  cells: cells((v,s) => ({ g: 'B', var: `${px(v,s)}-radius` })) },
+        { label: 'padding',        cells: cells((v,s) => ({ g: 'C', var: `${px(v,s)}-padding` })) },
+        { label: 'font-family',    cells: cells((v,s) => s === 'default' ? { g: 'D', var: `--button-${v}-text-font-family` } : { inherits: 'D', from: `--button-${v}-text-font-family` }) },
+        { label: 'font-size',      cells: cells((v,s) => s === 'default' ? { g: 'E', var: `--button-${v}-text-font-size` } : { inherits: 'E', from: `--button-${v}-text-font-size` }) },
+        { label: 'font-weight',    cells: cells((v,s) => s === 'default' ? { g: 'F', var: `--button-${v}-text-font-weight` } : { inherits: 'F', from: `--button-${v}-text-font-weight` }) },
+        { label: 'line-height',    cells: cells((v,s) => s === 'default' ? { g: 'G', var: `--button-${v}-text-line-height` } : { inherits: 'G', from: `--button-${v}-text-line-height` }) },
+      ];
+    })(),
+    groups: {
+      A: { groupKey: 'border-width', count: 18 },
+      B: { groupKey: 'radius', count: 18 },
+      C: { groupKey: 'padding', count: 18 },
+      D: { groupKey: 'font-family', count: 6 },
+      E: { groupKey: 'font-size', count: 6 },
+      F: { groupKey: 'font-weight', count: 6 },
+      G: { groupKey: 'line-height', count: 6 },
+    },
+    notes: '<p>Text color (the dots in column 2) is wrapped with typography in a <code>TypeGroupConfig</code> in the editor UI ("button text" / "button text (hover)" / "button text (disabled)"), so it reads as one fieldset alongside the typography props even though it\'s not linked.</p>',
+  },
+
+  card: {
+    label: 'Card',
+    anchor: 'card',
+    file: 'CardEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ reviewed — bare shape groupKeys, part-prefixed typography',
+    summary: 'Shape and typography link across default/hover. Title and body keep their part-prefix because two parts coexist; component-level <code>card-</code> prefix has been dropped.',
+    members: ['default', 'hover'],
+    props: (() => {
+      const cells = (fn) => Object.fromEntries(['default','hover'].map(s => [s, fn(s)]));
+      return [
+        { label: 'surface color',          cells: cells(s => ({ unlinked: true, var: `--card-${s}-surface` })) },
+        { label: 'border color',           cells: cells(s => ({ unlinked: true, var: `--card-${s}-border` })) },
+        { label: 'border-width',           cells: cells(s => ({ g: 'A', var: `--card-${s}-border-width` })) },
+        { label: 'corner radius',          cells: cells(s => ({ g: 'B', var: `--card-${s}-radius` })) },
+        { label: 'header padding',         cells: cells(s => ({ g: 'C', var: `--card-${s}-header-padding` })) },
+        { label: 'body padding',           cells: cells(s => ({ g: 'D', var: `--card-${s}-body-padding` })) },
+        { label: 'shadow',                 cells: cells(s => ({ g: 'E', var: `--card-${s}-shadow` })) },
+        { label: 'background blur',        cells: cells(s => ({ g: 'F', var: `--card-${s}-blur` })) },
+        { label: 'title color',            cells: cells(s => ({ unlinked: true, var: `--card-${s}-title` })) },
+        { label: 'title font-family',      cells: cells(s => ({ g: 'G', var: `--card-${s}-title-font-family` })) },
+        { label: 'title font-size',        cells: cells(s => ({ g: 'H', var: `--card-${s}-title-font-size` })) },
+        { label: 'title font-weight',      cells: cells(s => ({ g: 'I', var: `--card-${s}-title-font-weight` })) },
+        { label: 'title line-height',      cells: cells(s => ({ g: 'J', var: `--card-${s}-title-line-height` })) },
+        { label: 'body color',             cells: cells(s => ({ unlinked: true, var: `--card-${s}-body` })) },
+        { label: 'body font-family',       cells: cells(s => ({ g: 'K', var: `--card-${s}-body-font-family` })) },
+        { label: 'body font-size',         cells: cells(s => ({ g: 'L', var: `--card-${s}-body-font-size` })) },
+        { label: 'body font-weight',       cells: cells(s => ({ g: 'M', var: `--card-${s}-body-font-weight` })) },
+        { label: 'body line-height',       cells: cells(s => ({ g: 'N', var: `--card-${s}-body-line-height` })) },
+      ];
+    })(),
+    groups: {
+      A: { groupKey: 'border-width', count: 2 },
+      B: { groupKey: 'radius', count: 2 },
+      C: { groupKey: 'header-padding', count: 2 },
+      D: { groupKey: 'body-padding', count: 2 },
+      E: { groupKey: 'shadow', count: 2 },
+      F: { groupKey: 'blur', count: 2 },
+      G: { groupKey: 'title-font-family', count: 2 },
+      H: { groupKey: 'title-font-size', count: 2 },
+      I: { groupKey: 'title-font-weight', count: 2 },
+      J: { groupKey: 'title-line-height', count: 2 },
+      K: { groupKey: 'body-font-family', count: 2 },
+      L: { groupKey: 'body-font-size', count: 2 },
+      M: { groupKey: 'body-font-weight', count: 2 },
+      N: { groupKey: 'body-line-height', count: 2 },
+    },
+  },
+
+  'collapsible-section': {
+    label: 'Collapsible Section',
+    anchor: 'collapsible-section',
+    file: 'CollapsibleSectionEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ reviewed — bare typography groupKeys',
+    summary: 'Shape and typography link across default/hover/active. Only one text part ("label"), so the typography groupKeys are bare — no part-prefix.',
+    members: ['default', 'hover', 'active'],
+    props: (() => {
+      const cells = (fn) => Object.fromEntries(['default','hover','active'].map(s => [s, fn(s)]));
+      return [
+        { label: 'surface color',     cells: cells(s => ({ unlinked: true, var: `--collapsiblesection-${s}-surface` })) },
+        { label: 'border color',      cells: cells(s => ({ unlinked: true, var: `--collapsiblesection-${s}-border` })) },
+        { label: 'icon color',        cells: cells(s => ({ unlinked: true, var: `--collapsiblesection-${s}-icon-color` })) },
+        { label: 'border-width',      cells: cells(s => ({ g: 'A', var: `--collapsiblesection-${s}-border-width` })) },
+        { label: 'corner radius',     cells: cells(s => ({ g: 'B', var: `--collapsiblesection-${s}-radius` })) },
+        { label: 'padding',           cells: cells(s => ({ g: 'C', var: `--collapsiblesection-${s}-padding` })) },
+        { label: 'icon-size',         cells: cells(s => ({ g: 'D', var: `--collapsiblesection-${s}-icon-size` })) },
+        { label: 'label color',       cells: cells(s => ({ unlinked: true, var: `--collapsiblesection-${s}-label` })) },
+        { label: 'font-family',       cells: cells(s => ({ g: 'E', var: `--collapsiblesection-${s}-label-font-family` })) },
+        { label: 'font-size',         cells: cells(s => ({ g: 'F', var: `--collapsiblesection-${s}-label-font-size` })) },
+        { label: 'font-weight',       cells: cells(s => ({ g: 'G', var: `--collapsiblesection-${s}-label-font-weight` })) },
+        { label: 'line-height',       cells: cells(s => ({ g: 'H', var: `--collapsiblesection-${s}-label-line-height` })) },
+      ];
+    })(),
+    groups: {
+      A: { groupKey: 'border-width', count: 3 },
+      B: { groupKey: 'radius', count: 3 },
+      C: { groupKey: 'padding', count: 3 },
+      D: { groupKey: 'icon-size', count: 3 },
+      E: { groupKey: 'font-family', count: 3 },
+      F: { groupKey: 'font-size', count: 3 },
+      G: { groupKey: 'font-weight', count: 3 },
+      H: { groupKey: 'line-height', count: 3 },
+    },
+  },
+
+  dialog: {
+    label: 'Dialog',
+    anchor: 'dialog',
+    file: 'DialogEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ zero linkage is correct',
+    summary: 'Structural parts (overlay, dialog frame, header, body, footer). Each has a fundamentally different property surface — the matrix below shows that visually. No two parts share enough properties to warrant linking.',
+    members: ['overlay', 'dialog frame', 'header', 'body', 'footer'],
+    props: (() => {
+      const make = (m, status, varname) => [m, { ...status, var: varname }];
+      return [
+        { label: 'surface color',     cells: Object.fromEntries([
+          make('overlay', { unlinked: true }, '--dialog-overlay-surface'),
+          make('dialog frame', { unlinked: true }, '--dialog-surface'),
+          make('header', { unlinked: true }, '--dialog-header-surface'),
+          make('body', { missing: true }, ''),
+          make('footer', { missing: true }, ''),
+        ]) },
+        { label: 'border color',     cells: Object.fromEntries([
+          make('overlay', { missing: true }, ''),
+          make('dialog frame', { unlinked: true }, '--dialog-border'),
+          make('header', { unlinked: true }, '--dialog-header-border'),
+          make('body', { missing: true }, ''),
+          make('footer', { unlinked: true }, '--dialog-footer-border'),
+        ]) },
+        { label: 'border-width',     cells: Object.fromEntries([
+          make('overlay', { missing: true }, ''),
+          make('dialog frame', { unlinked: true }, '--dialog-border-width'),
+          make('header', { unlinked: true }, '--dialog-header-border-width'),
+          make('body', { missing: true }, ''),
+          make('footer', { unlinked: true }, '--dialog-footer-border-width'),
+        ]) },
+        { label: 'corner radius',     cells: Object.fromEntries([
+          make('overlay', { missing: true }, ''),
+          make('dialog frame', { unlinked: true }, '--dialog-radius'),
+          make('header', { missing: true }, ''),
+          make('body', { missing: true }, ''),
+          make('footer', { missing: true }, ''),
+        ]) },
+        { label: 'padding',     cells: Object.fromEntries([
+          make('overlay', { missing: true }, ''),
+          make('dialog frame', { missing: true }, ''),
+          make('header', { unlinked: true }, '--dialog-header-padding'),
+          make('body', { unlinked: true }, '--dialog-body-padding'),
+          make('footer', { unlinked: true }, '--dialog-footer-padding'),
+        ]) },
+        { label: 'shadow',     cells: Object.fromEntries([
+          make('overlay', { missing: true }, ''),
+          make('dialog frame', { unlinked: true }, '--dialog-shadow'),
+          make('header', { missing: true }, ''),
+          make('body', { missing: true }, ''),
+          make('footer', { missing: true }, ''),
+        ]) },
+        { label: 'background blur',     cells: Object.fromEntries([
+          make('overlay', { missing: true }, ''),
+          make('dialog frame', { unlinked: true }, '--dialog-blur'),
+          make('header', { missing: true }, ''),
+          make('body', { missing: true }, ''),
+          make('footer', { missing: true }, ''),
+        ]) },
+        { label: 'close icon color',     cells: Object.fromEntries([
+          make('overlay', { missing: true }, ''),
+          make('dialog frame', { missing: true }, ''),
+          make('header', { unlinked: true }, '--dialog-close-icon'),
+          make('body', { missing: true }, ''),
+          make('footer', { missing: true }, ''),
+        ]) },
+        { label: 'close icon size',     cells: Object.fromEntries([
+          make('overlay', { missing: true }, ''),
+          make('dialog frame', { missing: true }, ''),
+          make('header', { unlinked: true }, '--dialog-close-icon-size'),
+          make('body', { missing: true }, ''),
+          make('footer', { missing: true }, ''),
+        ]) },
+        { label: 'title color',     cells: Object.fromEntries([
+          make('overlay', { missing: true }, ''),
+          make('dialog frame', { missing: true }, ''),
+          make('header', { unlinked: true }, '--dialog-title'),
+          make('body', { missing: true }, ''),
+          make('footer', { missing: true }, ''),
+        ]) },
+        { label: 'title font-family',     cells: Object.fromEntries([
+          make('overlay', { missing: true }, ''),
+          make('dialog frame', { missing: true }, ''),
+          make('header', { unlinked: true }, '--dialog-title-font-family'),
+          make('body', { missing: true }, ''),
+          make('footer', { missing: true }, ''),
+        ]) },
+        { label: 'title font-size',     cells: Object.fromEntries([
+          make('overlay', { missing: true }, ''),
+          make('dialog frame', { missing: true }, ''),
+          make('header', { unlinked: true }, '--dialog-title-font-size'),
+          make('body', { missing: true }, ''),
+          make('footer', { missing: true }, ''),
+        ]) },
+        { label: 'title font-weight',     cells: Object.fromEntries([
+          make('overlay', { missing: true }, ''),
+          make('dialog frame', { missing: true }, ''),
+          make('header', { unlinked: true }, '--dialog-title-font-weight'),
+          make('body', { missing: true }, ''),
+          make('footer', { missing: true }, ''),
+        ]) },
+        { label: 'title line-height',     cells: Object.fromEntries([
+          make('overlay', { missing: true }, ''),
+          make('dialog frame', { missing: true }, ''),
+          make('header', { unlinked: true }, '--dialog-title-line-height'),
+          make('body', { missing: true }, ''),
+          make('footer', { missing: true }, ''),
+        ]) },
+      ];
+    })(),
+    groups: {},
+  },
+
+  image: {
+    label: 'Image',
+    anchor: 'image',
+    file: 'ImageEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ zero linkage is correct',
+    summary: 'Single state, no variants, no parts. Nothing to link.',
+    members: ['image'],
+    props: [
+      { label: 'border color',  cells: { image: { unlinked: true, var: '--image-default-border' } } },
+      { label: 'border-width',  cells: { image: { unlinked: true, var: '--image-default-border-width' } } },
+      { label: 'corner radius', cells: { image: { unlinked: true, var: '--image-default-radius' } } },
+      { label: 'shadow',        cells: { image: { unlinked: true, var: '--image-default-shadow' } } },
+    ],
+    groups: {},
+  },
+
+  'inline-edit-actions': {
+    label: 'Inline Edit Actions',
+    anchor: 'inline-edit-actions',
+    file: 'InlineEditActionsEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ reviewed — save and cancel intentionally split',
+    summary: 'Two distinct buttons (save, cancel), each with default/hover. Decision: keep save and cancel as separate linked groups so cancel can differ from save (subtler styling, thinner border, etc.).',
+    members: ['save default', 'save hover', 'cancel default', 'cancel hover'],
+    props: (() => {
+      const cells = (fn) => Object.fromEntries([['save','default'],['save','hover'],['cancel','default'],['cancel','hover']].map(([b,s]) => [`${b} ${s}`, fn(b,s)]));
+      return [
+        { label: 'surface color', cells: cells((b,s) => ({ unlinked: true, var: `--inlineeditactions-${b}-${s}-surface` })) },
+        { label: 'text color',    cells: cells((b,s) => ({ unlinked: true, var: `--inlineeditactions-${b}-${s}-text` })) },
+        { label: 'border color',  cells: cells((b,s) => ({ unlinked: true, var: `--inlineeditactions-${b}-${s}-border` })) },
+        { label: 'border-width',  cells: cells((b,s) => ({ g: b === 'save' ? 'A' : 'E', var: `--inlineeditactions-${b}-${s}-border-width` })) },
+        { label: 'corner radius', cells: cells((b,s) => ({ g: b === 'save' ? 'B' : 'F', var: `--inlineeditactions-${b}-${s}-radius` })) },
+        { label: 'padding',       cells: cells((b,s) => ({ g: b === 'save' ? 'C' : 'G', var: `--inlineeditactions-${b}-${s}-padding` })) },
+        { label: 'icon-size',     cells: cells((b,s) => ({ g: b === 'save' ? 'D' : 'H', var: `--inlineeditactions-${b}-${s}-icon-size` })) },
+      ];
+    })(),
+    groups: {
+      A: { groupKey: 'save-border-width', count: 2 },
+      B: { groupKey: 'save-radius', count: 2 },
+      C: { groupKey: 'save-padding', count: 2 },
+      D: { groupKey: 'save-icon-size', count: 2 },
+      E: { groupKey: 'cancel-border-width', count: 2 },
+      F: { groupKey: 'cancel-radius', count: 2 },
+      G: { groupKey: 'cancel-padding', count: 2 },
+      H: { groupKey: 'cancel-icon-size', count: 2 },
+    },
+  },
+
+  notification: {
+    label: 'Notification',
+    anchor: 'notification',
+    file: 'NotificationEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ reviewed — clean reference match',
+    summary: 'Shape (4 props) and two parts of typography (title, text — 4 props each) link across the 4 variants. Part-prefix on typography is justified — title and text are distinct parts.',
+    members: ['info', 'success', 'warning', 'danger'],
+    props: (() => {
+      const cells = (fn) => Object.fromEntries(['info','success','warning','danger'].map(v => [v, fn(v)]));
+      return [
+        { label: 'surface color',         cells: cells(v => ({ unlinked: true, var: `--notification-${v}-surface` })) },
+        { label: 'border color',          cells: cells(v => ({ unlinked: true, var: `--notification-${v}-border` })) },
+        { label: 'icon color',            cells: cells(v => ({ unlinked: true, var: `--notification-${v}-icon` })) },
+        { label: 'border-width',          cells: cells(v => ({ g: 'A', var: `--notification-${v}-border-width` })) },
+        { label: 'corner radius',         cells: cells(v => ({ g: 'B', var: `--notification-${v}-radius` })) },
+        { label: 'padding',               cells: cells(v => ({ g: 'C', var: `--notification-${v}-padding` })) },
+        { label: 'icon-size',             cells: cells(v => ({ g: 'D', var: `--notification-${v}-icon-size` })) },
+        { label: 'title color',           cells: cells(v => ({ unlinked: true, var: `--notification-${v}-title` })) },
+        { label: 'title font-family',     cells: cells(v => ({ g: 'E', var: `--notification-${v}-title-font-family` })) },
+        { label: 'title font-size',       cells: cells(v => ({ g: 'F', var: `--notification-${v}-title-font-size` })) },
+        { label: 'title font-weight',     cells: cells(v => ({ g: 'G', var: `--notification-${v}-title-font-weight` })) },
+        { label: 'title line-height',     cells: cells(v => ({ g: 'H', var: `--notification-${v}-title-line-height` })) },
+        { label: 'text color',            cells: cells(v => ({ unlinked: true, var: `--notification-${v}-text` })) },
+        { label: 'text font-family',      cells: cells(v => ({ g: 'I', var: `--notification-${v}-text-font-family` })) },
+        { label: 'text font-size',        cells: cells(v => ({ g: 'J', var: `--notification-${v}-text-font-size` })) },
+        { label: 'text font-weight',      cells: cells(v => ({ g: 'K', var: `--notification-${v}-text-font-weight` })) },
+        { label: 'text line-height',      cells: cells(v => ({ g: 'L', var: `--notification-${v}-text-line-height` })) },
+      ];
+    })(),
+    groups: {
+      A: { groupKey: 'border-width', count: 4 },
+      B: { groupKey: 'radius', count: 4 },
+      C: { groupKey: 'padding', count: 4 },
+      D: { groupKey: 'icon-size', count: 4 },
+      E: { groupKey: 'title-font-family', count: 4 },
+      F: { groupKey: 'title-font-size', count: 4 },
+      G: { groupKey: 'title-font-weight', count: 4 },
+      H: { groupKey: 'title-line-height', count: 4 },
+      I: { groupKey: 'text-font-family', count: 4 },
+      J: { groupKey: 'text-font-size', count: 4 },
+      K: { groupKey: 'text-font-weight', count: 4 },
+      L: { groupKey: 'text-line-height', count: 4 },
+    },
+  },
+
+  'progress-bar': {
+    label: 'Progress Bar',
+    anchor: 'progress-bar',
+    file: 'ProgressBarEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ reviewed — clean reference match',
+    summary: 'Shape and two parts of typography (label, value) link across 5 variants. Part-prefixes on typography distinguish label from value — both justified.',
+    members: ['primary', 'success', 'warning', 'danger', 'info'],
+    props: (() => {
+      const cells = (fn) => Object.fromEntries(['primary','success','warning','danger','info'].map(v => [v, fn(v)]));
+      return [
+        { label: 'track surface',          cells: cells(v => ({ unlinked: true, var: `--progressbar-${v}-track-surface` })) },
+        { label: 'fill color',             cells: cells(v => ({ unlinked: true, var: `--progressbar-${v}-fill` })) },
+        { label: 'track border color',     cells: cells(v => ({ unlinked: true, var: `--progressbar-${v}-track-border` })) },
+        { label: 'track border-width',     cells: cells(v => ({ g: 'A', var: `--progressbar-${v}-track-border-width` })) },
+        { label: 'corner radius',          cells: cells(v => ({ g: 'B', var: `--progressbar-${v}-radius` })) },
+        { label: 'track height',           cells: cells(v => ({ g: 'C', var: `--progressbar-${v}-track-height` })) },
+        { label: 'label color',            cells: cells(v => ({ unlinked: true, var: `--progressbar-${v}-label` })) },
+        { label: 'label font-family',      cells: cells(v => ({ g: 'D', var: `--progressbar-${v}-label-font-family` })) },
+        { label: 'label font-size',        cells: cells(v => ({ g: 'E', var: `--progressbar-${v}-label-font-size` })) },
+        { label: 'label font-weight',      cells: cells(v => ({ g: 'F', var: `--progressbar-${v}-label-font-weight` })) },
+        { label: 'label line-height',      cells: cells(v => ({ g: 'G', var: `--progressbar-${v}-label-line-height` })) },
+        { label: 'value color',            cells: cells(v => ({ unlinked: true, var: `--progressbar-${v}-value` })) },
+        { label: 'value font-family',      cells: cells(v => ({ g: 'H', var: `--progressbar-${v}-value-font-family` })) },
+        { label: 'value font-size',        cells: cells(v => ({ g: 'I', var: `--progressbar-${v}-value-font-size` })) },
+        { label: 'value font-weight',      cells: cells(v => ({ g: 'J', var: `--progressbar-${v}-value-font-weight` })) },
+        { label: 'value line-height',      cells: cells(v => ({ g: 'K', var: `--progressbar-${v}-value-line-height` })) },
+      ];
+    })(),
+    groups: {
+      A: { groupKey: 'track-border-width', count: 5 },
+      B: { groupKey: 'radius', count: 5 },
+      C: { groupKey: 'track-height', count: 5 },
+      D: { groupKey: 'label-font-family', count: 5 },
+      E: { groupKey: 'label-font-size', count: 5 },
+      F: { groupKey: 'label-font-weight', count: 5 },
+      G: { groupKey: 'label-line-height', count: 5 },
+      H: { groupKey: 'value-font-family', count: 5 },
+      I: { groupKey: 'value-font-size', count: 5 },
+      J: { groupKey: 'value-font-weight', count: 5 },
+      K: { groupKey: 'value-line-height', count: 5 },
+    },
+  },
+
+  'radio-button': {
+    label: 'Radio Button',
+    anchor: 'radio-button',
+    file: 'RadioButtonEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ reviewed — bare groupKeys; dot color/fill stay unlinked',
+    summary: 'Only one part each for shape (the dot) and typography (the label), so all groupKeys are bare. <code>dot-border-color</code> and <code>dot-fill</code> remain unlinked — they\'re per-state colors meant to vary.',
+    members: ['default', 'hover', 'active'],
+    props: (() => {
+      const cells = (fn) => Object.fromEntries(['default','hover','active'].map(s => [s, fn(s)]));
+      return [
+        { label: 'dot border color',  cells: cells(s => ({ unlinked: true, var: `--radiobutton-${s}-dot-border-color` })) },
+        { label: 'dot fill',          cells: cells(s => ({ unlinked: true, var: `--radiobutton-${s}-dot-fill` })) },
+        { label: 'dot size',          cells: cells(s => ({ unlinked: true, var: `--radiobutton-${s}-dot-size` })) },
+        { label: 'border-width',      cells: cells(s => ({ g: 'A', var: `--radiobutton-${s}-dot-border-width` })) },
+        { label: 'label color',       cells: cells(s => ({ unlinked: true, var: `--radiobutton-${s}-label` })) },
+        { label: 'font-family',       cells: cells(s => ({ g: 'B', var: `--radiobutton-${s}-label-font-family` })) },
+        { label: 'font-size',         cells: cells(s => ({ g: 'C', var: `--radiobutton-${s}-label-font-size` })) },
+        { label: 'font-weight',       cells: cells(s => ({ g: 'D', var: `--radiobutton-${s}-label-font-weight` })) },
+        { label: 'line-height',       cells: cells(s => ({ g: 'E', var: `--radiobutton-${s}-label-line-height` })) },
+      ];
+    })(),
+    groups: {
+      A: { groupKey: 'border-width', count: 3 },
+      B: { groupKey: 'font-family', count: 3 },
+      C: { groupKey: 'font-size', count: 3 },
+      D: { groupKey: 'font-weight', count: 3 },
+      E: { groupKey: 'line-height', count: 3 },
+    },
+  },
+
+  'section-divider': {
+    label: 'Section Divider',
+    anchor: 'section-divider',
+    file: 'SectionDividerEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ reviewed — no linkage by design',
+    summary: 'Six variants. Decision: no linkage. Editor stays without linkage infrastructure. Padding and the title/description type-groups remain component-level singletons.',
+    members: ['canvas', 'neutral', 'alternate', 'primary', 'accent', 'special'],
+    props: (() => {
+      const cells = (fn) => Object.fromEntries(['canvas','neutral','alternate','primary','accent','special'].map(v => [v, fn(v)]));
+      return [
+        { label: 'gradient stop 1',     cells: cells(v => ({ unlinked: true, var: `--sectiondivider-${v}-gradient-stop-1` })) },
+        { label: 'gradient stop 2',     cells: cells(v => ({ unlinked: true, var: `--sectiondivider-${v}-gradient-stop-2` })) },
+        { label: 'gradient stop 3',     cells: cells(v => ({ unlinked: true, var: `--sectiondivider-${v}-gradient-stop-3` })) },
+        { label: 'gradient stop 4',     cells: cells(v => ({ unlinked: true, var: `--sectiondivider-${v}-gradient-stop-4` })) },
+        { label: 'text stroke color',   cells: cells(v => ({ unlinked: true, var: `--sectiondivider-${v}-text-stroke` })) },
+        { label: 'corner radius',       cells: cells(v => ({ unlinked: true, var: `--sectiondivider-${v}-radius` })) },
+      ];
+    })(),
+    groups: {},
+    notes: '<p><strong>Component-level singletons</strong> (one var, shared across all variants — already &ldquo;linked&rdquo; by being a single declaration): <code>--sectiondivider-padding</code>, plus the title and description type-groups (color, font-family, font-size, font-weight, line-height each).</p>',
+  },
+
+  'segmented-control': {
+    label: 'Segmented Control',
+    anchor: 'segmented-control',
+    file: 'SegmentedControlEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ reviewed — typography linked, bar/pill radii kept distinct',
+    summary: 'Sparse property surface — different parts have different vars. Typography links across the four option states. Decision: <code>bar-radius</code> and <code>selected-radius</code> stay distinct and unlinked — the bar wraps everything; the selected pill is a different element.',
+    members: ['control bar', 'default option', 'selected option', 'hover option', 'disabled option'],
+    props: (() => {
+      const m = (k, fn) => [k, fn(k)];
+      const ks = ['control bar', 'default option', 'selected option', 'hover option', 'disabled option'];
+      const C = (mapping) => Object.fromEntries(ks.map(k => [k, mapping[k] || { missing: true }]));
+      return [
+        { label: 'bar surface',         cells: C({ 'control bar': { unlinked: true, var: '--segmentedcontrol-bar-surface' } }) },
+        { label: 'bar border color',    cells: C({ 'control bar': { unlinked: true, var: '--segmentedcontrol-bar-border' } }) },
+        { label: 'bar border-width',    cells: C({ 'control bar': { unlinked: true, var: '--segmentedcontrol-bar-border-width' } }) },
+        { label: 'divider color',       cells: C({ 'control bar': { unlinked: true, var: '--segmentedcontrol-divider-color' } }) },
+        { label: 'divider thickness',   cells: C({ 'control bar': { unlinked: true, var: '--segmentedcontrol-divider-thickness' } }) },
+        { label: 'divider height',      cells: C({ 'control bar': { unlinked: true, var: '--segmentedcontrol-divider-height' } }) },
+        { label: 'bar corner radius',   cells: C({ 'control bar': { unlinked: true, var: '--segmentedcontrol-bar-radius' } }) },
+        { label: 'option gap',          cells: C({ 'control bar': { unlinked: true, var: '--segmentedcontrol-bar-gap' } }) },
+        { label: 'bar padding',         cells: C({ 'control bar': { unlinked: true, var: '--segmentedcontrol-bar-padding' } }) },
+        { label: 'icon color',          cells: C({
+          'default option':  { unlinked: true, var: '--segmentedcontrol-option-icon' },
+          'selected option': { unlinked: true, var: '--segmentedcontrol-selected-icon' },
+          'hover option':    { unlinked: true, var: '--segmentedcontrol-option-hover-icon' },
+          'disabled option': { unlinked: true, var: '--segmentedcontrol-disabled-icon' },
+        }) },
+        { label: 'surface color',       cells: C({
+          'selected option': { unlinked: true, var: '--segmentedcontrol-selected-surface' },
+          'hover option':    { unlinked: true, var: '--segmentedcontrol-option-hover-surface' },
+          'disabled option': { unlinked: true, var: '--segmentedcontrol-disabled-surface' },
+        }) },
+        { label: 'border color',        cells: C({
+          'selected option': { unlinked: true, var: '--segmentedcontrol-selected-border' },
+        }) },
+        { label: 'selected border-width', cells: C({
+          'selected option': { unlinked: true, var: '--segmentedcontrol-selected-border-width' },
+        }) },
+        { label: 'selected corner radius', cells: C({
+          'selected option': { unlinked: true, var: '--segmentedcontrol-selected-radius' },
+        }) },
+        { label: 'text color',          cells: C({
+          'default option':  { unlinked: true, var: '--segmentedcontrol-option-text' },
+          'selected option': { unlinked: true, var: '--segmentedcontrol-selected-text' },
+          'hover option':    { unlinked: true, var: '--segmentedcontrol-option-hover-text' },
+          'disabled option': { unlinked: true, var: '--segmentedcontrol-disabled-text' },
+        }) },
+        { label: 'font-family',         cells: C({
+          'default option':  { g: 'A', var: '--segmentedcontrol-option-text-font-family' },
+          'selected option': { g: 'A', var: '--segmentedcontrol-selected-text-font-family' },
+          'hover option':    { g: 'A', var: '--segmentedcontrol-option-hover-text-font-family' },
+          'disabled option': { g: 'A', var: '--segmentedcontrol-disabled-text-font-family' },
+        }) },
+        { label: 'font-size',           cells: C({
+          'default option':  { g: 'B', var: '--segmentedcontrol-option-text-font-size' },
+          'selected option': { g: 'B', var: '--segmentedcontrol-selected-text-font-size' },
+          'hover option':    { g: 'B', var: '--segmentedcontrol-option-hover-text-font-size' },
+          'disabled option': { g: 'B', var: '--segmentedcontrol-disabled-text-font-size' },
+        }) },
+        { label: 'font-weight',         cells: C({
+          'default option':  { g: 'C', var: '--segmentedcontrol-option-text-font-weight' },
+          'selected option': { g: 'C', var: '--segmentedcontrol-selected-text-font-weight' },
+          'hover option':    { g: 'C', var: '--segmentedcontrol-option-hover-text-font-weight' },
+          'disabled option': { g: 'C', var: '--segmentedcontrol-disabled-text-font-weight' },
+        }) },
+        { label: 'line-height',         cells: C({
+          'default option':  { g: 'D', var: '--segmentedcontrol-option-text-line-height' },
+          'selected option': { g: 'D', var: '--segmentedcontrol-selected-text-line-height' },
+          'hover option':    { g: 'D', var: '--segmentedcontrol-option-hover-text-line-height' },
+          'disabled option': { g: 'D', var: '--segmentedcontrol-disabled-text-line-height' },
+        }) },
+      ];
+    })(),
+    groups: {
+      A: { groupKey: 'font-family', count: 4 },
+      B: { groupKey: 'font-size', count: 4 },
+      C: { groupKey: 'font-weight', count: 4 },
+      D: { groupKey: 'line-height', count: 4 },
+    },
+  },
+
+  'tab-bar': {
+    label: 'Tab Bar',
+    anchor: 'tab-bar',
+    file: 'TabBarEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ reviewed — bare groupKeys; bar-level tokens exposed unlinked',
+    summary: 'Per-tab shape and typography link across default/hover/active with bare groupKeys (only one tab part). Bar-level tokens (divider, radius, padding) are exposed as single unlinked tokens — see the bar-level matrix below.',
+    members: ['default', 'hover', 'active'],
+    props: (() => {
+      const cells = (fn) => Object.fromEntries(['default','hover','active'].map(s => [s, fn(s)]));
+      return [
+        { label: 'surface color',     cells: cells(s => ({ unlinked: true, var: `--tabbar-${s}-surface` })) },
+        { label: 'border color',      cells: cells(s => ({ unlinked: true, var: `--tabbar-${s}-border` })) },
+        { label: 'icon color',        cells: cells(s => ({ unlinked: true, var: `--tabbar-${s}-icon` })) },
+        { label: 'border-width',      cells: cells(s => ({ g: 'A', var: `--tabbar-${s}-border-width` })) },
+        { label: 'padding',           cells: cells(s => ({ g: 'B', var: `--tabbar-${s}-padding` })) },
+        { label: 'icon-size',         cells: cells(s => ({ g: 'C', var: `--tabbar-${s}-icon-size` })) },
+        { label: 'text color',        cells: cells(s => ({ unlinked: true, var: `--tabbar-${s}-text` })) },
+        { label: 'font-family',       cells: cells(s => ({ g: 'D', var: `--tabbar-${s}-text-font-family` })) },
+        { label: 'font-size',         cells: cells(s => ({ g: 'E', var: `--tabbar-${s}-text-font-size` })) },
+        { label: 'font-weight',       cells: cells(s => ({ g: 'F', var: `--tabbar-${s}-text-font-weight` })) },
+        { label: 'line-height',       cells: cells(s => ({ g: 'G', var: `--tabbar-${s}-text-line-height` })) },
+      ];
+    })(),
+    groups: {
+      A: { groupKey: 'border-width', count: 3 },
+      B: { groupKey: 'padding', count: 3 },
+      C: { groupKey: 'icon-size', count: 3 },
+      D: { groupKey: 'font-family', count: 3 },
+      E: { groupKey: 'font-size', count: 3 },
+      F: { groupKey: 'font-weight', count: 3 },
+      G: { groupKey: 'line-height', count: 3 },
+    },
+    barProps: [
+      { label: 'divider color',     cells: { bar: { unlinked: true, var: '--tabbar-bar-divider' } } },
+      { label: 'divider thickness', cells: { bar: { unlinked: true, var: '--tabbar-bar-divider-thickness' } } },
+      { label: 'corner radius',     cells: { bar: { unlinked: true, var: '--tabbar-bar-radius' } } },
+      { label: 'padding',           cells: { bar: { unlinked: true, var: '--tabbar-bar-padding' } } },
+    ],
+    barMembers: ['bar'],
+    notes: '<p><strong>Bar-level tokens</strong> are component-level singletons — one var, no per-state variation, no linkage. They\'re surfaced in the schema but rendered separately from the per-state tabs matrix.</p>',
+  },
+
+  tooltip: {
+    label: 'Tooltip',
+    anchor: 'tooltip',
+    file: 'TooltipEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ zero linkage is correct',
+    summary: 'Single object, no variants, no states. Nothing to link.',
+    members: ['tooltip'],
+    props: [
+      { label: 'surface color',  cells: { tooltip: { unlinked: true, var: '--tooltip-surface' } } },
+      { label: 'border color',   cells: { tooltip: { unlinked: true, var: '--tooltip-border' } } },
+      { label: 'border-width',   cells: { tooltip: { unlinked: true, var: '--tooltip-border-width' } } },
+      { label: 'corner radius',  cells: { tooltip: { unlinked: true, var: '--tooltip-radius' } } },
+      { label: 'padding',        cells: { tooltip: { unlinked: true, var: '--tooltip-padding' } } },
+      { label: 'shadow',         cells: { tooltip: { unlinked: true, var: '--tooltip-shadow' } } },
+      { label: 'text color',     cells: { tooltip: { unlinked: true, var: '--tooltip-text' } } },
+      { label: 'font-family',    cells: { tooltip: { unlinked: true, var: '--tooltip-text-font-family' } } },
+      { label: 'font-size',      cells: { tooltip: { unlinked: true, var: '--tooltip-text-font-size' } } },
+      { label: 'font-weight',    cells: { tooltip: { unlinked: true, var: '--tooltip-text-font-weight' } } },
+      { label: 'line-height',    cells: { tooltip: { unlinked: true, var: '--tooltip-text-line-height' } } },
+    ],
+    groups: {},
+  },
+
+  'trait-badge': {
+    label: 'Trait Badge',
+    anchor: 'trait-badge',
+    file: 'BadgeEditor.svelte',
+    status: 'reviewed',
+    statusLabel: '✅ reviewed — clean reference match',
+    summary: 'Three variants (info, accent, trait), no states. Shape and typography link across all three. Bare groupKeys throughout — clean reference pattern.',
+    members: ['info', 'accent', 'trait'],
+    props: (() => {
+      const cells = (fn) => Object.fromEntries(['info','accent','trait'].map(v => [v, fn(v)]));
+      return [
+        { label: 'surface color',  cells: cells(v => ({ unlinked: true, var: `--badge-${v}-surface` })) },
+        { label: 'border color',   cells: cells(v => ({ unlinked: true, var: `--badge-${v}-border` })) },
+        { label: 'border-width',   cells: cells(v => ({ g: 'A', var: `--badge-${v}-border-width` })) },
+        { label: 'corner radius',  cells: cells(v => ({ g: 'B', var: `--badge-${v}-radius` })) },
+        { label: 'padding',        cells: cells(v => ({ g: 'C', var: `--badge-${v}-padding` })) },
+        { label: 'shadow',         cells: cells(v => ({ g: 'D', var: `--badge-${v}-shadow` })) },
+        { label: 'text color',     cells: cells(v => ({ unlinked: true, var: `--badge-${v}-text` })) },
+        { label: 'font-family',    cells: cells(v => ({ g: 'E', var: `--badge-${v}-text-font-family` })) },
+        { label: 'font-size',      cells: cells(v => ({ g: 'F', var: `--badge-${v}-text-font-size` })) },
+        { label: 'font-weight',    cells: cells(v => ({ g: 'G', var: `--badge-${v}-text-font-weight` })) },
+        { label: 'line-height',    cells: cells(v => ({ g: 'H', var: `--badge-${v}-text-line-height` })) },
+      ];
+    })(),
+    groups: {
+      A: { groupKey: 'border-width', count: 3 },
+      B: { groupKey: 'radius', count: 3 },
+      C: { groupKey: 'padding', count: 3 },
+      D: { groupKey: 'shadow', count: 3 },
+      E: { groupKey: 'font-family', count: 3 },
+      F: { groupKey: 'font-size', count: 3 },
+      G: { groupKey: 'font-weight', count: 3 },
+      H: { groupKey: 'line-height', count: 3 },
+    },
+  },
+};
+
+// =========================================================================
+// Renderer
+// =========================================================================
+
+function renderCell(cell, propLabel, member) {
+  if (!cell || cell.missing) {
+    return `<td class="missing" title="property not declared at this cell">—</td>`;
+  }
+  if (cell.inherits) {
+    const tip = `no separate variable at this cell\nvalue cascades from: ${cell.from || ''}\nvisually shares group ${cell.inherits}`;
+    return `<td class="g-${cell.inherits} inherits" title="${tip.replace(/"/g, '&quot;')}">→</td>`;
+  }
+  if (cell.unlinked) {
+    return `<td class="unlinked" title="${cell.var || ''} — exposed, unlinked">·</td>`;
+  }
+  const tip = `${cell.var || ''}\nproperty: ${propLabel}\nmember: ${member}\ngroup: ${cell.g}`;
+  return `<td class="g-${cell.g}" title="${tip.replace(/"/g, '&quot;')}">${cell.g}</td>`;
+}
+
+function renderMatrix(c, propsKey = 'props', membersKey = 'members') {
+  const props = c[propsKey];
+  const members = c[membersKey];
+  const head = `<thead><tr><th class="corner"></th>${members.map(m => `<th class="col"><span>${m}</span></th>`).join('')}</tr></thead>`;
+  const body = `<tbody>${props.map(p => `
+    <tr>
+      <th class="row">${p.label}</th>
+      ${members.map(m => renderCell(p.cells[m], p.label, m)).join('')}
+    </tr>
+  `).join('')}</tbody>`;
+  return `<div class="matrix-wrap"><table class="matrix">${head}${body}</table></div>`;
+}
+
+function renderLegend(groups) {
+  const entries = Object.entries(groups);
+  if (!entries.length) return '<p class="summary"><em>No linked groups.</em></p>';
+  return `<ul class="legend">${entries.map(([letter, g]) =>
+    `<li><span class="swatch g-${letter}">${letter}</span><code>${g.groupKey}</code> <span class="count">(${g.count} tokens)</span></li>`
+  ).join('')}</ul>`;
+}
+
+function renderSection(c) {
+  return `
+    <h2 id="${c.anchor}">${c.label} <span class="status ${c.status}">${c.statusLabel}</span> <span class="file">${c.file}</span></h2>
+    <p class="summary">${c.summary}</p>
+    ${renderMatrix(c)}
+    ${c.barProps ? `<h3>Bar-level tokens</h3>${renderMatrix(c, 'barProps', 'barMembers')}` : ''}
+    <h3>Linked groups</h3>
+    ${renderLegend(c.groups)}
+    ${c.notes ? `<h3>Notes</h3>${c.notes}` : ''}
+    ${c.options ? `<h3>Options</h3>${c.options}` : ''}
+    ${c.changes ? `<div class="changes"><h4>Changes needed</h4>${c.changes}</div>` : ''}
+  `;
+}
+
+document.getElementById('components').innerHTML = Object.values(data).map(renderSection).join('\n');
+
+// =========================================================================
+// Decisions panel
+// =========================================================================
+
+const decisions = [
+  {
+    id: 'naming',
+    title: 'Naming convention rollout',
+    prompt: 'Apply the agreed convention across affected components — drop component-level prefixes (<code>card-</code>, <code>tab-</code>); drop part-prefixes when only one part exists (<code>label-</code> in Collapsible, <code>dot-</code>/<code>label-</code> in Radio Button); keep part-prefixes where multiple parts coexist (Card title vs body, Notification title vs text, ProgressBar label vs value).',
+    options: [
+      ['yes', 'Yes — apply to Card, Collapsible Section, Radio Button, Tab Bar'],
+      ['partial', 'Partial — see notes for which to apply or skip'],
+      ['no', 'No — keep current naming'],
+    ],
+  },
+  {
+    id: 'inline-edit',
+    title: 'Inline Edit Actions — save & cancel',
+    prompt: 'Currently save and cancel have separate linked groups for shape (8 groupKeys total). Should the action pair share one geometry, or stay independent?',
+    options: [
+      ['unify', 'Option A — unify shape across both buttons (4 groupKeys)'],
+      ['split', 'Option B — keep split (cancel allowed to differ from save)'],
+    ],
+  },
+  {
+    id: 'segctl-radius',
+    title: 'Segmented Control — radius pair',
+    prompt: 'Link <code>bar-radius</code> (control bar) and <code>selected-radius</code> (selected option pill) as one <code>radius</code> group?',
+    options: [
+      ['link', 'Yes — link them so the bar and pill stay visually consistent'],
+      ['keep', 'No — keep them as independent unlinked tokens'],
+    ],
+  },
+  {
+    id: 'tabbar-radius',
+    title: 'Tab Bar — radius gap',
+    prompt: '<code>--tabbar-bar-radius</code> exists in <code>TabBar.svelte:52</code> but is missing from the editor schema. How to handle?',
+    options: [
+      ['add-single', 'Add as a single unlinked token (matches current runtime — one bar-level radius)'],
+      ['add-perstate', 'Expand runtime to per-state radius and link as a group'],
+      ['leave', 'Leave out of schema — radius stays uneditable'],
+    ],
+  },
+  {
+    id: 'sectiondiv',
+    title: 'Section Divider — wire up linkage?',
+    prompt: 'The editor currently has no linkage infrastructure imported. To link <code>radius</code> across the 6 variants (the only natural link candidate), we\'d need to import <code>computeLinkedBlock</code>, add a <code>linkableContexts</code> map, and pass <code>linked</code> to <code>ComponentEditorBase</code>.',
+    options: [
+      ['wire', 'Yes — wire up linkage and link radius across 6 variants'],
+      ['skip', 'No — leave Section Divider with no linkage'],
+    ],
+  },
+  {
+    id: 'general-notes',
+    title: 'General notes',
+    prompt: 'Anything else from the audit that needs follow-up?',
+    options: [],
+    notesOnly: true,
+  },
+];
+
+const STORAGE_KEY = 'linkage-audit-decisions-v1';
+const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+
+function renderDecision(d) {
+  const choice = state[d.id]?.choice || '';
+  const notes = state[d.id]?.notes || '';
+  const opts = d.options.map(([val, label]) => `
+    <label class="${choice === val ? 'checked' : ''}">
+      <input type="radio" name="dec-${d.id}" value="${val}" ${choice === val ? 'checked' : ''}>
+      <span>${label}</span>
+    </label>
+  `).join('');
+  const answered = state[d.id]?.choice || (d.notesOnly && state[d.id]?.notes);
+  return `
+    <div class="decision ${answered ? 'answered' : ''}" data-id="${d.id}">
+      <h4><span class="indicator"></span>${d.title}</h4>
+      <div class="prompt">${d.prompt}</div>
+      ${opts ? `<div class="opts">${opts}</div>` : ''}
+      <textarea data-id="${d.id}" placeholder="Notes (optional)…">${notes.replace(/</g, '&lt;')}</textarea>
+    </div>
+  `;
+}
+
+function updateProgress() {
+  const total = decisions.filter(d => !d.notesOnly).length;
+  const done = decisions.filter(d => !d.notesOnly && state[d.id]?.choice).length;
+  document.getElementById('progress').textContent = `${done} / ${total} answered`;
+  // Update each card's "answered" class
+  decisions.forEach(d => {
+    const card = document.querySelector(`[data-id="${d.id}"].decision`);
+    if (!card) return;
+    const isAnswered = state[d.id]?.choice || (d.notesOnly && state[d.id]?.notes);
+    card.classList.toggle('answered', !!isAnswered);
+  });
+}
+
+function persist() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  updateProgress();
+}
+
+function setChoice(id, val) {
+  state[id] = state[id] || {};
+  state[id].choice = val;
+  persist();
+}
+function setNotes(id, val) {
+  state[id] = state[id] || {};
+  state[id].notes = val;
+  persist();
+}
+
+document.getElementById('decisions-list').innerHTML = decisions.map(renderDecision).join('');
+
+document.getElementById('decisions-list').addEventListener('change', (e) => {
+  if (e.target.matches('input[type=radio]')) {
+    const card = e.target.closest('.decision');
+    const id = card.dataset.id;
+    setChoice(id, e.target.value);
+    // Update visual on labels in this card
+    card.querySelectorAll('.opts label').forEach(l => l.classList.remove('checked'));
+    e.target.closest('label').classList.add('checked');
+  }
+});
+document.getElementById('decisions-list').addEventListener('input', (e) => {
+  if (e.target.matches('textarea')) {
+    setNotes(e.target.dataset.id, e.target.value);
+  }
+});
+
+function buildSummary() {
+  const lines = [];
+  lines.push('# Component linkage audit — decisions');
+  lines.push('');
+  lines.push(`_Captured ${new Date().toLocaleString()}_`);
+  lines.push('');
+  decisions.forEach(d => {
+    const s = state[d.id] || {};
+    if (!s.choice && !s.notes) return; // skip unanswered
+    lines.push(`## ${d.title}`);
+    if (s.choice) {
+      const opt = d.options.find(o => o[0] === s.choice);
+      lines.push(`**Answer:** ${opt ? opt[1] : s.choice}`);
+    }
+    if (s.notes && s.notes.trim()) {
+      lines.push('');
+      lines.push(`**Notes:** ${s.notes.trim()}`);
+    }
+    lines.push('');
+  });
+  // List unanswered if any (helps spot gaps)
+  const missing = decisions.filter(d => !d.notesOnly && !state[d.id]?.choice);
+  if (missing.length) {
+    lines.push('---');
+    lines.push('');
+    lines.push('**Unanswered:** ' + missing.map(d => d.title).join(', '));
+    lines.push('');
+  }
+  return lines.join('\n');
+}
+
+const toast = document.getElementById('toast');
+function showToast(msg, isError) {
+  toast.textContent = msg;
+  toast.style.color = isError ? '#f85149' : 'var(--good)';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+document.getElementById('copy-btn').addEventListener('click', async () => {
+  const text = buildSummary();
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast('Copied to clipboard');
+  } catch (err) {
+    // Fallback: select-and-copy via temporary textarea
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); showToast('Copied to clipboard'); }
+    catch (e) { showToast('Copy failed — open console for the text', true); console.log(text); }
+    document.body.removeChild(ta);
+  }
+});
+
+document.getElementById('clear-btn').addEventListener('click', () => {
+  if (!confirm('Clear all decision answers? This cannot be undone.')) return;
+  Object.keys(state).forEach(k => delete state[k]);
+  localStorage.removeItem(STORAGE_KEY);
+  document.getElementById('decisions-list').innerHTML = decisions.map(renderDecision).join('');
+  updateProgress();
+  showToast('Cleared');
+});
+
+updateProgress();
+</script>
+
+</body>
+</html>
