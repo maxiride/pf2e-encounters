@@ -20,8 +20,8 @@ const ROOT = new URL('..', import.meta.url).pathname;
 const FORBIDDEN = /var\(\s*--font-(sans|serif|display|mono)\b/g;
 
 const STYLE_FILES = [
-  'src/editor/styles/ui-editor.css',
-  'src/editor/styles/ui-form-controls.css',
+  'src/live-tokens/editor/styles/ui-editor.css',
+  'src/live-tokens/editor/styles/ui-form-controls.css',
 ];
 
 async function walk(dir, extFilter) {
@@ -42,13 +42,13 @@ async function walk(dir, extFilter) {
 // pages (which we list explicitly) with the themed consumer pages
 // `Home.svelte` and `Demo.svelte` (which are *expected* to use theme fonts).
 const editorSvelteDirs = [
-  'src/editor/ui',
-  'src/editor/component-editor',
+  'src/live-tokens/editor/ui',
+  'src/live-tokens/editor/component-editor',
 ];
 const editorSvelteFiles = [
-  'src/editor/pages/Editor.svelte',
-  'src/editor/pages/EditorShell.svelte',
-  'src/editor/pages/ComponentEditorPage.svelte',
+  'src/live-tokens/editor/pages/Editor.svelte',
+  'src/live-tokens/editor/pages/EditorShell.svelte',
+  'src/live-tokens/editor/pages/ComponentEditorPage.svelte',
 ];
 
 const violations = [];

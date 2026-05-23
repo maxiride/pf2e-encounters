@@ -1,10 +1,10 @@
 <script lang="ts">
   import { run } from 'svelte/legacy';
 
-  import LiveEditorOverlay from '../editor/overlay/LiveEditorOverlay.svelte';
-  import ColumnsOverlay from '../editor/overlay/ColumnsOverlay.svelte';
-  import { route, navigate } from '../editor/core/routing/router';
-  import { editorView } from '../editor/core/store/editorViewStore';
+  import LiveEditorOverlay from './live-tokens/editor/overlay/LiveEditorOverlay.svelte';
+  import ColumnsOverlay from './live-tokens/editor/overlay/ColumnsOverlay.svelte';
+  import { route, navigate } from './live-tokens/editor/core/routing/router';
+  import { editorView } from './live-tokens/editor/core/store/editorViewStore';
 
   const allNavLinks = [
     { path: '/', label: 'Site', icon: 'fa-home' },
@@ -47,10 +47,10 @@
   // route is actually visited. Static imports at the top of this file would
   // evaluate every page module at boot, leaking site.css into editor routes.
   let pagePromise = $derived.by(() => {
-    if (isEditor) return import('../editor/pages/Editor.svelte');
-    if (isDemo) return import('../demo/Demo.svelte');
-    if (isComponentEditor) return import('../editor/pages/ComponentEditorPage.svelte');
-    if (isFloatingTagsPlayground) return import('../demo/FloatingTagsPlayground.svelte');
+    if (isEditor) return import('./live-tokens/editor/pages/Editor.svelte');
+    if (isDemo) return import('./live-tokens/demo/Demo.svelte');
+    if (isComponentEditor) return import('./live-tokens/editor/pages/ComponentEditorPage.svelte');
+    if (isFloatingTagsPlayground) return import('./live-tokens/demo/FloatingTagsPlayground.svelte');
     return import('./Home.svelte');
   });
 </script>
@@ -60,11 +60,11 @@
   <LiveEditorOverlay
     navLinks={visibleNavLinks}
     pageSources={{
-      '/': 'src/app/Home.svelte',
-      '/demo': 'src/demo/Demo.svelte',
-      '/components': 'src/editor/pages/ComponentEditorPage.svelte',
-      '/editor': 'src/editor/pages/Editor.svelte',
-      '/playground/floating-tags': 'src/demo/FloatingTagsPlayground.svelte',
+      '/': 'src/Home.svelte',
+      '/demo': 'src/live-tokens/demo/Demo.svelte',
+      '/components': 'src/live-tokens/editor/pages/ComponentEditorPage.svelte',
+      '/editor': 'src/live-tokens/editor/pages/Editor.svelte',
+      '/playground/floating-tags': 'src/live-tokens/demo/FloatingTagsPlayground.svelte',
     }}
     hidePageSourceOn={['/components']}
   />

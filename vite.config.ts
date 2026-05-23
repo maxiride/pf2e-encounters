@@ -5,7 +5,11 @@ import { themeFileApi } from './vite-plugin';
 export default defineConfig({
   plugins: [
     svelte({ preprocess: vitePreprocess() }),
-    themeFileApi({ themesDir: 'themes', tokensCssPath: 'src/system/styles/tokens.css' }),
+    themeFileApi({
+      themesDir: 'themes',
+      tokensCssPath: 'src/live-tokens/system/styles/tokens.css',
+      componentsSrcDir: 'src/live-tokens/system/components',
+    }),
   ],
   // Force Svelte's browser-side exports under vitest (happy-dom). Without this,
   // `import { createEventDispatcher } from 'svelte'` resolves to the SSR build

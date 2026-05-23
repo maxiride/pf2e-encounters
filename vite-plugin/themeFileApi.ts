@@ -1,12 +1,12 @@
 import type { Plugin } from 'vite';
 import fs from 'fs';
 import path from 'path';
-import { extractGlobalRootBody } from '../src/editor/core/themes/parsers/globalRootBlock';
-import { sanitizeFileName } from '../src/editor/core/storage/files/versionedFileResourceClient';
+import { extractGlobalRootBody } from '../src/live-tokens/editor/core/themes/parsers/globalRootBlock';
+import { sanitizeFileName } from '../src/live-tokens/editor/core/storage/files/versionedFileResourceClient';
 import {
   palettesToVars,
   reconcilePalettesFromCssVars,
-} from '../src/editor/core/palettes/paletteDerivation';
+} from '../src/live-tokens/editor/core/palettes/paletteDerivation';
 import {
   versionedFileResourceServer,
   type VersionedFileResourceServer,

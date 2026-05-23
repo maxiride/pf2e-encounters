@@ -10,7 +10,7 @@ const ALIGNMENT_VALUES = new Set([
 ]);
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUTPUT_PATH = resolve(__dirname, "../webui/public/creatures.json");
+const OUTPUT_PATH = resolve(__dirname, "../public/creatures.json");
 
 async function fetchPage(searchAfter) {
   const body = {

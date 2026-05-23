@@ -1,9 +1,9 @@
 <script lang="ts">
   import './site.css';
-  import Button from '../system/components/Button.svelte';
-  import Table from '../system/components/Table.svelte';
-  import ProgressBar from '../system/components/ProgressBar.svelte';
-  import SelectBadge from '../system/components/SelectBadge.svelte';
+  import Button from './live-tokens/system/components/Button.svelte';
+  import Table from './live-tokens/system/components/Table.svelte';
+  import ProgressBar from './live-tokens/system/components/ProgressBar.svelte';
+  import SelectBadge from './live-tokens/system/components/SelectBadge.svelte';
 
   type Creature = {
     id: string;
