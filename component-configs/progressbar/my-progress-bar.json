@@ -2,10 +2,10 @@
   "name": "my-progress-bar",
   "component": "progressbar",
   "createdAt": "2026-05-20T01:04:54.418Z",
-  "updatedAt": "2026-05-23T02:10:01.102Z",
+  "updatedAt": "2026-05-24T14:13:41.473Z",
   "aliases": {
-    "--progressbar-primary-track-surface": "color-mix(in srgb, var(--surface-neutral-lowest) 80%, transparent)",
-    "--progressbar-primary-track-border": "--border-neutral-faint",
+    "--progressbar-primary-track-surface": "color-mix(in srgb, var(--color-info-600) 80%, transparent)",
+    "--progressbar-primary-track-border": "--border-neutral",
     "--progressbar-primary-track-border-width": "--border-width-1",
     "--progressbar-primary-track-height": "--space-8",
     "--progressbar-primary-radius": "--radius-full",

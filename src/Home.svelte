@@ -1,9 +1,14 @@
 <script lang="ts">
   import './site.css';
   import Button from './live-tokens/system/components/Button.svelte';
+  import Input from './live-tokens/system/components/Input.svelte';
   import Table from './live-tokens/system/components/Table.svelte';
+  import Tooltip from './live-tokens/system/components/Tooltip.svelte';
   import ProgressBar from './live-tokens/system/components/ProgressBar.svelte';
   import SelectBadge from './live-tokens/system/components/SelectBadge.svelte';
+  import CollapsibleSection from './live-tokens/system/components/CollapsibleSection.svelte';
+  import Dialog from './live-tokens/system/components/Dialog.svelte';
+  import RuneGoblinBadge from './RuneGoblinBadge.svelte';
 
   type Creature = {
     id: string;
@@ -35,8 +40,9 @@
   let metadata = $state<Metadata | null>(null);
 
   let name = $state('');
-  let minLevel = $state<number | ''>('');
-  let maxLevel = $state<number | ''>('');
+  // Stored as strings so the <Input> component can two-way-bind directly; coerce on read.
+  let minLevel = $state('');
+  let maxLevel = $state('');
   let size = $state<string[]>([]);
   let family = $state<string[]>([]);
   let trait = $state<string[]>([]);
@@ -45,11 +51,54 @@
   let traitSearch = $state('');
   let familySearch = $state('');
 
-  let partySize = $state(4);
-  let partyLevel = $state(1);
+  let sizeExpanded = $state(true);
+  let familyExpanded = $state(false);
+  let traitExpanded = $state(false);
+  let creatureTypeExpanded = $state(false);
+  let rarityExpanded = $state(false);
+
+  let partySize = $state('4');
+  let partyLevel = $state('1');
   let encounter = $state<EncounterEntry[]>([]);
   let sortBy = $state<'name' | 'level'>('name');
   let sortDesc = $state(false);
+
+  type ColumnKey = 'name' | 'level' | 'size' | 'family' | 'type' | 'traits' | 'rarity';
+  let columnVisibility = $state<Record<ColumnKey, boolean>>({
+    name: true,
+    level: true,
+    size: true,
+    family: false,
+    type: false,
+    traits: true,
+    rarity: false,
+  });
+  let showColumnsDialog = $state(false);
+
+  // Per-row tooltip gate: holds the creature id whose traits cell currently overflows + is hovered.
+  let openTraitsRow = $state<string | null>(null);
+
+  const SIZE_ABBR: Record<string, string> = {
+    Tiny: 'Tiny',
+    Small: 'Sm',
+    Medium: 'Med',
+    Large: 'Lg',
+    Huge: 'Huge',
+    Gargantuan: 'Gtn',
+  };
+  function sizeLabel(s: string): string {
+    return SIZE_ABBR[s] ?? s;
+  }
+
+  function maybeShowTraitsTooltip(target: EventTarget | null, id: string) {
+    if (!(target instanceof HTMLElement)) return;
+    const span = target.querySelector<HTMLElement>('.traits-ellipsis');
+    if (!span || span.scrollWidth <= span.clientWidth) return;
+    openTraitsRow = id;
+  }
+  function hideTraitsTooltip() {
+    openTraitsRow = null;
+  }
 
   $effect(() => {
     fetch('/creatures.json')
@@ -129,7 +178,7 @@
   });
 
   const enriched = $derived(
-    encounter.map((e) => ({ ...e, cost: computeCost(e, partyLevel) * e.count }))
+    encounter.map((e) => ({ ...e, cost: computeCost(e, Number(partyLevel)) * e.count }))
   );
 
   const xpCost = $derived(enriched.reduce((sum, e) => sum + e.cost, 0));
@@ -218,6 +267,7 @@
 <div class="page">
   <header>
     <h1>Pathfinder 2e Encounter Builder</h1>
+    <RuneGoblinBadge />
   </header>
 
   {#if !metadata}
@@ -225,13 +275,21 @@
   {:else}
     <section class="top-controls">
       <div class="control-group party">
-        <label class="f narrow"><span>Party size</span>
-          <input type="number" min="1" bind:value={partySize} />
-        </label>
-        <label class="f narrow"><span>Party level</span>
-          <input type="number" min="1" max="25" bind:value={partyLevel} />
-        </label>
+        <div class="narrow">
+          <Input type="number" label="Party size" bind:value={partySize} />
+        </div>
+        <div class="narrow">
+          <Input type="number" label="Party level" bind:value={partyLevel} />
+        </div>
       </div>
+      <a
+        class="attribution"
+        href="https://github.com/maxiride/pf2e-encounters"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Based on the original work by maxiride
+      </a>
     </section>
 
     <section class="danger-bar">
@@ -241,19 +299,15 @@
     <section class="main">
       <div class="creatures-panel">
         <div class="table-controls">
-          <label class="f search-field">
-            <span>Search</span>
-            <div class="search-input">
-              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-              <input type="text" bind:value={name} placeholder="Creature name…" />
-            </div>
-          </label>
-          <label class="f narrow"><span>Min level</span>
-            <input type="number" min={metadata.min_level} max={metadata.max_level} bind:value={minLevel} />
-          </label>
-          <label class="f narrow"><span>Max level</span>
-            <input type="number" min={metadata.min_level} max={metadata.max_level} bind:value={maxLevel} />
-          </label>
+          <div class="search-field">
+            <Input type="search" label="Search" bind:value={name} placeholder="Creature name…" />
+          </div>
+          <div class="narrow">
+            <Input type="number" label="Min level" bind:value={minLevel} />
+          </div>
+          <div class="narrow">
+            <Input type="number" label="Max level" bind:value={maxLevel} />
+          </div>
         </div>
         <Table>
 
@@ -261,15 +315,28 @@
           <table>
             <thead>
               <tr>
-                <th></th>
-                <th></th>
-                <th class="sortable" onclick={() => setSort('name')}>Name {sortBy === 'name' ? (sortDesc ? '↓' : '↑') : ''}</th>
-                <th class="sortable" onclick={() => setSort('level')}>Level {sortBy === 'level' ? (sortDesc ? '↓' : '↑') : ''}</th>
-                <th>Size</th>
-                <th>Family</th>
-                <th>Type</th>
-                <th>Traits</th>
-                <th>Rarity</th>
+                <th class="icon-col">
+                  <button
+                    class="icon-btn gear"
+                    title="Choose columns"
+                    aria-label="Choose columns"
+                    onclick={() => (showColumnsDialog = true)}
+                  >
+                    <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                  </button>
+                </th>
+                <th class="icon-col"></th>
+                {#if columnVisibility.name}
+                  <th class="sortable" onclick={() => setSort('name')}>Name {sortBy === 'name' ? (sortDesc ? '↓' : '↑') : ''}</th>
+                {/if}
+                {#if columnVisibility.level}
+                  <th class="sortable" onclick={() => setSort('level')}>Level {sortBy === 'level' ? (sortDesc ? '↓' : '↑') : ''}</th>
+                {/if}
+                {#if columnVisibility.size}<th>Size</th>{/if}
+                {#if columnVisibility.family}<th>Family</th>{/if}
+                {#if columnVisibility.type}<th>Type</th>{/if}
+                {#if columnVisibility.traits}<th>Traits</th>{/if}
+                {#if columnVisibility.rarity}<th>Rarity</th>{/if}
               </tr>
             </thead>
             <tbody>
@@ -281,13 +348,23 @@
                   <td>
                     <button class="icon-btn" title="Open on Archives of Nethys" onclick={() => openAon(c)}>↗</button>
                   </td>
-                  <td>{c.name}</td>
-                  <td>{c.level}</td>
-                  <td>{c.size}</td>
-                  <td>{c.family}</td>
-                  <td>{c.creature_type}</td>
-                  <td class="traits">{c.traits.join(', ')}</td>
-                  <td>{c.rarity}</td>
+                  {#if columnVisibility.name}<td>{c.name}</td>{/if}
+                  {#if columnVisibility.level}<td>{c.level}</td>{/if}
+                  {#if columnVisibility.size}<td>{sizeLabel(c.size)}</td>{/if}
+                  {#if columnVisibility.family}<td>{c.family}</td>{/if}
+                  {#if columnVisibility.type}<td>{c.creature_type}</td>{/if}
+                  {#if columnVisibility.traits}
+                    <td
+                      class="traits"
+                      onmouseenter={(e) => maybeShowTraitsTooltip(e.currentTarget, c.id)}
+                      onmouseleave={hideTraitsTooltip}
+                    >
+                      <Tooltip text={c.traits.join(', ')} position="top" wrap manual portal open={openTraitsRow === c.id}>
+                        <span class="traits-ellipsis">{c.traits.join(', ')}</span>
+                      </Tooltip>
+                    </td>
+                  {/if}
+                  {#if columnVisibility.rarity}<td>{c.rarity}</td>{/if}
                 </tr>
               {/each}
             </tbody>
@@ -304,7 +381,7 @@
         <div class="encounter-panel">
           <div class="totals" style:background={activeStage.color} style:color={totalsTextColor}>
             <strong>Total encounter cost: {xpCost} XP</strong>
-            {#if partySize > 0 && partySize !== 4}
+            {#if Number(partySize) > 0 && Number(partySize) !== 4}
               <small>XP award: {Math.floor((xpCost * 4) / Number(partySize))}</small>
             {/if}
           </div>
@@ -349,27 +426,43 @@
           {/if}
         </div>
 
-        <div class="detail-filters">
-          <h2>Refine</h2>
-          <div class="filter-group">
-            <div class="filter-head">
-              <span class="filter-label">Size</span>
-              {#if size.length}<button type="button" class="reset" onclick={() => (size = [])}>Reset</button>{/if}
-            </div>
+        <div class="refine">
+          <h2 class="refine-title">Filter Creatures</h2>
+          <CollapsibleSection
+            variant="container"
+            label="Size"
+            expanded={sizeExpanded}
+            ontoggle={() => (sizeExpanded = !sizeExpanded)}
+          >
+            {#snippet summary()}
+              {#if size.length}
+                <div class="reset-wrap">
+                  <Button variant="outline" size="small" onclick={(e) => { e.stopPropagation(); size = []; }}>Reset</Button>
+                </div>
+              {/if}
+            {/snippet}
             <div class="badges">
               {#each metadata.sizes as opt}
                 <SelectBadge selected={size.includes(opt)} label={opt} onclick={() => (size = toggle(size, opt))} />
               {/each}
             </div>
-          </div>
-          <div class="filter-group">
-            <div class="filter-head">
-              <span class="filter-label">Family</span>
-              {#if family.length}<button type="button" class="reset" onclick={() => (family = [])}>Reset</button>{/if}
-            </div>
-            <input
-              type="text"
-              class="pill-search"
+          </CollapsibleSection>
+
+          <CollapsibleSection
+            variant="container"
+            label="Family"
+            expanded={familyExpanded}
+            ontoggle={() => (familyExpanded = !familyExpanded)}
+          >
+            {#snippet summary()}
+              {#if family.length}
+                <div class="reset-wrap">
+                  <Button variant="outline" size="small" onclick={(e) => { e.stopPropagation(); family = []; }}>Reset</Button>
+                </div>
+              {/if}
+            {/snippet}
+            <Input
+              type="search"
               placeholder="Filter families…"
               bind:value={familySearch}
             />
@@ -378,15 +471,23 @@
                 <SelectBadge selected={family.includes(opt)} label={opt} onclick={() => (family = toggle(family, opt))} />
               {/each}
             </div>
-          </div>
-          <div class="filter-group">
-            <div class="filter-head">
-              <span class="filter-label">Trait</span>
-              {#if trait.length}<button type="button" class="reset" onclick={() => (trait = [])}>Reset</button>{/if}
-            </div>
-            <input
-              type="text"
-              class="pill-search"
+          </CollapsibleSection>
+
+          <CollapsibleSection
+            variant="container"
+            label="Trait"
+            expanded={traitExpanded}
+            ontoggle={() => (traitExpanded = !traitExpanded)}
+          >
+            {#snippet summary()}
+              {#if trait.length}
+                <div class="reset-wrap">
+                  <Button variant="outline" size="small" onclick={(e) => { e.stopPropagation(); trait = []; }}>Reset</Button>
+                </div>
+              {/if}
+            {/snippet}
+            <Input
+              type="search"
               placeholder="Filter traits…"
               bind:value={traitSearch}
             />
@@ -395,33 +496,81 @@
                 <SelectBadge selected={trait.includes(opt)} label={opt} onclick={() => (trait = toggle(trait, opt))} />
               {/each}
             </div>
-          </div>
-          <div class="filter-group">
-            <div class="filter-head">
-              <span class="filter-label">Creature type</span>
-              {#if creatureType.length}<button type="button" class="reset" onclick={() => (creatureType = [])}>Reset</button>{/if}
-            </div>
+          </CollapsibleSection>
+
+          <CollapsibleSection
+            variant="container"
+            label="Creature type"
+            expanded={creatureTypeExpanded}
+            ontoggle={() => (creatureTypeExpanded = !creatureTypeExpanded)}
+          >
+            {#snippet summary()}
+              {#if creatureType.length}
+                <div class="reset-wrap">
+                  <Button variant="outline" size="small" onclick={(e) => { e.stopPropagation(); creatureType = []; }}>Reset</Button>
+                </div>
+              {/if}
+            {/snippet}
             <div class="badges">
               {#each metadata.creature_types as opt}
                 <SelectBadge selected={creatureType.includes(opt)} label={opt} onclick={() => (creatureType = toggle(creatureType, opt))} />
               {/each}
             </div>
-          </div>
-          <div class="filter-group">
-            <div class="filter-head">
-              <span class="filter-label">Rarity</span>
-              {#if rarity.length}<button type="button" class="reset" onclick={() => (rarity = [])}>Reset</button>{/if}
-            </div>
+          </CollapsibleSection>
+
+          <CollapsibleSection
+            variant="container"
+            label="Rarity"
+            expanded={rarityExpanded}
+            ontoggle={() => (rarityExpanded = !rarityExpanded)}
+          >
+            {#snippet summary()}
+              {#if rarity.length}
+                <div class="reset-wrap">
+                  <Button variant="outline" size="small" onclick={(e) => { e.stopPropagation(); rarity = []; }}>Reset</Button>
+                </div>
+              {/if}
+            {/snippet}
             <div class="badges">
               {#each metadata.rarities as opt}
                 <SelectBadge selected={rarity.includes(opt)} label={opt} onclick={() => (rarity = toggle(rarity, opt))} />
               {/each}
             </div>
-          </div>
+          </CollapsibleSection>
         </div>
       </aside>
     </section>
   {/if}
+
+  <Dialog
+    bind:show={showColumnsDialog}
+    title="Columns"
+    width="320px"
+    onclose={() => (showColumnsDialog = false)}
+  >
+    <div class="columns-body">
+      {#each [
+        { key: 'name', label: 'Name', locked: true },
+        { key: 'level', label: 'Level', locked: true },
+        { key: 'size', label: 'Size', locked: false },
+        { key: 'family', label: 'Family', locked: false },
+        { key: 'type', label: 'Type', locked: false },
+        { key: 'traits', label: 'Traits', locked: false },
+        { key: 'rarity', label: 'Rarity', locked: false },
+      ] as col (col.key)}
+        <label class="col-toggle" class:locked={col.locked}>
+          <input
+            type="checkbox"
+            checked={columnVisibility[col.key as ColumnKey]}
+            disabled={col.locked}
+            onchange={(e) => (columnVisibility[col.key as ColumnKey] = (e.currentTarget as HTMLInputElement).checked)}
+          />
+          <span>{col.label}</span>
+        </label>
+      {/each}
+    </div>
+  </Dialog>
+
 </div>
 
 <style>
@@ -436,10 +585,17 @@
     overflow-x: auto;
   }
 
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-24, 24px);
+    margin: 0 0 var(--space-16, 16px);
+  }
   header h1 {
     font-family: var(--font-display, serif);
     color: var(--text-primary);
-    margin: 0 0 var(--space-16, 16px);
+    margin: 0;
   }
 
   .loading {
@@ -451,13 +607,31 @@
   .top-controls {
     display: flex;
     flex-wrap: wrap;
+    align-items: end;
     gap: var(--space-24, 24px);
     margin-bottom: var(--space-16, 16px);
     padding: var(--space-12, 12px) var(--space-16, 16px);
-    background: var(--surface-canvas-low, #1a1a1a);
-    border: 1px solid var(--border-canvas-subtle, #333);
+    background: linear-gradient(
+      to bottom,
+      var(--surface-canvas-lower, #18201f),
+      var(--surface-canvas-low, #2e3634)
+    );
+    border: 1px solid var(--border-canvas, #333);
     border-radius: var(--radius-md, 6px);
   }
+  .attribution {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    /* Match the Input box height so the text vertically centers on the inputs */
+    min-height: calc(var(--font-size-sm, 14px) * var(--line-height-sm, 1.4) + var(--space-8, 8px) * 2.5);
+    color: var(--text-secondary, #bbb);
+    font-size: var(--font-size-sm, 12px);
+    text-decoration: underline dotted;
+    text-underline-offset: 0.2em;
+    line-height: 1;
+  }
+  .attribution:hover { color: var(--text-primary, #eee); }
   .control-group {
     display: flex;
     flex-wrap: wrap;
@@ -473,52 +647,18 @@
     margin-bottom: var(--space-8, 8px);
   }
   .table-controls .search-field { flex: 1; min-width: 240px; }
-
-  .f {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 160px;
-  }
-  .f.narrow { min-width: 100px; }
-  .f > span {
-    font-size: var(--font-size-xs, 12px);
-    color: var(--text-tertiary, #999);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .f input {
-    background: var(--surface-canvas-low, #1a1a1a);
-    color: var(--text-primary, #eee);
-    border: var(--border-width-1, 1px) solid var(--border-canvas-subtle, #333);
-    border-radius: var(--radius-sm, 4px);
-    padding: var(--space-6, 6px) var(--space-8, 8px);
-    font-family: var(--font-sans, sans-serif);
-    font-size: var(--font-size-sm, 14px);
-  }
-
-  .search-input {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  .search-input i {
-    position: absolute;
-    left: var(--space-8, 8px);
-    color: var(--text-tertiary, #888);
-    pointer-events: none;
-    font-size: var(--font-size-sm, 14px);
-  }
-  .search-input input {
-    width: 100%;
-    padding-left: var(--space-28, 28px);
-  }
+  .narrow { min-width: 100px; max-width: 140px; }
 
   .danger-bar {
     margin: var(--space-16, 16px) 0 var(--space-32, 32px);
     /* Default ProgressBar track is ~8px tall — too short for tick labels.
        Bump the danger variant just for this bar. */
     --progressbar-danger-track-height: 20px;
+    /* Borrow the primary variant's translucent track surface — the danger
+       default (solid neutral-low) reads heavier than the rest of the page. */
+    --progressbar-danger-track-surface: color-mix(in srgb, var(--surface-neutral-lowest) 80%, transparent);
+    --progressbar-danger-track-border: var(--border-neutral-faint);
+    --progressbar-danger-track-border-width: var(--border-width-1);
   }
 
   .main {
@@ -538,7 +678,6 @@
   .table-scroll thead th {
     position: sticky;
     top: 0;
-    background: var(--surface-canvas-low, #1a1a1a);
     z-index: 1;
   }
 
@@ -550,7 +689,29 @@
 
   .sortable { cursor: pointer; user-select: none; }
   .sortable:hover { color: var(--text-primary); }
-  .traits { font-size: var(--font-size-xs, 12px); color: var(--text-tertiary); }
+  .traits {
+    font-size: var(--font-size-xs, 12px);
+    color: var(--text-tertiary);
+    max-width: 220px;
+  }
+  /* Tooltip wraps the ellipsis span; let it inherit the cell width so the
+     ellipsis still triggers on the span inside. */
+  .traits :global(.tooltip-wrapper) {
+    display: block;
+    max-width: 100%;
+  }
+  .traits-ellipsis {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .icon-col { width: 1%; white-space: nowrap; }
+
+  /* Top-align cell content so multi-line cells (e.g. traits before truncation
+     was applied) don't push single-line cells off-center. */
+  tbody td { vertical-align: top; }
 
   /* Skip layout + paint for off-screen rows — keeps 3000+ rows feeling snappy
      without virtual-scroll bookkeeping. Browser uses contain-intrinsic-size
@@ -609,50 +770,21 @@
     padding: var(--space-16, 16px);
   }
 
-  .detail-filters {
+  .refine {
     display: flex;
     flex-direction: column;
-    gap: var(--space-8, 8px);
-    background: var(--surface-canvas-low, #1a1a1a);
-    border: 1px solid var(--border-canvas-subtle, #333);
-    border-radius: var(--radius-md, 6px);
-    padding: var(--space-16, 16px);
+    gap: 0.5rem;
   }
-  .detail-filters h2 {
-    font-size: var(--font-size-sm, 14px);
-    font-weight: 600;
+  .refine-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    text-transform: none;
+    letter-spacing: normal;
     margin: 0 0 var(--space-4, 4px);
-    color: var(--text-secondary, #ccc);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    color: var(--text-primary);
   }
-  .filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4, 4px);
-  }
-  .filter-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-8, 8px);
-  }
-  .filter-label {
-    font-size: var(--font-size-xs, 12px);
-    color: var(--text-tertiary, #999);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .reset {
-    background: none;
-    border: none;
-    color: var(--text-tertiary, #999);
-    font-size: var(--font-size-xs, 12px);
-    cursor: pointer;
-    padding: 0;
-    text-decoration: underline;
-  }
-  .reset:hover { color: var(--text-primary, #eee); }
+  .reset-wrap { margin-left: auto; }
   .badges {
     display: flex;
     flex-wrap: wrap;
@@ -663,17 +795,7 @@
     overflow-y: auto;
     padding: var(--space-4, 4px) 2px;
   }
-  .pill-search {
-    width: 100%;
-    background: var(--surface-canvas-low, #1a1a1a);
-    color: var(--text-primary, #eee);
-    border: var(--border-width-1, 1px) solid var(--border-canvas-subtle, #333);
-    border-radius: var(--radius-sm, 4px);
-    padding: var(--space-6, 6px) var(--space-8, 8px);
-    font-family: var(--font-sans, sans-serif);
-    font-size: var(--font-size-sm, 14px);
-  }
-  .totals {
+.totals {
     padding: var(--space-12, 12px);
     border-radius: var(--radius-sm, 4px);
     margin-bottom: var(--space-12, 12px);
@@ -739,4 +861,32 @@
     background: var(--surface-brand-high, #d84315);
     color: var(--text-primary, #fff);
   }
+
+  .icon-btn.gear {
+    background: transparent;
+    border-color: transparent;
+    color: var(--text-tertiary, #999);
+    padding: 4px 6px;
+  }
+  .icon-btn.gear:hover {
+    background: var(--surface-neutral-high, #333);
+    color: var(--text-primary, #eee);
+  }
+
+.columns-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8, 8px);
+  }
+  .col-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8, 8px);
+    color: var(--text-primary, #eee);
+    font-size: var(--font-size-sm, 14px);
+    cursor: pointer;
+  }
+  .col-toggle input { cursor: pointer; }
+  .col-toggle.locked { cursor: not-allowed; opacity: 0.6; }
+  .col-toggle.locked input { cursor: not-allowed; }
 </style>

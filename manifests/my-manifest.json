@@ -1,14 +1,14 @@
 {
   "name": "my-manifest",
   "createdAt": "2026-05-19T15:35:53.747Z",
-  "updatedAt": "2026-05-23T02:10:01.140Z",
+  "updatedAt": "2026-05-24T14:13:41.508Z",
   "theme": "my-theme",
   "componentConfigs": {
     "badge": "my-badge",
     "button": "my-button",
     "callout": "default",
     "card": "default",
-    "collapsiblesection": "default",
+    "collapsiblesection": "my-collapsible-section",
     "cornerbadge": "default",
     "dialog": "default",
     "floatingtokentags": "default",

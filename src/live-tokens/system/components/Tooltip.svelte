@@ -3,6 +3,18 @@
     text?: string;
     position?: 'top' | 'bottom';
     open?: boolean;
+    /** When true, long text wraps onto multiple lines (capped by `--tooltip-max-width`).
+        Defaults to false — tooltip stays on a single line, matching prior behavior. */
+    wrap?: boolean;
+    /** When true, the CSS :hover trigger is disabled and `open` is the only source
+        of visibility. Use when the caller wants to gate the tooltip on something
+        more than mouse presence (e.g. only show when text is truncated). */
+    manual?: boolean;
+    /** When true, the tooltip uses `position: fixed` with JS-computed coordinates
+        so it escapes `overflow: hidden` ancestors (e.g. scrollable tables). The
+        tooltip still mounts in the same DOM location — fixed positioning is
+        viewport-relative, so it isn't clipped by scroll containers. */
+    portal?: boolean;
     children?: import('svelte').Snippet;
   }
 
@@ -10,14 +22,53 @@
     text = '',
     position = 'top',
     open = false,
+    wrap = false,
+    manual = false,
+    portal = false,
     children
   }: Props = $props();
+
+  let wrapperEl: HTMLElement | undefined = $state(undefined);
+  let anchor = $state<{ top: number; bottom: number; centerX: number } | null>(null);
+
+  // In portal mode the tooltip is fixed-positioned; we need to read the wrapper's
+  // viewport rect whenever visibility flips on so the coords match the trigger.
+  $effect(() => {
+    if (!portal || !open || !wrapperEl) {
+      anchor = null;
+      return;
+    }
+    function measure() {
+      if (!wrapperEl) return;
+      const rect = wrapperEl.getBoundingClientRect();
+      anchor = { top: rect.top, bottom: rect.bottom, centerX: rect.left + rect.width / 2 };
+    }
+    measure();
+    window.addEventListener('scroll', measure, true);
+    window.addEventListener('resize', measure);
+    return () => {
+      window.removeEventListener('scroll', measure, true);
+      window.removeEventListener('resize', measure);
+    };
+  });
+
+  let tooltipStyle = $derived.by(() => {
+    if (!portal || !anchor) return '';
+    const y = position === 'top' ? anchor.top : anchor.bottom;
+    return `left: ${anchor.centerX}px; top: ${y}px;`;
+  });
 </script>
 
-<div class="tooltip-wrapper" class:open>
+<div class="tooltip-wrapper" class:open class:manual bind:this={wrapperEl}>
   {@render children?.()}
   {#if text}
-    <div class="tooltip" class:bottom={position === 'bottom'}>
+    <div
+      class="tooltip"
+      class:bottom={position === 'bottom'}
+      class:wrap
+      class:portal
+      style={tooltipStyle}
+    >
       {text}
     </div>
   {/if}
@@ -67,6 +118,26 @@
     box-shadow: var(--tooltip-shadow);
   }
 
+  .tooltip.wrap {
+    white-space: normal;
+    max-width: var(--tooltip-max-width, 20rem);
+    overflow-wrap: anywhere;
+  }
+
+  /* Portal mode: coords come from inline style (set by JS), so disable the
+     wrapper-relative positioning. Translate moves the box above (or below) the
+     anchor point and centers it horizontally on it. */
+  .tooltip.portal {
+    position: fixed;
+    bottom: auto;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, calc(-100% - var(--space-8)));
+  }
+  .tooltip.portal.bottom {
+    transform: translate(-50%, var(--space-8));
+  }
+
   .tooltip::after {
     content: '';
     position: absolute;
@@ -95,7 +166,8 @@
     border-top: var(--tooltip-border-width) solid var(--tooltip-border);
   }
 
-  .tooltip-wrapper:hover .tooltip,
+  /* Hover trigger applies only when the caller hasn't opted into manual control. */
+  .tooltip-wrapper:not(.manual):hover .tooltip,
   .tooltip-wrapper.open .tooltip {
     opacity: 1;
   }

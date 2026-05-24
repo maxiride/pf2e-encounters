@@ -2,7 +2,7 @@
   "name": "default",
   "component": "progressbar",
   "createdAt": "2026-05-10T20:42:26.726Z",
-  "updatedAt": "2026-05-23T02:05:33.854Z",
+  "updatedAt": "2026-05-23T10:50:03.563Z",
   "aliases": {
     "--progressbar-primary-track-surface": "--surface-neutral-low",
     "--progressbar-primary-track-border": "--border-neutral-faint",
@@ -52,7 +52,6 @@
     "--progressbar-warning-value-font-size": "--font-size-xs",
     "--progressbar-warning-value-font-weight": "--font-weight-light",
     "--progressbar-warning-value-line-height": "--line-height-md",
-    "--progressbar-danger-track-surface": "color-mix(in srgb, var(--surface-neutral-lowest) 80%, transparent)",
     "--progressbar-danger-track-border": "--border-neutral-faint",
     "--progressbar-danger-track-border-width": "--border-width-1",
     "--progressbar-danger-track-height": "--space-8",

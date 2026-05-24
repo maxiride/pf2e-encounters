@@ -2,9 +2,9 @@
   "name": "my-tooltip",
   "component": "tooltip",
   "createdAt": "2026-05-23T01:25:11.062Z",
-  "updatedAt": "2026-05-23T01:25:11.065Z",
+  "updatedAt": "2026-05-23T13:24:02.148Z",
   "aliases": {
-    "--tooltip-surface": "color-mix(in srgb, var(--surface-neutral-lower) 66%, transparent)",
+    "--tooltip-surface": "color-mix(in srgb, var(--surface-neutral-lower) 90%, transparent)",
     "--tooltip-text": "--text-secondary",
     "--tooltip-text-font-family": "--font-sans",
     "--tooltip-text-font-size": "--font-size-sm",

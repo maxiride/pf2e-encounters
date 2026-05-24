@@ -52,7 +52,12 @@
     <div class="progress-stages">
       {#each stages as s}
         {#if s.label}
-          <div class="stage-tag" style:left="{s.at}%">{s.label}</div>
+          <div
+            class="stage-tag"
+            class:at-end={s.at >= 100}
+            class:at-start={s.at <= 0}
+            style:left="{s.at}%"
+          >{s.label}</div>
         {/if}
       {/each}
     </div>
@@ -286,6 +291,25 @@
     border-right: var(--tooltip-border-width) solid var(--tooltip-border);
     border-bottom: var(--tooltip-border-width) solid var(--tooltip-border);
     z-index: -1;
+  }
+
+  /* Edge stages: anchor the box's nearest side to the stage position so the
+     tag doesn't overflow the bar. The arrow shifts to that same side so it
+     still reads as belonging to the rightmost (or leftmost) stop. */
+  .stage-tag.at-end {
+    transform: translateX(-100%);
+  }
+  .stage-tag.at-end::after {
+    left: auto;
+    right: var(--space-12, 12px);
+    transform: rotate(45deg);
+  }
+  .stage-tag.at-start {
+    transform: none;
+  }
+  .stage-tag.at-start::after {
+    left: var(--space-12, 12px);
+    transform: rotate(45deg);
   }
 
   /* Vertical tick line drawn across the track at each stage's position.

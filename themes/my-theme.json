@@ -1,7 +1,7 @@
 {
   "name": "My Theme",
   "createdAt": "2026-05-19T15:35:49.317Z",
-  "updatedAt": "2026-05-23T01:07:47.807Z",
+  "updatedAt": "2026-05-23T12:06:26.944Z",
   "editorConfigs": {
     "Neutral": {
       "baseColor": "#808080",
@@ -405,7 +405,7 @@
       "anchorToBase": true
     },
     "Background": {
-      "baseColor": "#3c3c53",
+      "baseColor": "#282e2d",
       "tintHue": 240,
       "tintChroma": 0.04,
       "lightnessCurve": [
@@ -621,7 +621,7 @@
       "gradientSize": "page"
     },
     "Brand": {
-      "baseColor": "#73ba40",
+      "baseColor": "#4adeb4",
       "tintHue": 240,
       "tintChroma": 0.04,
       "lightnessCurve": [
@@ -2160,7 +2160,7 @@
     {
       "id": "src_manrope_local",
       "kind": "font-face",
-      "cssText": "@font-face {\n  font-family: \"Manrope\";\n  src: url('/src/system/styles/fonts/Manrope/Manrope-latin.woff2') format('woff2');\n  font-weight: 200 800;\n  font-style: normal;\n  font-display: swap;\n}",
+      "cssText": "@font-face {\n  font-family: \"Manrope\";\n  src: url('/src/live-tokens/system/styles/fonts/Manrope/Manrope-latin.woff2') format('woff2');\n  font-weight: 200 800;\n  font-style: normal;\n  font-display: swap;\n}",
       "label": "Local",
       "families": [
         {
