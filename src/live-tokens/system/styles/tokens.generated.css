@@ -619,6 +619,28 @@
   --sectiondivider-md-title-padding-left: var(--space-0);
   --sectiondivider-sm-title-padding-left: var(--space-2);
 
+  /* segmentedcontrol (my-segmented-control) */
+  --segmentedcontrol-bar-surface: var(--surface-neutral-lower);
+  --segmentedcontrol-bar-radius: var(--radius-sm);
+  --segmentedcontrol-bar-padding: var(--space-0);
+  --segmentedcontrol-bar-gap: var(--space-0);
+  --segmentedcontrol-divider-height: var(--space-full);
+  --segmentedcontrol-option-text: var(--text-secondary);
+  --segmentedcontrol-option-text-font-size: var(--font-size-xs);
+  --segmentedcontrol-option-text-line-height: var(--line-height-sm);
+  --segmentedcontrol-option-hover-text-font-size: var(--font-size-xs);
+  --segmentedcontrol-option-hover-text-line-height: var(--line-height-sm);
+  --segmentedcontrol-selected-text-font-size: var(--font-size-xs);
+  --segmentedcontrol-selected-text-line-height: var(--line-height-sm);
+  --segmentedcontrol-selected-radius: var(--radius-none);
+  --segmentedcontrol-disabled-surface: transparent;
+  --segmentedcontrol-disabled-text-font-size: var(--font-size-xs);
+  --segmentedcontrol-disabled-text-line-height: var(--line-height-sm);
+  --segmentedcontrol-bar-padding-top: var(--space-0);
+  --segmentedcontrol-bar-padding-right: var(--space-0);
+  --segmentedcontrol-bar-padding-bottom: var(--space-0);
+  --segmentedcontrol-bar-padding-left: var(--space-0);
+
   /* selectbadge (my-select-badge) */
   --selectbadge-default-frame-radius: var(--radius-md);
   --selectbadge-hover-frame-radius: var(--radius-md);
