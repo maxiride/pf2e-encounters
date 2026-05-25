@@ -35,18 +35,47 @@ const PKG_VERSION: string = (() => {
 })();
 
 export interface ThemeFileApiOptions {
-  themesDir: string;           // required, e.g. 'themes' (relative to cwd, resolved with path.resolve)
   tokensCssPath: string;       // required, e.g. 'src/styles/tokens.css'. Developer-authored, never written.
   tokensGeneratedCssPath?: string; // default: sibling of tokensCssPath named 'tokens.generated.css'. Editor-owned.
   fontsCssPath?: string;       // default: sibling of tokensCssPath named 'fonts.css'
   apiBase?: string;            // default: '/api'. Must be a simple '/path' without regex metacharacters.
-  componentConfigsDir?: string; // default: 'component-configs'
+  // Data directories. Resolution order for each: explicit option > `live-tokens.config.json`
+  // at cwd > default of `<dataDir>/<sub>` where dataDir defaults to 'src/live-tokens/data'.
+  dataDir?: string;            // default: 'src/live-tokens/data' (or value from live-tokens.config.json)
+  themesDir?: string;          // default: '<dataDir>/themes'
+  componentConfigsDir?: string; // default: '<dataDir>/component-configs'
+  manifestsDir?: string;       // default: '<dataDir>/manifests'
   componentsSrcDir?: string;   // default: 'src/system/components'
-  manifestsDir?: string;       // default: 'manifests'
+}
+
+interface LiveTokensFileConfig {
+  dataDir?: string;
+  themesDir?: string;
+  componentConfigsDir?: string;
+  manifestsDir?: string;
+}
+
+function readLiveTokensConfig(): LiveTokensFileConfig {
+  try {
+    const configPath = path.resolve('live-tokens.config.json');
+    if (!fs.existsSync(configPath)) return {};
+    const parsed = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+    return (parsed && typeof parsed === 'object') ? parsed : {};
+  } catch {
+    return {};
+  }
 }
 
 export function themeFileApi(opts: ThemeFileApiOptions): Plugin {
-  const THEMES_DIR = path.resolve(opts.themesDir);
+  const fileConfig = readLiveTokensConfig();
+  const DATA_DIR = opts.dataDir ?? fileConfig.dataDir ?? 'src/live-tokens/data';
+  const resolveData = (sub: string) => path.resolve(DATA_DIR, sub);
+
+  const THEMES_DIR = opts.themesDir
+    ? path.resolve(opts.themesDir)
+    : fileConfig.themesDir
+      ? path.resolve(fileConfig.themesDir)
+      : resolveData('themes');
   const CSS_PATH = path.resolve(opts.tokensCssPath);
   const GENERATED_CSS_PATH = opts.tokensGeneratedCssPath
     ? path.resolve(opts.tokensGeneratedCssPath)
@@ -57,13 +86,17 @@ export function themeFileApi(opts: ThemeFileApiOptions): Plugin {
   const API_BASE = opts.apiBase ?? '/api';
   const COMPONENT_CONFIGS_DIR = opts.componentConfigsDir
     ? path.resolve(opts.componentConfigsDir)
-    : path.resolve('component-configs');
+    : fileConfig.componentConfigsDir
+      ? path.resolve(fileConfig.componentConfigsDir)
+      : resolveData('component-configs');
   const COMPONENTS_SRC_DIR = opts.componentsSrcDir
     ? path.resolve(opts.componentsSrcDir)
     : path.resolve('src/system/components');
   const MANIFESTS_DIR = opts.manifestsDir
     ? path.resolve(opts.manifestsDir)
-    : path.resolve('manifests');
+    : fileConfig.manifestsDir
+      ? path.resolve(fileConfig.manifestsDir)
+      : resolveData('manifests');
   const LEGACY_PRESETS_DIR = path.resolve('presets');
 
   // Themes resource — list/load/save/delete + active/production.

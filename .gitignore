@@ -10,7 +10,7 @@ dist-ssr
 *.local
 
 # Theme + CSS backups (local-only working state)
-themes/_backups/
+src/live-tokens/data/themes/_backups/
 src/live-tokens/system/styles/_backups/
 
 .env*

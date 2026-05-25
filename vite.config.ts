@@ -6,7 +6,6 @@ export default defineConfig({
   plugins: [
     svelte({ preprocess: vitePreprocess() }),
     themeFileApi({
-      themesDir: 'themes',
       tokensCssPath: 'src/live-tokens/system/styles/tokens.css',
       componentsSrcDir: 'src/live-tokens/system/components',
     }),
