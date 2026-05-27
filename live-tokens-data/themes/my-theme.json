@@ -2159,9 +2159,8 @@
     },
     {
       "id": "src_manrope_local",
-      "kind": "font-face",
-      "cssText": "@font-face {\n  font-family: \"Manrope\";\n  src: url('/src/live-tokens/system/styles/fonts/Manrope/Manrope-latin.woff2') format('woff2');\n  font-weight: 200 800;\n  font-style: normal;\n  font-display: swap;\n}",
-      "label": "Local",
+      "kind": "google",
+      "label": "Google Fonts",
       "families": [
         {
           "id": "src_manrope_local:manrope",
@@ -2177,7 +2176,8 @@
             800
           ]
         }
-      ]
+      ],
+      "url": "https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
     },
     {
       "id": "src_google_arvo",

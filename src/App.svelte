@@ -1,28 +1,12 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
-  import LiveEditorOverlay from './live-tokens/editor/overlay/LiveEditorOverlay.svelte';
-  import ColumnsOverlay from './live-tokens/editor/overlay/ColumnsOverlay.svelte';
-  import { route, navigate } from './live-tokens/editor/core/routing/router';
-  import { editorView } from './live-tokens/editor/core/store/editorViewStore';
+  import { LiveEditorOverlay, ColumnsOverlay, route, navigate } from '@motion-proto/live-tokens';
 
   const allNavLinks = [
     { path: '/', label: 'Site', icon: 'fa-home' },
-    { path: '/demo', label: 'Demo', icon: 'fa-box-open' },
     { path: '/components', label: 'Components', icon: 'fa-puzzle-piece' },
   ];
 
   let visibleNavLinks = $derived(allNavLinks);
-
-  // The /components page and the overlay's components view are the same surface.
-  // Keep them mutually exclusive by flipping the overlay to tokens whenever the
-  // underlying page is /components, so they pair as page+overlay instead of
-  // stacking on top of each other.
-  run(() => {
-    if ($route === '/components' && $editorView === 'components') {
-      editorView.set('tokens');
-    }
-  });
 
   function handleClick(e: MouseEvent) {
     const anchor = (e.target as HTMLElement).closest('a[href]');
@@ -36,21 +20,13 @@
 
   const isDev = import.meta.env.DEV;
   let isEditor = $derived(isDev && $route === '/editor');
-  let isDemo = $derived(isDev && $route === '/demo');
   let isComponentEditor = $derived(isDev && $route === '/components');
-  // Unlisted dev-only playgrounds for component iteration. Reachable only by
-  // typing the URL directly; intentionally absent from allNavLinks.
-  let isFloatingTagsPlayground = $derived(isDev && $route === '/playground/floating-tags');
 
-  // Pages are loaded dynamically so each route's module — and any CSS it
-  // side-effect-imports (e.g. site.css on Home) — only evaluates when that
-  // route is actually visited. Static imports at the top of this file would
-  // evaluate every page module at boot, leaking site.css into editor routes.
+  // Pages are loaded dynamically so each route's module, and any CSS it
+  // side-effect-imports, only evaluates when that route is actually visited.
   let pagePromise = $derived.by(() => {
-    if (isEditor) return import('./live-tokens/editor/pages/Editor.svelte');
-    if (isDemo) return import('./live-tokens/demo/Demo.svelte');
-    if (isComponentEditor) return import('./live-tokens/editor/pages/ComponentEditorPage.svelte');
-    if (isFloatingTagsPlayground) return import('./live-tokens/demo/FloatingTagsPlayground.svelte');
+    if (isEditor) return import('@motion-proto/live-tokens/editor');
+    if (isComponentEditor) return import('@motion-proto/live-tokens/component-editor-page');
     return import('./Home.svelte');
   });
 </script>
@@ -59,13 +35,7 @@
 <div class="lt-app" class:is-editor={isEditor} class:is-component-editor={isComponentEditor} onclick={handleClick}>
   <LiveEditorOverlay
     navLinks={visibleNavLinks}
-    pageSources={{
-      '/': 'src/Home.svelte',
-      '/demo': 'src/live-tokens/demo/Demo.svelte',
-      '/components': 'src/live-tokens/editor/pages/ComponentEditorPage.svelte',
-      '/editor': 'src/live-tokens/editor/pages/Editor.svelte',
-      '/playground/floating-tags': 'src/live-tokens/demo/FloatingTagsPlayground.svelte',
-    }}
+    pageSources={{ '/': 'src/Home.svelte' }}
     hidePageSourceOn={['/components']}
   />
   <ColumnsOverlay />

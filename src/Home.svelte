@@ -1,6 +1,6 @@
 <script lang="ts">
   import './site.css';
-  import Input from './live-tokens/system/components/Input.svelte';
+  import Input from '@motion-proto/live-tokens/components/Input.svelte';
   import RuneGoblinBadge from './RuneGoblinBadge.svelte';
   import EncounterBudget from './EncounterBudget.svelte';
   import CreatureTable from './CreatureTable.svelte';

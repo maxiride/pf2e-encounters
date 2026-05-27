@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from './live-tokens/system/components/Button.svelte';
+  import Button from '@motion-proto/live-tokens/components/Button.svelte';
   import type { EncounterEntry } from './lib/encounter';
 
   interface Props {

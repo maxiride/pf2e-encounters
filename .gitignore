@@ -9,10 +9,6 @@ dist-plugin
 dist-ssr
 *.local
 
-# Theme + CSS backups (local-only working state)
-src/live-tokens/data/themes/_backups/
-src/live-tokens/system/styles/_backups/
-
 .env*
 
 # Editor directories and files

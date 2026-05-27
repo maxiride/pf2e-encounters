@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ProgressBar from './live-tokens/system/components/ProgressBar.svelte';
+  import ProgressBar from './components/ProgressBar.svelte';
   import type { BarStage } from './lib/encounter';
 
   interface Props {

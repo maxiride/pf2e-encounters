@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Input from './live-tokens/system/components/Input.svelte';
-  import Table from './live-tokens/system/components/Table.svelte';
-  import Dialog from './live-tokens/system/components/Dialog.svelte';
+  import Input from '@motion-proto/live-tokens/components/Input.svelte';
+  import Table from '@motion-proto/live-tokens/components/Table.svelte';
+  import Dialog from '@motion-proto/live-tokens/components/Dialog.svelte';
   import AddButton from './AddButton.svelte';
   import OpenInNewButton from './OpenInNewButton.svelte';
   import { sizeLabel, type Creature, type ColumnKey } from './lib/encounter';

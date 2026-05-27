@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Button from './live-tokens/system/components/Button.svelte';
-  import Input from './live-tokens/system/components/Input.svelte';
-  import SelectBadge from './live-tokens/system/components/SelectBadge.svelte';
-  import CollapsibleSection from './live-tokens/system/components/CollapsibleSection.svelte';
+  import Button from '@motion-proto/live-tokens/components/Button.svelte';
+  import Input from '@motion-proto/live-tokens/components/Input.svelte';
+  import CollapsibleSection from '@motion-proto/live-tokens/components/CollapsibleSection.svelte';
+  import SelectBadge from './components/SelectBadge.svelte';
   import { filterOptions, type Metadata } from './lib/encounter';
 
   interface Props {
