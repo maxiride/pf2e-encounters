@@ -1,6 +1,6 @@
 <script lang="ts">
-  import ProgressBar from './components/ProgressBar.svelte';
-  import type { BarStage } from './lib/encounter';
+  import ProgressBar from './ProgressBar.svelte';
+  import type { BarStage } from './encounter';
 
   interface Props {
     value: number;

@@ -2,7 +2,7 @@
   "name": "default",
   "component": "tabbar",
   "createdAt": "2026-05-12T01:57:26.390Z",
-  "updatedAt": "2026-05-14T12:36:17.495Z",
+  "updatedAt": "2026-05-28T01:21:50.724Z",
   "aliases": {
     "--tabbar-bar-divider": "--border-neutral-subtle",
     "--tabbar-bar-divider-thickness": "--border-width-1",
@@ -39,7 +39,7 @@
     "--tabbar-hover-tab-bottom-radius": "--radius-none",
     "--tabbar-active-text": "--text-primary",
     "--tabbar-active-border": "--color-brand-500",
-    "--tabbar-active-surface": "--overlay-lowest",
+    "--tabbar-active-surface": "--overlay-low",
     "--tabbar-active-text-font-family": "--font-sans",
     "--tabbar-active-text-font-size": "--font-size-md",
     "--tabbar-active-text-font-weight": "--font-weight-light",

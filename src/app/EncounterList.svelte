@@ -1,7 +1,7 @@
 <script lang="ts">
   import Button from '@motion-proto/live-tokens/components/Button.svelte';
   import SegmentedControl from '@motion-proto/live-tokens/components/SegmentedControl.svelte';
-  import type { EncounterEntry } from './lib/encounter';
+  import type { EncounterEntry } from './encounter';
 
   const VARIANT_SEGMENTS = [
     { value: 'weak', label: 'Weak' },

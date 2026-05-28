@@ -2,6 +2,24 @@
   "name": "default",
   "component": "progressbar",
   "createdAt": "2026-05-10T20:42:26.726Z",
-  "updatedAt": "2026-05-27T23:35:23.125Z",
-  "aliases": {}
+  "updatedAt": "2026-05-28T01:21:50.723Z",
+  "aliases": {
+    "--progressbar-track-surface": "--surface-neutral-low",
+    "--progressbar-track-border": "--border-neutral-faint",
+    "--progressbar-track-border-width": "--border-width-1",
+    "--progressbar-track-height": "--space-8",
+    "--progressbar-radius": "--radius-full",
+    "--progressbar-fill": "--gradient-1",
+    "--progressbar-label-gap": "--space-6",
+    "--progressbar-label": "--text-secondary",
+    "--progressbar-label-font-family": "--font-sans",
+    "--progressbar-label-font-size": "--font-size-sm",
+    "--progressbar-label-font-weight": "--font-weight-light",
+    "--progressbar-label-line-height": "--line-height-md",
+    "--progressbar-value": "--text-tertiary",
+    "--progressbar-value-font-family": "--font-mono",
+    "--progressbar-value-font-size": "--font-size-xs",
+    "--progressbar-value-font-weight": "--font-weight-light",
+    "--progressbar-value-line-height": "--line-height-md"
+  }
 }

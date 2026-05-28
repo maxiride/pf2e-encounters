@@ -7,8 +7,6 @@ export default defineConfig({
     svelte({ preprocess: vitePreprocess() }),
     themeFileApi({
       tokensCssPath: 'node_modules/@motion-proto/live-tokens/src/system/styles/tokens.css',
-      dataDir: 'live-tokens-data',
-      componentsSrcDir: 'src/components',
     }),
   ],
   // Force Svelte's browser-side exports under vitest (happy-dom). Without this,

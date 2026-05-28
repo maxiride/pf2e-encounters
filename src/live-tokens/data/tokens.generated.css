@@ -359,23 +359,31 @@
 
 /* Component aliases (production configs differing from defaults) */
 :root:root {
-  /* progressbar (my-progress-bar) */
-  --progressbar-track-surface: color-mix(in srgb, var(--surface-neutral-lowest) 80%, transparent);
-  --progressbar-track-border: var(--border-neutral);
-  --progressbar-track-border-width: var(--border-width-1);
-  --progressbar-track-height: var(--space-20);
-  --progressbar-radius: var(--radius-full);
-  --progressbar-fill: linear-gradient(225deg, var(--color-brand-500) 0%, var(--color-accent-500) 100%);
-  --progressbar-label: var(--text-secondary);
-  --progressbar-label-font-family: var(--font-sans);
-  --progressbar-label-font-size: var(--font-size-sm);
-  --progressbar-label-font-weight: var(--font-weight-light);
-  --progressbar-label-line-height: var(--line-height-lg);
-  --progressbar-value: var(--text-tertiary);
-  --progressbar-value-font-family: var(--font-mono);
-  --progressbar-value-font-size: var(--font-size-xs);
-  --progressbar-value-font-weight: var(--font-weight-light);
-  --progressbar-value-line-height: var(--line-height-md);
+  /* selectbadge (my-select-badge) */
+  --selectbadge-default-frame-radius: var(--radius-md);
+  --selectbadge-hover-frame-radius: var(--radius-md);
+  --selectbadge-selected-frame-radius: var(--radius-md);
+  --selectbadge-default-frame-border-color: var(--border-neutral-medium);
+  --selectbadge-default-dot-border-color: var(--border-neutral-medium);
+  --selectbadge-default-dot-fill: transparent;
+  --selectbadge-default-frame-surface: color-mix(in srgb, var(--color-neutral-900) 30%, transparent);
+  --selectbadge-label-text-transform: none;
+  --selectbadge-default-label-font-weight: var(--font-weight-normal);
+  --selectbadge-hover-label-font-weight: var(--font-weight-normal);
+  --selectbadge-selected-label-font-weight: var(--font-weight-normal);
+  --selectbadge-default-label-font-size: var(--font-size-sm);
+  --selectbadge-hover-label-font-size: var(--font-size-sm);
+  --selectbadge-selected-label-font-size: var(--font-size-sm);
+  --selectbadge-default-label: var(--text-secondary);
+  --selectbadge-default-frame-padding: var(--space-4);
+  --selectbadge-hover-frame-padding: var(--space-4);
+  --selectbadge-selected-frame-padding: var(--space-4);
+  --selectbadge-hover-frame-border-color: var(--border-brand-medium);
+  --selectbadge-hover-frame-surface: var(--color-neutral-850);
+  --selectbadge-hover-dot-border-color: var(--border-brand-strong);
+  --selectbadge-default-label-line-height: var(--line-height-sm);
+  --selectbadge-hover-label-line-height: var(--line-height-sm);
+  --selectbadge-selected-label-line-height: var(--line-height-sm);
 
   /* badge (my-badge) */
   --badge-primary-text-font-size: var(--font-size-md);
@@ -443,42 +451,84 @@
   --button-primary-text-font-size: var(--font-size-md);
   --button-primary-text-font-weight: var(--font-weight-semibold);
   --button-primary-radius: var(--radius-xl);
+  --button-primary-hover-border-width: var(--border-width-1);
   --button-primary-hover-radius: var(--radius-xl);
+  --button-primary-hover-padding: var(--space-8);
+  --button-primary-disabled-border-width: var(--border-width-1);
   --button-primary-disabled-radius: var(--radius-xl);
+  --button-primary-disabled-padding: var(--space-8);
   --button-secondary-text-font-size: var(--font-size-md);
   --button-secondary-text-font-weight: var(--font-weight-semibold);
   --button-secondary-radius: var(--radius-xl);
+  --button-secondary-hover-border-width: var(--border-width-1);
   --button-secondary-hover-radius: var(--radius-xl);
+  --button-secondary-hover-padding: var(--space-8);
+  --button-secondary-disabled-border-width: var(--border-width-1);
   --button-secondary-disabled-radius: var(--radius-xl);
+  --button-secondary-disabled-padding: var(--space-8);
   --button-outline-text-font-size: var(--font-size-md);
   --button-outline-text-font-weight: var(--font-weight-semibold);
   --button-outline-radius: var(--radius-xl);
+  --button-outline-hover-border-width: var(--border-width-1);
   --button-outline-hover-radius: var(--radius-xl);
+  --button-outline-hover-padding: var(--space-8);
+  --button-outline-disabled-border-width: var(--border-width-1);
   --button-outline-disabled-radius: var(--radius-xl);
+  --button-outline-disabled-padding: var(--space-8);
   --button-success-text-font-size: var(--font-size-md);
   --button-success-text-font-weight: var(--font-weight-semibold);
   --button-success-radius: var(--radius-xl);
+  --button-success-hover-border-width: var(--border-width-2);
   --button-success-hover-radius: var(--radius-xl);
+  --button-success-hover-padding: var(--space-8);
+  --button-success-disabled-border-width: var(--border-width-2);
   --button-success-disabled-radius: var(--radius-xl);
+  --button-success-disabled-padding: var(--space-8);
   --button-danger-text-font-size: var(--font-size-md);
   --button-danger-text-font-weight: var(--font-weight-semibold);
   --button-danger-radius: var(--radius-xl);
+  --button-danger-hover-border-width: var(--border-width-2);
   --button-danger-hover-radius: var(--radius-xl);
+  --button-danger-hover-padding: var(--space-8);
+  --button-danger-disabled-border-width: var(--border-width-2);
   --button-danger-disabled-radius: var(--radius-xl);
+  --button-danger-disabled-padding: var(--space-8);
   --button-warning-text-font-size: var(--font-size-md);
   --button-warning-text-font-weight: var(--font-weight-semibold);
   --button-warning-radius: var(--radius-xl);
+  --button-warning-hover-border-width: var(--border-width-2);
   --button-warning-hover-radius: var(--radius-xl);
+  --button-warning-hover-padding: var(--space-8);
+  --button-warning-disabled-border-width: var(--border-width-2);
   --button-warning-disabled-radius: var(--radius-xl);
+  --button-warning-disabled-padding: var(--space-8);
 
   /* collapsiblesection (my-collapsible-section) */
   --collapsiblesection-chromeless-default-padding: var(--space-6);
   --collapsiblesection-chromeless-hover-padding: var(--space-6);
+  --collapsiblesection-chromeless-active-surface: var(--color-transparent);
   --collapsiblesection-chromeless-active-padding: var(--space-6);
+  --collapsiblesection-chromeless-active-label: var(--text-primary);
+  --collapsiblesection-chromeless-active-label-font-family: var(--font-sans);
+  --collapsiblesection-chromeless-active-label-font-size: var(--font-size-md);
+  --collapsiblesection-chromeless-active-label-font-weight: var(--font-weight-normal);
+  --collapsiblesection-chromeless-active-label-line-height: var(--line-height-md);
+  --collapsiblesection-chromeless-active-icon: var(--text-muted);
+  --collapsiblesection-chromeless-active-icon-size: var(--icon-size-xs);
   --collapsiblesection-chromeless-expanded-padding: var(--space-6);
   --collapsiblesection-divider-default-padding: var(--space-6);
   --collapsiblesection-divider-hover-padding: var(--space-6);
+  --collapsiblesection-divider-active-surface: var(--color-transparent);
+  --collapsiblesection-divider-active-border: var(--color-brand-400);
+  --collapsiblesection-divider-active-border-width: var(--border-width-1);
   --collapsiblesection-divider-active-padding: var(--space-6);
+  --collapsiblesection-divider-active-label: var(--text-primary);
+  --collapsiblesection-divider-active-label-font-family: var(--font-sans);
+  --collapsiblesection-divider-active-label-font-size: var(--font-size-md);
+  --collapsiblesection-divider-active-label-font-weight: var(--font-weight-normal);
+  --collapsiblesection-divider-active-label-line-height: var(--line-height-md);
+  --collapsiblesection-divider-active-icon: var(--text-muted);
+  --collapsiblesection-divider-active-icon-size: var(--icon-size-xs);
   --collapsiblesection-divider-expanded-padding: var(--space-6);
   --collapsiblesection-container-frame-border: var(--border-neutral-subtle);
   --collapsiblesection-container-frame-border-width: var(--border-width-1);
@@ -491,6 +541,13 @@
   --collapsiblesection-container-hover-icon: var(--text-primary);
   --collapsiblesection-container-active-surface: var(--surface-neutral-lowest);
   --collapsiblesection-container-active-padding: var(--space-6);
+  --collapsiblesection-container-active-label: var(--text-primary);
+  --collapsiblesection-container-active-label-font-family: var(--font-sans);
+  --collapsiblesection-container-active-label-font-size: var(--font-size-md);
+  --collapsiblesection-container-active-label-font-weight: var(--font-weight-normal);
+  --collapsiblesection-container-active-label-line-height: var(--line-height-md);
+  --collapsiblesection-container-active-icon: var(--text-muted);
+  --collapsiblesection-container-active-icon-size: var(--icon-size-xs);
   --collapsiblesection-container-expanded-surface: var(--surface-neutral-lowest);
   --collapsiblesection-container-expanded-padding: var(--space-6);
   --collapsiblesection-chromeless-default-padding-top: var(--space-6);
@@ -541,6 +598,13 @@
   --collapsiblesection-container-hover-padding-left: var(--space-6);
   --collapsiblesection-container-active-padding-left: var(--space-6);
   --collapsiblesection-container-expanded-padding-left: var(--space-10);
+
+  /* progressbar (my-progress-bar) */
+  --progressbar-track-surface: color-mix(in srgb, var(--surface-neutral-lowest) 80%, transparent);
+  --progressbar-track-border: var(--border-neutral);
+  --progressbar-track-height: var(--space-20);
+  --progressbar-fill: linear-gradient(225deg, var(--color-brand-500) 0%, var(--color-accent-500) 100%);
+  --progressbar-label-line-height: var(--line-height-lg);
 
   /* sectiondivider (my-section-divider) */
   --sectiondivider-lg-padding: var(--space-4);

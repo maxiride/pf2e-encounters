@@ -15,7 +15,7 @@
     type Creature,
     type EncounterEntry,
     type Metadata,
-  } from './lib/encounter';
+  } from './encounter';
 
   let creatures = $state<Creature[]>([]);
   let metadata = $state<Metadata | null>(null);

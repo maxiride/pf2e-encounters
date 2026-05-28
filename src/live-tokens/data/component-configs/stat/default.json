@@ -1,0 +1,32 @@
+{
+  "name": "default",
+  "component": "stat",
+  "createdAt": "2026-05-28T01:20:38.464Z",
+  "updatedAt": "2026-05-28T01:20:38.464Z",
+  "aliases": {
+    "--stat-primary-surface": "--surface-primary",
+    "--stat-primary-border": "--border-primary",
+    "--stat-primary-radius": "--radius-md",
+    "--stat-primary-padding": "--space-16",
+    "--stat-primary-value-text": "--text-primary",
+    "--stat-primary-value-font-family": "--font-display",
+    "--stat-primary-value-font-size": "--font-size-2xl",
+    "--stat-primary-value-font-weight": "--font-weight-bold",
+    "--stat-primary-label-text": "--text-secondary",
+    "--stat-primary-label-font-family": "--font-sans",
+    "--stat-primary-label-font-size": "--font-size-sm",
+    "--stat-primary-hover-surface": "--surface-primary-high",
+    "--stat-subtle-surface": "--surface-neutral",
+    "--stat-subtle-border": "--border-neutral",
+    "--stat-subtle-radius": "--radius-md",
+    "--stat-subtle-padding": "--space-16",
+    "--stat-subtle-value-text": "--text-primary",
+    "--stat-subtle-value-font-family": "--font-display",
+    "--stat-subtle-value-font-size": "--font-size-2xl",
+    "--stat-subtle-value-font-weight": "--font-weight-bold",
+    "--stat-subtle-label-text": "--text-tertiary",
+    "--stat-subtle-label-font-family": "--font-sans",
+    "--stat-subtle-label-font-size": "--font-size-sm",
+    "--stat-subtle-hover-surface": "--surface-neutral-high"
+  }
+}

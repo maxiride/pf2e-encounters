@@ -3,8 +3,8 @@
   import Input from '@motion-proto/live-tokens/components/Input.svelte';
   import CollapsibleSection from '@motion-proto/live-tokens/components/CollapsibleSection.svelte';
   import Toggle from '@motion-proto/live-tokens/components/Toggle.svelte';
-  import SelectBadge from './system/components/SelectBadge.svelte';
-  import { filterOptions, type Metadata } from './lib/encounter';
+  import SelectBadge from '../components/SelectBadge.svelte';
+  import { filterOptions, type Metadata } from './encounter';
 
   interface Props {
     metadata: Metadata;

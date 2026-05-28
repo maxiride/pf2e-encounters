@@ -4,7 +4,7 @@
   import Dialog from '@motion-proto/live-tokens/components/Dialog.svelte';
   import AddButton from './AddButton.svelte';
   import OpenInNewButton from './OpenInNewButton.svelte';
-  import { sizeLabel, type Creature, type ColumnKey } from './lib/encounter';
+  import { sizeLabel, type Creature, type ColumnKey } from './encounter';
 
   interface Props {
     creatures: Creature[];

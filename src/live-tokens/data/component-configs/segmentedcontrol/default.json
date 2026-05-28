@@ -2,7 +2,7 @@
   "name": "default",
   "component": "segmentedcontrol",
   "createdAt": "2026-04-28T21:13:17.669Z",
-  "updatedAt": "2026-05-18T15:58:43.832Z",
+  "updatedAt": "2026-05-28T01:21:50.723Z",
   "aliases": {
     "--segmentedcontrol-bar-surface": "--surface-neutral-high",
     "--segmentedcontrol-bar-border": "--border-neutral",
@@ -12,7 +12,9 @@
     "--segmentedcontrol-bar-gap": "--space-8",
     "--segmentedcontrol-divider-color": "--border-neutral",
     "--segmentedcontrol-divider-thickness": "--border-width-1",
-    "--segmentedcontrol-divider-height": "--space-12",
+    "--segmentedcontrol-divider-inset": "--space-6",
+    "--segmentedcontrol-option-padding": "--space-8",
+    "--segmentedcontrol-option-gap": "--space-8",
     "--segmentedcontrol-option-text": "--text-primary",
     "--segmentedcontrol-option-text-font-family": "--font-sans",
     "--segmentedcontrol-option-text-font-size": "--font-size-md",
@@ -27,7 +29,6 @@
     "--segmentedcontrol-option-hover-text-font-weight": "--font-weight-normal",
     "--segmentedcontrol-option-hover-text-line-height": "--line-height-md",
     "--segmentedcontrol-option-hover-icon": "--text-secondary",
-    "--segmentedcontrol-option-hover-icon-size": "--icon-size-md",
     "--segmentedcontrol-selected-surface": "--surface-success-high",
     "--segmentedcontrol-selected-text": "--text-primary",
     "--segmentedcontrol-selected-text-font-family": "--font-sans",
@@ -35,7 +36,6 @@
     "--segmentedcontrol-selected-text-font-weight": "--font-weight-semibold",
     "--segmentedcontrol-selected-text-line-height": "--line-height-md",
     "--segmentedcontrol-selected-icon": "--text-secondary",
-    "--segmentedcontrol-selected-icon-size": "--icon-size-md",
     "--segmentedcontrol-selected-border": "--border-success",
     "--segmentedcontrol-selected-border-width": "--border-width-1",
     "--segmentedcontrol-selected-radius": "--radius-md",
@@ -46,6 +46,15 @@
     "--segmentedcontrol-disabled-text-font-weight": "--font-weight-light",
     "--segmentedcontrol-disabled-text-line-height": "--line-height-md",
     "--segmentedcontrol-disabled-icon": "--text-tertiary",
-    "--segmentedcontrol-disabled-icon-size": "--icon-size-md"
+    "--segmentedcontrol-bar-small-padding": "--space-2",
+    "--segmentedcontrol-bar-small-radius": "--radius-md",
+    "--segmentedcontrol-divider-small-inset": "--space-4",
+    "--segmentedcontrol-divider-small-thickness": "--border-width-1",
+    "--segmentedcontrol-option-small-padding": "--space-6",
+    "--segmentedcontrol-option-small-gap": "--space-6",
+    "--segmentedcontrol-option-small-icon-size": "--icon-size-sm",
+    "--segmentedcontrol-option-small-text-font-size": "--font-size-sm",
+    "--segmentedcontrol-option-small-text-line-height": "--line-height-sm",
+    "--segmentedcontrol-selected-small-radius": "--radius-sm"
   }
 }
