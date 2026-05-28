@@ -11,9 +11,10 @@ const ALIGNMENT_VALUES = new Set([
   "CE", "CG", "CN", "LE", "LG", "LN", "N", "NE", "NG", "No Alignment",
 ]);
 const REMASTER_CUTOFF = "2023-11-15";
+const FORMAT_VERSION = 1;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUTPUT_PATH = resolve(__dirname, "../public/creatures.json");
+const OUTPUT_PATH = resolve(__dirname, "../src/app/data/creatures.json");
 
 async function fetchPage(searchAfter) {
   const body = {
@@ -22,7 +23,7 @@ async function fetchPage(searchAfter) {
     sort: [{ "id.keyword": "asc" }],
     _source: [
       "id", "name", "level", "alignment", "size", "trait",
-      "rarity", "creature_family", "npc", "image", "summary",
+      "rarity", "creature_family", "npc",
       "remaster_id", "release_date",
     ],
     ...(searchAfter ? { search_after: searchAfter } : {}),
@@ -54,12 +55,10 @@ function mapHit(src) {
     alignment: src.alignment ?? "No Alignment",
     size: Array.isArray(src.size) ? src.size[0] ?? "" : src.size ?? "",
     rarity: src.rarity ?? "common",
-    lore: src.summary ?? "",
     family: src.creature_family ?? "",
-    image_url: Array.isArray(src.image) ? src.image[0] ?? "" : src.image ?? "",
     npc: !!src.npc,
     traits,
-    ...(remaster ? { remaster: true } : {}),
+    remaster,
   };
 }
 
@@ -96,6 +95,59 @@ function buildMetadata(creatures) {
   };
 }
 
+/**
+ * Pack the verbose creature list into a compact wire format:
+ *   - Shared dictionaries (T, F, K, A, S, R) carry every distinct string once.
+ *   - Each creature is a positional tuple of indices into those dictionaries.
+ *
+ * Tuple schema (see src/app/creatures-store.ts for the decoder):
+ *   [id, name, level, K, A, S, R, F, npc, remaster, [T...]]
+ */
+export function compact(creatures, metadata) {
+  const dict = (values) => {
+    const uniq = [...new Set(values)].sort((a, b) => a.localeCompare(b));
+    const idx = new Map(uniq.map((v, i) => [v, i]));
+    return { table: uniq, idx };
+  };
+
+  const T = dict(creatures.flatMap((c) => c.traits || []));
+  const F = dict(creatures.map((c) => c.family || ""));
+  const K = dict(creatures.map((c) => c.creature_type || ""));
+  const A = dict(creatures.map((c) => c.alignment || ""));
+  const S = dict(creatures.map((c) => c.size || ""));
+  const R = dict(creatures.map((c) => c.rarity || ""));
+
+  const c = creatures.map((cr) => [
+    cr.id,
+    cr.name,
+    cr.level,
+    K.idx.get(cr.creature_type),
+    A.idx.get(cr.alignment),
+    S.idx.get(cr.size),
+    R.idx.get(cr.rarity),
+    F.idx.get(cr.family || ""),
+    cr.npc ? 1 : 0,
+    cr.remaster ? 1 : 0,
+    (cr.traits || []).map((t) => T.idx.get(t)),
+  ]);
+
+  return {
+    v: FORMAT_VERSION,
+    T: T.table, F: F.table, K: K.table, A: A.table, S: S.table, R: R.table,
+    c,
+    m: metadata,
+  };
+}
+
+export async function emit(creatures) {
+  const metadata = buildMetadata(creatures);
+  const compactData = compact(creatures, metadata);
+  const json = JSON.stringify(compactData);
+  await mkdir(dirname(OUTPUT_PATH), { recursive: true });
+  await writeFile(OUTPUT_PATH, json);
+  console.log(`Wrote ${creatures.length} creatures to ${OUTPUT_PATH} (${json.length} bytes)`);
+}
+
 async function main() {
   const creatures = [];
   let searchAfter;
@@ -114,14 +166,12 @@ async function main() {
   process.stdout.write("\n");
 
   creatures.sort((a, b) => Number(a.id) - Number(b.id));
-  const data = { creatures, metadata: buildMetadata(creatures) };
-
-  await mkdir(dirname(OUTPUT_PATH), { recursive: true });
-  await writeFile(OUTPUT_PATH, JSON.stringify(data));
-  console.log(`Wrote ${creatures.length} creatures to ${OUTPUT_PATH}`);
+  await emit(creatures);
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

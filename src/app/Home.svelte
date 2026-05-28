@@ -16,13 +16,14 @@
     type EncounterEntry,
     type Metadata,
   } from './encounter';
+  import { loadCreatures } from './creatures-store';
 
   let creatures = $state<Creature[]>([]);
   let metadata = $state<Metadata | null>(null);
 
   // Stored as strings so the <Input> component can two-way-bind directly; coerce on read.
-  let partySize = $state('4');
-  let partyLevel = $state('1');
+  let partySize = $state(loadParty('pf2e:partySize', '4'));
+  let partyLevel = $state(loadParty('pf2e:partyLevel', '1'));
 
   let encounter = $state<EncounterEntry[]>([]);
 
@@ -35,13 +36,21 @@
   let remasterOnly = $state(false);
 
   $effect(() => {
-    fetch('/creatures.json')
-      .then((r) => r.json())
-      .then((d: { creatures: Creature[]; metadata: Metadata }) => {
-        creatures = d.creatures;
-        metadata = d.metadata;
-      });
+    loadCreatures().then((d) => {
+      creatures = d.creatures;
+      metadata = d.metadata;
+    });
   });
+
+  $effect(() => saveParty('pf2e:partySize', partySize));
+  $effect(() => saveParty('pf2e:partyLevel', partyLevel));
+
+  function loadParty(key: string, fallback: string): string {
+    try { return localStorage.getItem(key) ?? fallback; } catch { return fallback; }
+  }
+  function saveParty(key: string, value: string): void {
+    try { localStorage.setItem(key, value); } catch { /* localStorage may be unavailable */ }
+  }
 
   const enriched = $derived(
     encounter.map((e) => ({ ...e, cost: computeCost(e, Number(partyLevel)) * e.count })),
