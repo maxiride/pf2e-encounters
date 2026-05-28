@@ -6,6 +6,11 @@
   import CreatureTable from './CreatureTable.svelte';
   import EncounterList from './EncounterList.svelte';
   import CreatureFilters from './CreatureFilters.svelte';
+  import AiDisclosure from './AiDisclosure.svelte';
+
+  const aiDisclosureItems = [
+    'The code for this app was written by Claude Opus 4.7',
+  ];
   import {
     activeStageIndex,
     blackTextSwitchIndex,
@@ -132,6 +137,13 @@
         />
       </aside>
     </section>
+
+    <section class="ai-disclosure-section">
+      <div class="ai-disclosure-inner">
+        <h2>AI Disclosure</h2>
+        <AiDisclosure items={aiDisclosureItems} />
+      </div>
+    </section>
   {/if}
 </div>
 
@@ -207,6 +219,23 @@
     grid-template-columns: 2fr 1fr;
     gap: var(--space-16, 16px);
     align-items: start;
+  }
+
+  /* Same 2fr/1fr split as .main so the disclosure aligns to the table column
+     (the "column 8" of an 8/4 split). */
+  .ai-disclosure-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-16, 16px);
+    margin-top: var(--space-32, 32px);
+  }
+  .ai-disclosure-inner {
+    grid-column: 1;
+  }
+  .ai-disclosure-inner h2 {
+    font-family: var(--font-display, serif);
+    color: var(--text-primary);
+    margin: 0;
   }
 
   .right-col {
