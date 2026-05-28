@@ -32,6 +32,7 @@
   let trait = $state<string[]>([]);
   let creatureType = $state<string[]>([]);
   let rarity = $state<string[]>([]);
+  let remasterOnly = $state(false);
 
   $effect(() => {
     fetch('/creatures.json')
@@ -97,6 +98,7 @@
         traitFilter={trait}
         creatureTypeFilter={creatureType}
         rarityFilter={rarity}
+        {remasterOnly}
         onAdd={addCreature}
       />
 
@@ -117,6 +119,7 @@
           bind:trait
           bind:creatureType
           bind:rarity
+          bind:remasterOnly
         />
       </aside>
     </section>

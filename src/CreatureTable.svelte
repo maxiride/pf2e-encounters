@@ -13,6 +13,7 @@
     traitFilter: string[];
     creatureTypeFilter: string[];
     rarityFilter: string[];
+    remasterOnly: boolean;
     onAdd: (creature: Creature) => void;
   }
 
@@ -23,6 +24,7 @@
     traitFilter,
     creatureTypeFilter,
     rarityFilter,
+    remasterOnly,
     onAdd,
   }: Props = $props();
 
@@ -83,6 +85,7 @@
       if (traitFilter.length && !traitFilter.some((t) => c.traits.includes(t))) return false;
       if (creatureTypeFilter.length && !creatureTypeFilter.includes(c.creature_type)) return false;
       if (rarityFilter.length && !rarityFilter.includes(c.rarity)) return false;
+      if (remasterOnly && !c.remaster) return false;
       return true;
     });
     rows = [...rows].sort((a, b) => {

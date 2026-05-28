@@ -11,9 +11,20 @@ import {
   initColumnsOverlay,
   initRouter,
   initEditorStore,
+  registerComponent,
 } from '@motion-proto/live-tokens';
+import SelectBadgeEditor, { allTokens as selectBadgeTokens } from './system/components/SelectBadgeEditor.svelte';
 import App from './App.svelte';
 import { mount } from 'svelte';
+
+registerComponent({
+  id: 'selectbadge',
+  label: 'Select Badge',
+  icon: 'fas fa-tag',
+  sourceFile: 'src/system/components/SelectBadge.svelte',
+  editorComponent: SelectBadgeEditor,
+  schema: selectBadgeTokens,
+});
 
 async function boot() {
   initCssVarSync();

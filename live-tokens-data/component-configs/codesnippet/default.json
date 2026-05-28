@@ -1,0 +1,22 @@
+{
+  "name": "default",
+  "component": "codesnippet",
+  "createdAt": "2026-05-27T22:34:31.619Z",
+  "updatedAt": "2026-05-27T22:34:31.619Z",
+  "aliases": {
+    "--codesnippet-surface": "--surface-neutral-lower",
+    "--codesnippet-border": "--border-neutral-subtle",
+    "--codesnippet-border-width": "--border-width-1",
+    "--codesnippet-radius": "--radius-md",
+    "--codesnippet-padding": "--space-16",
+    "--codesnippet-gap": "--space-16",
+    "--codesnippet-code-text": "--text-primary",
+    "--codesnippet-code-font-family": "--font-mono",
+    "--codesnippet-code-font-size": "--font-size-sm",
+    "--codesnippet-code-font-weight": "--font-weight-normal",
+    "--codesnippet-code-line-height": "--line-height-md",
+    "--codesnippet-icon": "--text-secondary",
+    "--codesnippet-icon-size": "--font-size-md",
+    "--codesnippet-hover-icon": "--text-primary"
+  }
+}

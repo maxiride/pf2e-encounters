@@ -1,0 +1,19 @@
+{
+  "name": "default",
+  "component": "imagelightbox",
+  "createdAt": "2026-05-27T22:34:31.619Z",
+  "updatedAt": "2026-05-27T22:34:31.619Z",
+  "aliases": {
+    "--imagelightbox-tile-radius": "--radius-2xl",
+    "--imagelightbox-tile-border": "--color-transparent",
+    "--imagelightbox-tile-border-width": "--border-width-0",
+    "--imagelightbox-tile-shadow": "--shadow-md",
+    "--imagelightbox-overlay-surface": "--overlay-high",
+    "--imagelightbox-chrome-surface": "--surface-neutral-low",
+    "--imagelightbox-chrome-border": "--border-brand",
+    "--imagelightbox-chrome-border-width": "--border-width-1",
+    "--imagelightbox-chrome-radius": "--radius-full",
+    "--imagelightbox-chrome-icon": "--text-primary",
+    "--imagelightbox-chrome-hover-surface": "--surface-brand-high"
+  }
+}

@@ -1,6 +1,15 @@
 <script lang="ts">
   import Button from '@motion-proto/live-tokens/components/Button.svelte';
+  import SegmentedControl from '@motion-proto/live-tokens/components/SegmentedControl.svelte';
   import type { EncounterEntry } from './lib/encounter';
+
+  const VARIANT_SEGMENTS = [
+    { value: 'weak', label: 'Weak' },
+    { value: 'base', label: 'Base' },
+    { value: 'elite', label: 'Elite' },
+  ];
+  const VARIANT_TO_VALUE = ['base', 'weak', 'elite'] as const;
+  const VALUE_TO_VARIANT: Record<string, 0 | 1 | 2> = { base: 0, weak: 1, elite: 2 };
 
   interface Props {
     encounter: EncounterEntry[];
@@ -58,23 +67,12 @@
             <div class="title">{item.count} × {item.name}</div>
             <div class="cost">XP {item.cost}</div>
           </div>
-          <div class="variants">
-            <button
-              class="seg"
-              class:active={item.variant === 1}
-              onclick={() => setVariant(i, 1)}
-            >Weak</button>
-            <button
-              class="seg"
-              class:active={item.variant === 0}
-              onclick={() => setVariant(i, 0)}
-            >Base</button>
-            <button
-              class="seg"
-              class:active={item.variant === 2}
-              onclick={() => setVariant(i, 2)}
-            >Elite</button>
-          </div>
+          <SegmentedControl
+            size="small"
+            segments={VARIANT_SEGMENTS}
+            value={VARIANT_TO_VALUE[item.variant]}
+            onchange={(v) => setVariant(i, VALUE_TO_VARIANT[v])}
+          />
         </li>
       {/each}
       {#if encounter.length === 0}
@@ -156,27 +154,6 @@
   }
   .info .title { font-size: var(--font-size-sm, 14px); color: var(--text-primary); }
   .info .cost { font-size: var(--font-size-xs, 12px); color: var(--text-tertiary); }
-
-  .variants {
-    display: inline-flex;
-    border-radius: var(--radius-sm, 2px);
-    overflow: hidden;
-    border: 1px solid var(--border-neutral, #555);
-  }
-  .seg {
-    background: var(--surface-canvas-low, #1a1a1a);
-    color: var(--text-tertiary, #999);
-    border: none;
-    border-right: 1px solid var(--border-neutral, #555);
-    padding: 4px 10px;
-    cursor: pointer;
-    font-size: var(--font-size-xs, 12px);
-  }
-  .seg:last-child { border-right: none; }
-  .seg.active {
-    background: var(--surface-brand-high, #d84315);
-    color: var(--text-primary, #fff);
-  }
 
   .icon-btn {
     background: var(--surface-neutral-high, #333);

@@ -9,6 +9,7 @@ export type Creature = {
   rarity: string;
   traits: string[];
   npc: boolean;
+  remaster?: boolean;
 };
 
 export type Metadata = {
@@ -106,7 +107,7 @@ export function makeBarStages(xpBudget: number[]): BarStage[] {
     { at: 37.5, color: '#2e7d32', label: `Low ${xpBudget[1]}` },
     { at: 50,   color: '#b05600', label: `Moderate ${xpBudget[2]}` },
     { at: 75,   color: '#e53935', label: `Severe ${xpBudget[3]}` },
-    { at: 100,  color: '#8b0000', label: `Extreme ${xpBudget[4]}`, tickline: false },
+    { at: 100,  color: '#8b0000', label: `Extreme ${xpBudget[4]}` },
   ];
 }
 

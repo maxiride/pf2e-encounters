@@ -2,7 +2,8 @@
   import Button from '@motion-proto/live-tokens/components/Button.svelte';
   import Input from '@motion-proto/live-tokens/components/Input.svelte';
   import CollapsibleSection from '@motion-proto/live-tokens/components/CollapsibleSection.svelte';
-  import SelectBadge from './components/SelectBadge.svelte';
+  import Toggle from '@motion-proto/live-tokens/components/Toggle.svelte';
+  import SelectBadge from './system/components/SelectBadge.svelte';
   import { filterOptions, type Metadata } from './lib/encounter';
 
   interface Props {
@@ -12,6 +13,7 @@
     trait: string[];
     creatureType: string[];
     rarity: string[];
+    remasterOnly: boolean;
   }
 
   let {
@@ -21,6 +23,7 @@
     trait = $bindable(),
     creatureType = $bindable(),
     rarity = $bindable(),
+    remasterOnly = $bindable(),
   }: Props = $props();
 
   let sizeExpanded = $state(true);
@@ -41,7 +44,21 @@
 </script>
 
 <div class="refine">
-  <h2 class="section-title">Filter Creatures</h2>
+  <div class="filters-header">
+    <h2 class="section-title">Filter Creatures</h2>
+    <div class="legacy-toggle">
+      <button
+        type="button"
+        class="legacy-toggle-label"
+        onclick={() => (remasterOnly = !remasterOnly)}
+      >Remaster only</button>
+      <Toggle
+        ariaLabel="Remaster only"
+        checked={remasterOnly}
+        onchange={(v) => (remasterOnly = v)}
+      />
+    </div>
+  </div>
   <CollapsibleSection
     variant="container"
     label="Size"
@@ -159,13 +176,35 @@
     flex-direction: column;
     gap: 0.5rem;
   }
+  .filters-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-12, 12px);
+    margin: 0 0 var(--space-8, 8px);
+  }
+  .legacy-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--toggle-gap, var(--space-8, 8px));
+  }
+  .legacy-toggle-label {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    color: var(--toggle-label-text, var(--text-primary));
+    font-family: var(--toggle-label-font-family, var(--font-sans));
+    font-size: var(--toggle-label-font-size, var(--font-size-sm));
+    font-weight: var(--toggle-label-font-weight, var(--font-weight-normal));
+  }
   .section-title {
     font-family: var(--font-sans);
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-bold);
     text-transform: none;
     letter-spacing: normal;
-    margin: 0 0 var(--space-8, 8px);
+    margin: 0;
     color: var(--text-primary);
   }
   .reset-wrap { margin-left: auto; }

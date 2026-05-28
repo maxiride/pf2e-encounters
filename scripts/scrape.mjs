@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// AoN API fields, semantics, and the remaster flag definition: see
+// docs/aon-api-reference.md
 import { writeFile, mkdir } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -8,6 +10,7 @@ const PAGE_SIZE = 1000;
 const ALIGNMENT_VALUES = new Set([
   "CE", "CG", "CN", "LE", "LG", "LN", "N", "NE", "NG", "No Alignment",
 ]);
+const REMASTER_CUTOFF = "2023-11-15";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUTPUT_PATH = resolve(__dirname, "../public/creatures.json");
@@ -20,6 +23,7 @@ async function fetchPage(searchAfter) {
     _source: [
       "id", "name", "level", "alignment", "size", "trait",
       "rarity", "creature_family", "npc", "image", "summary",
+      "remaster_id", "release_date",
     ],
     ...(searchAfter ? { search_after: searchAfter } : {}),
   };
@@ -39,6 +43,9 @@ function mapHit(src) {
     .filter((t) => !ALIGNMENT_VALUES.has(t))
     .sort((a, b) => a.localeCompare(b));
 
+  const hasRemasterId = Array.isArray(src.remaster_id) ? src.remaster_id.length > 0 : !!src.remaster_id;
+  const remaster = !hasRemasterId && typeof src.release_date === "string" && src.release_date >= REMASTER_CUTOFF;
+
   return {
     id: idStr,
     name: src.name ?? "",
@@ -52,6 +59,7 @@ function mapHit(src) {
     image_url: Array.isArray(src.image) ? src.image[0] ?? "" : src.image ?? "",
     npc: !!src.npc,
     traits,
+    ...(remaster ? { remaster: true } : {}),
   };
 }
 
