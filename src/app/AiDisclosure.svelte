@@ -68,7 +68,7 @@
 
   .hal-frame {
     width: 100%;
-    max-width: 140px;
+    max-width: 128px;
     aspect-ratio: 1;
     border-radius: var(--radius-full);
     overflow: hidden;
