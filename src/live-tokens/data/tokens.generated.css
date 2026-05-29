@@ -503,6 +503,18 @@
   --button-warning-disabled-radius: var(--radius-xl);
   --button-warning-disabled-padding: var(--space-8);
 
+  /* card (my-card) */
+  --card-default-surface: color-mix(in srgb, var(--surface-neutral-lower) 70%, transparent);
+  --card-default-header-surface: color-mix(in srgb, var(--surface-neutral-lowest) 80%, transparent);
+  --card-default-header-padding-top: var(--space-12);
+  --card-default-header-padding-right: var(--space-16);
+  --card-default-header-padding-bottom: var(--space-12);
+  --card-default-header-padding-left: var(--space-16);
+  --card-default-body-padding-top: var(--space-12);
+  --card-default-body-padding-right: var(--space-16);
+  --card-default-body-padding-bottom: var(--space-16);
+  --card-default-body-padding-left: var(--space-16);
+
   /* collapsiblesection (my-collapsible-section) */
   --collapsiblesection-chromeless-default-padding: var(--space-6);
   --collapsiblesection-chromeless-hover-padding: var(--space-6);
