@@ -2,11 +2,10 @@
   "name": "default",
   "component": "tabbar",
   "createdAt": "2026-05-12T01:57:26.390Z",
-  "updatedAt": "2026-05-28T01:21:50.724Z",
+  "updatedAt": "2026-05-29T23:54:51.155Z",
   "aliases": {
     "--tabbar-bar-divider": "--border-neutral-subtle",
     "--tabbar-bar-divider-thickness": "--border-width-1",
-    "--tabbar-bar-indicator-thickness": "--border-width-2",
     "--tabbar-bar-top-margin": "--space-0",
     "--tabbar-bar-bottom-padding": "--space-0",
     "--tabbar-bar-bottom-margin": "--space-0",
@@ -24,6 +23,7 @@
     "--tabbar-default-tab-border-width": "--border-width-0",
     "--tabbar-default-tab-top-radius": "--radius-none",
     "--tabbar-default-tab-bottom-radius": "--radius-none",
+    "--tabbar-default-indicator-border-width": "--border-width-2",
     "--tabbar-hover-text": "--text-secondary",
     "--tabbar-hover-surface": "--surface-neutral-lower",
     "--tabbar-hover-text-font-family": "--font-sans",
@@ -37,6 +37,7 @@
     "--tabbar-hover-tab-border-width": "--border-width-0",
     "--tabbar-hover-tab-top-radius": "--radius-none",
     "--tabbar-hover-tab-bottom-radius": "--radius-none",
+    "--tabbar-hover-indicator-border-width": "--border-width-2",
     "--tabbar-active-text": "--text-primary",
     "--tabbar-active-border": "--color-brand-500",
     "--tabbar-active-surface": "--overlay-low",
@@ -50,6 +51,7 @@
     "--tabbar-active-tab-border-width": "--border-width-0",
     "--tabbar-active-tab-top-radius": "--radius-none",
     "--tabbar-active-tab-bottom-radius": "--radius-none",
+    "--tabbar-active-indicator-border-width": "--border-width-2",
     "--tabbar-disabled-text": "--text-disabled",
     "--tabbar-disabled-text-font-family": "--font-sans",
     "--tabbar-disabled-text-font-size": "--font-size-md",
@@ -62,6 +64,7 @@
     "--tabbar-disabled-tab-border-color": "--color-transparent",
     "--tabbar-disabled-tab-border-width": "--border-width-0",
     "--tabbar-disabled-tab-top-radius": "--radius-none",
-    "--tabbar-disabled-tab-bottom-radius": "--radius-none"
+    "--tabbar-disabled-tab-bottom-radius": "--radius-none",
+    "--tabbar-disabled-indicator-border-width": "--border-width-2"
   }
 }
