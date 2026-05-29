@@ -15,6 +15,9 @@ const FORMAT_VERSION = 1;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUTPUT_PATH = resolve(__dirname, "../src/app/data/creatures.json");
+// Deduped list of Paizo source books, for the ORC attribution notice only —
+// kept out of creatures.json so the creature payload carries no per-entry source data.
+const SOURCES_PATH = resolve(__dirname, "../src/app/data/sources.generated.json");
 
 async function fetchPage(searchAfter) {
   const body = {
@@ -24,7 +27,7 @@ async function fetchPage(searchAfter) {
     _source: [
       "id", "name", "level", "alignment", "size", "trait",
       "rarity", "creature_family", "npc",
-      "remaster_id", "release_date",
+      "remaster_id", "release_date", "source",
     ],
     ...(searchAfter ? { search_after: searchAfter } : {}),
   };
@@ -139,6 +142,30 @@ export function compact(creatures, metadata) {
   };
 }
 
+/**
+ * Fold a hit's source book(s) into a title -> earliest-copyright-year map.
+ * Used only to build the ORC attribution list; never written to creatures.json.
+ */
+export function collectSources(src, map) {
+  const year = typeof src.release_date === "string" ? Number(src.release_date.slice(0, 4)) : NaN;
+  for (const title of src.source ?? []) {
+    if (!title) continue;
+    const prev = map.get(title);
+    if (!Number.isFinite(year)) { if (prev === undefined) map.set(title, null); continue; }
+    if (prev == null || year < prev) map.set(title, year);
+  }
+}
+
+export async function emitSources(sourceYears) {
+  const list = [...sourceYears.entries()]
+    .map(([title, year]) => ({ title, year }))
+    .sort((a, b) => a.title.localeCompare(b.title));
+  const json = JSON.stringify(list, null, 2);
+  await mkdir(dirname(SOURCES_PATH), { recursive: true });
+  await writeFile(SOURCES_PATH, json + "\n");
+  console.log(`Wrote ${list.length} sources to ${SOURCES_PATH} (${json.length} bytes)`);
+}
+
 export async function emit(creatures) {
   const metadata = buildMetadata(creatures);
   const compactData = compact(creatures, metadata);
@@ -150,6 +177,7 @@ export async function emit(creatures) {
 
 async function main() {
   const creatures = [];
+  const sourceYears = new Map();
   let searchAfter;
   let total;
 
@@ -158,7 +186,10 @@ async function main() {
     total ??= page.hits.total.value;
     const hits = page.hits.hits;
     if (hits.length === 0) break;
-    for (const h of hits) creatures.push(mapHit(h._source));
+    for (const h of hits) {
+      creatures.push(mapHit(h._source));
+      collectSources(h._source, sourceYears);
+    }
     process.stdout.write(`\rFetched ${creatures.length} / ${total}`);
     if (hits.length < PAGE_SIZE) break;
     searchAfter = hits[hits.length - 1].sort;
@@ -167,6 +198,7 @@ async function main() {
 
   creatures.sort((a, b) => Number(a.id) - Number(b.id));
   await emit(creatures);
+  await emitSources(sourceYears);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

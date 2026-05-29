@@ -7,6 +7,9 @@
   import EncounterList from './EncounterList.svelte';
   import CreatureFilters from './CreatureFilters.svelte';
   import AiDisclosure from './AiDisclosure.svelte';
+  import LicenseView from './LicenseView.svelte';
+
+  let showLicense = $state(false);
 
   const aiDisclosureItems = [
     'The code for this app was written by Claude Opus 4.7',
@@ -82,68 +85,79 @@
   {#if !metadata}
     <p class="loading">Loading creatures…</p>
   {:else}
-    <section class="top-controls">
-      <div class="control-group party">
-        <div class="narrow">
-          <Input type="number" label="Party size" bind:value={partySize} />
+    {#if !showLicense}
+      <section class="top-controls">
+        <div class="control-group party">
+          <div class="narrow">
+            <Input type="number" label="Party size" bind:value={partySize} />
+          </div>
+          <div class="narrow">
+            <Input type="number" label="Party level" bind:value={partyLevel} />
+          </div>
         </div>
-        <div class="narrow">
-          <Input type="number" label="Party level" bind:value={partyLevel} />
+        <div class="attribution-block">
+          <button class="license-link" type="button" onclick={(e) => { e.stopPropagation(); showLicense = true; }}>
+            License information
+          </button>
+          <a
+            class="attribution"
+            href="https://2e.aonprd.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            tabindex="-1"
+          >
+            Sourced from Archives of Nethys
+          </a>
         </div>
-      </div>
-      <a
-        class="attribution"
-        href="https://github.com/maxiride/pf2e-encounters"
-        target="_blank"
-        rel="noopener noreferrer"
-        tabindex="-1"
-      >
-        Based on the original work by maxiride
-      </a>
-    </section>
+      </section>
+    {/if}
 
-    <EncounterBudget value={barValue} stages={barStages} />
+    {#if showLicense}
+      <LicenseView onClose={() => (showLicense = false)} />
+    {:else}
+      <EncounterBudget value={barValue} stages={barStages} />
 
-    <section class="main">
-      <CreatureTable
-        {creatures}
-        sizeFilter={size}
-        familyFilter={family}
-        traitFilter={trait}
-        creatureTypeFilter={creatureType}
-        rarityFilter={rarity}
-        {remasterOnly}
-        onAdd={addCreature}
-      />
-
-      <aside class="right-col">
-        <EncounterList
-          bind:encounter
-          {enriched}
-          {xpCost}
-          {partySize}
-          stageColor={activeStage.color}
-          {totalsTextColor}
+      <section class="main">
+        <CreatureTable
+          {creatures}
+          sizeFilter={size}
+          familyFilter={family}
+          traitFilter={trait}
+          creatureTypeFilter={creatureType}
+          rarityFilter={rarity}
+          {remasterOnly}
+          onAdd={addCreature}
         />
 
-        <CreatureFilters
-          {metadata}
-          bind:size
-          bind:family
-          bind:trait
-          bind:creatureType
-          bind:rarity
-          bind:remasterOnly
-        />
-      </aside>
-    </section>
+        <aside class="right-col">
+          <EncounterList
+            bind:encounter
+            {enriched}
+            {xpCost}
+            {partySize}
+            stageColor={activeStage.color}
+            {totalsTextColor}
+          />
 
-    <section class="ai-disclosure-section">
-      <div class="ai-disclosure-inner">
-        <h2>AI Disclosure</h2>
-        <AiDisclosure items={aiDisclosureItems} />
-      </div>
-    </section>
+          <CreatureFilters
+            {metadata}
+            bind:size
+            bind:family
+            bind:trait
+            bind:creatureType
+            bind:rarity
+            bind:remasterOnly
+          />
+        </aside>
+      </section>
+
+      <section class="ai-disclosure-section">
+        <div class="ai-disclosure-inner">
+          <h2>AI Disclosure</h2>
+          <AiDisclosure items={aiDisclosureItems} />
+        </div>
+      </section>
+    {/if}
   {/if}
 </div>
 
@@ -193,12 +207,19 @@
     border: 1px solid var(--border-canvas, #333);
     border-radius: var(--radius-md, 6px);
   }
-  .attribution {
+  .attribution-block {
     margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-8, 8px);
+    /* Match the Input box height so the block vertically centers on the inputs */
+    min-height: calc(var(--font-size-sm, 14px) * var(--line-height-sm, 1.4) + var(--space-8, 8px) * 2.5);
+    justify-content: center;
+  }
+  .attribution {
     display: inline-flex;
     align-items: center;
-    /* Match the Input box height so the text vertically centers on the inputs */
-    min-height: calc(var(--font-size-sm, 14px) * var(--line-height-sm, 1.4) + var(--space-8, 8px) * 2.5);
     color: var(--text-secondary, #bbb);
     font-size: var(--font-size-sm, 12px);
     text-decoration: underline dotted;
@@ -206,6 +227,18 @@
     line-height: 1;
   }
   .attribution:hover { color: var(--text-primary, #eee); }
+  .license-link {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: var(--text-secondary, #bbb);
+    font-size: var(--font-size-sm, 12px);
+    text-decoration: underline dotted;
+    text-underline-offset: 0.2em;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .license-link:hover { color: var(--text-primary, #eee); }
   .control-group {
     display: flex;
     flex-wrap: wrap;
