@@ -1,4 +1,4 @@
-import '@motion-proto/live-tokens/app/tokens.css';
+import './system/styles/tokens.css';
 import './live-tokens/data/tokens.generated.css';
 import '@motion-proto/live-tokens/app/fonts.css';
 import { bootLiveTokens } from '@motion-proto/live-tokens';
