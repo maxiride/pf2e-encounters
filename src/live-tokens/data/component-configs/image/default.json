@@ -2,9 +2,9 @@
   "name": "default",
   "component": "image",
   "createdAt": "2026-04-26T00:00:00.000Z",
-  "updatedAt": "2026-05-10T16:59:16.436Z",
+  "updatedAt": "2026-05-31T01:29:40.847Z",
   "aliases": {
-    "--image-default-radius": "--radius-xl",
+    "--image-default-radius": "--radius-2xl",
     "--image-default-border": "--border-neutral",
     "--image-default-border-width": "--border-width-1",
     "--image-default-shadow": "--shadow-md"

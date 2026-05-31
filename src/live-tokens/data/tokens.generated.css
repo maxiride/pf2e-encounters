@@ -448,54 +448,39 @@
   --badge-info-padding-left: var(--space-10);
 
   /* button (my-button) */
-  --button-primary-text-font-size: var(--font-size-md);
-  --button-primary-text-font-weight: var(--font-weight-semibold);
-  --button-primary-radius: var(--radius-xl);
   --button-primary-hover-border-width: var(--border-width-1);
   --button-primary-hover-radius: var(--radius-xl);
   --button-primary-hover-padding: var(--space-8);
   --button-primary-disabled-border-width: var(--border-width-1);
   --button-primary-disabled-radius: var(--radius-xl);
   --button-primary-disabled-padding: var(--space-8);
-  --button-secondary-text-font-size: var(--font-size-md);
-  --button-secondary-text-font-weight: var(--font-weight-semibold);
-  --button-secondary-radius: var(--radius-xl);
   --button-secondary-hover-border-width: var(--border-width-1);
   --button-secondary-hover-radius: var(--radius-xl);
   --button-secondary-hover-padding: var(--space-8);
   --button-secondary-disabled-border-width: var(--border-width-1);
   --button-secondary-disabled-radius: var(--radius-xl);
   --button-secondary-disabled-padding: var(--space-8);
-  --button-outline-text-font-size: var(--font-size-md);
-  --button-outline-text-font-weight: var(--font-weight-semibold);
-  --button-outline-radius: var(--radius-xl);
   --button-outline-hover-border-width: var(--border-width-1);
   --button-outline-hover-radius: var(--radius-xl);
   --button-outline-hover-padding: var(--space-8);
   --button-outline-disabled-border-width: var(--border-width-1);
   --button-outline-disabled-radius: var(--radius-xl);
   --button-outline-disabled-padding: var(--space-8);
-  --button-success-text-font-size: var(--font-size-md);
-  --button-success-text-font-weight: var(--font-weight-semibold);
-  --button-success-radius: var(--radius-xl);
+  --button-success-border-width: var(--border-width-2);
   --button-success-hover-border-width: var(--border-width-2);
   --button-success-hover-radius: var(--radius-xl);
   --button-success-hover-padding: var(--space-8);
   --button-success-disabled-border-width: var(--border-width-2);
   --button-success-disabled-radius: var(--radius-xl);
   --button-success-disabled-padding: var(--space-8);
-  --button-danger-text-font-size: var(--font-size-md);
-  --button-danger-text-font-weight: var(--font-weight-semibold);
-  --button-danger-radius: var(--radius-xl);
+  --button-danger-border-width: var(--border-width-2);
   --button-danger-hover-border-width: var(--border-width-2);
   --button-danger-hover-radius: var(--radius-xl);
   --button-danger-hover-padding: var(--space-8);
   --button-danger-disabled-border-width: var(--border-width-2);
   --button-danger-disabled-radius: var(--radius-xl);
   --button-danger-disabled-padding: var(--space-8);
-  --button-warning-text-font-size: var(--font-size-md);
-  --button-warning-text-font-weight: var(--font-weight-semibold);
-  --button-warning-radius: var(--radius-xl);
+  --button-warning-border-width: var(--border-width-2);
   --button-warning-hover-border-width: var(--border-width-2);
   --button-warning-hover-radius: var(--radius-xl);
   --button-warning-hover-padding: var(--space-8);
@@ -504,15 +489,15 @@
   --button-warning-disabled-padding: var(--space-8);
 
   /* card (my-card) */
-  --card-default-surface: color-mix(in srgb, var(--surface-neutral-lower) 70%, transparent);
-  --card-default-header-surface: color-mix(in srgb, var(--surface-neutral-lowest) 80%, transparent);
-  --card-default-header-padding-top: var(--space-12);
+  --card-default-title-font-size: var(--font-size-lg);
+  --card-default-title-font-weight: var(--font-weight-normal);
+  --card-default-title-line-height: var(--line-height-sm);
+  --card-default-icon-size: var(--icon-size-lg);
+  --card-default-body-font-size: var(--font-size-md);
   --card-default-header-padding-right: var(--space-16);
-  --card-default-header-padding-bottom: var(--space-12);
   --card-default-header-padding-left: var(--space-16);
   --card-default-body-padding-top: var(--space-12);
   --card-default-body-padding-right: var(--space-16);
-  --card-default-body-padding-bottom: var(--space-16);
   --card-default-body-padding-left: var(--space-16);
 
   /* collapsiblesection (my-collapsible-section) */
@@ -739,16 +724,17 @@
   --segmentedcontrol-option-gap: var(--space-0);
 
   /* table (my-table) */
+  --table-default-surface: var(--color-transparent);
   --table-default-border: var(--border-canvas);
+  --table-default-border-width: var(--border-width-1);
   --table-default-header-surface: var(--surface-brand);
   --table-default-header-font-size: var(--font-size-md);
   --table-default-header-font-weight: var(--font-weight-medium);
   --table-default-header-border: var(--border-neutral-subtle);
+  --table-default-cell-font-size: var(--font-size-sm);
+  --table-default-cell-font-weight: var(--font-weight-normal);
   --table-default-row-surface: color-mix(in srgb, var(--color-neutral-900) 91%, transparent);
-  --table-default-row-divider: var(--border-neutral-subtle);
   --table-default-row-stripe-surface: color-mix(in srgb, var(--color-neutral-850) 72%, transparent);
-  --table-default-column-divider: var(--border-neutral-faint);
-  --table-default-column-divider-width: var(--border-width-1);
 
   /* tooltip (my-tooltip) */
   --tooltip-surface: color-mix(in srgb, var(--surface-neutral-lower) 90%, transparent);
