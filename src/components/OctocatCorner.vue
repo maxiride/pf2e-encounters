@@ -2,7 +2,7 @@
   <!-- begin github animated corner https://github.com/eugena/github-animated-corners/ -->
   <a
     target="_blank"
-    href="https://github.com/maxiride/pf-encounters"
+    href="https://github.com/maxiride/pf2e-encounters"
     class="github-corner"
     aria-label="View source on GitHub"
   >

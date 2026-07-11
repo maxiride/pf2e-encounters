@@ -1,108 +1,98 @@
 <template>
-  <q-linear-progress stripe rounded size="20px" :value="xpPool" :color="barColor()">
-    <div class="flex-center flex absolute-full">
-      <q-badge
-        :style="{
-          position: 'absolute',
-          left: 25 * cssOffset + '%',
-          transform: 'translate(-50%)',
-        }"
-        color="light-green"
-        text-color="black"
-        :label="'Trivial ' + xpBudget.trivial"
-      />
-      <q-badge
-        :style="{
-          position: 'absolute',
-          left: 37.5 * cssOffset + '%',
-          transform: 'translate(-50%)',
-        }"
-        color="lime"
-        text-color="black"
-        :label="'Low ' + xpBudget.low"
-      />
-      <q-badge
-        :style="{
-          position: 'absolute',
-          left: 50 * cssOffset + '%',
-          transform: 'translate(-50%)',
-        }"
-        color="amber"
-        text-color="black"
-        :label="'Moderate ' + xpBudget.moderate"
-      />
-      <q-badge
-        :style="{
-          position: 'absolute',
-          left: 75 * cssOffset + '%',
-          transform: 'translate(-50%)',
-        }"
-        color="orange"
-        text-color="black"
-        :label="'Severe ' + xpBudget.severe"
-      />
-      <q-badge
-        :style="{
-          position: 'absolute',
-          left: 100 * cssOffset + '%',
-          transform: 'translate(-100%)',
-        }"
-        color="deep-orange"
-        text-color="black"
-        :label="'Extreme ' + xpBudget.extreme"
-      />
+  <div class="threat-bar">
+    <!-- Track with fill -->
+    <div class="track">
+      <div class="fill" :class="`bg-${fillColor}`" :style="{ width: fillPercent + '%' }" />
+      <!-- Threshold markers -->
+      <div v-for="mark in marks" :key="mark.label" class="mark" :style="{ left: mark.percent + '%' }">
+        <div class="tick" />
+      </div>
     </div>
-  </q-linear-progress>
+    <!-- Labels under the track -->
+    <div class="labels">
+      <div
+        v-for="mark in marks"
+        :key="mark.label"
+        class="label text-caption"
+        :class="xpCost > mark.value ? 'text-weight-bold' : 'text-grey-7'"
+        :style="{ left: mark.percent + '%' }"
+      >
+        {{ mark.label }}<span class="gt-xs"> {{ mark.value }}</span>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useEncounterStore } from 'stores/encounter-store';
+import { THREAT_COLORS } from 'components/threat-colors';
 
-const props = defineProps({
-  xpPool: {
-    type: Number,
-    required: true,
-    default: 1,
-  },
-  xpBudget: {
-    type: Object,
-    required: true,
-    default: () => {
-      return {
-        trivial: 0,
-        low: 0,
-        moderate: 0,
-        severe: 0,
-        extreme: 0,
-      }
-    },
-  },
-  xpCost: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-})
+const encounterStore = useEncounterStore();
+const { xpBudget, xpCost, threat } = storeToRefs(encounterStore);
 
-const cssOffset = computed(() => {
-  return props.xpPool < 1 ? 1 : 1 / props.xpPool
-})
+// Scale the bar so the extreme budget sits at 90%; overshoot compresses the scale instead of overflowing.
+const scale = computed(() => Math.max(xpBudget.value.extreme / 0.9, xpCost.value));
 
-function barColor() {
-  if (props.xpBudget.trivial < props.xpCost && props.xpCost <= props.xpBudget.low) {
-    return 'lime'
-  } else if (props.xpBudget.low < props.xpCost && props.xpCost <= props.xpBudget.moderate) {
-    return 'amber'
-  } else if (props.xpBudget.moderate < props.xpCost && props.xpCost <= props.xpBudget.severe) {
-    return 'orange'
-  } else if (props.xpBudget.severe < props.xpCost && props.xpCost <= props.xpBudget.extreme) {
-    return 'deep-orange'
-  } else if (props.xpBudget.extreme < props.xpCost) {
-    return 'black'
-  }
+const fillPercent = computed(() => Math.min(100, (xpCost.value / scale.value) * 100));
 
-  return 'light-green'
-}
+const fillColor = computed(() => THREAT_COLORS[threat.value] ?? 'grey-6');
+
+const marks = computed(() => {
+  const b = xpBudget.value;
+  return [
+    { label: 'Trivial', value: b.trivial },
+    { label: 'Low', value: b.low },
+    { label: 'Moderate', value: b.moderate },
+    { label: 'Severe', value: b.severe },
+    { label: 'Extreme', value: b.extreme },
+  ].map((m) => ({ ...m, percent: (m.value / scale.value) * 100 }));
+});
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.threat-bar {
+  width: 100%;
+}
+
+.track {
+  position: relative;
+  height: 12px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 6px;
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.mark {
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+
+.tick {
+  width: 2px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.labels {
+  position: relative;
+  height: 18px;
+  margin-top: 2px;
+}
+
+.label {
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+</style>

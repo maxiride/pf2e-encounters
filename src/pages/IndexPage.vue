@@ -1,39 +1,47 @@
 <template>
-  <q-page class="q-pa-md q-gutter-md">
-    <ThreatBar class="col-12" :xp-cost="xpCost" :xp-budget="xpBudget" :xp-pool="xpPool" />
-
-    <div class="row col-12">
-      <CreaturesTable class="col-9" />
-
-      <EncounterList class="col" />
+  <q-page padding>
+    <div class="row q-col-gutter-md">
+      <div class="col-12">
+        <ThreatBar />
+      </div>
+      <div class="col-12 col-md-8 col-lg-9">
+        <CreaturesTable />
+      </div>
+      <div class="col-12 col-md-4 col-lg-3">
+        <EncounterList class="encounter-panel" />
+      </div>
     </div>
-
   </q-page>
 </template>
 
 <script setup lang="ts">
-import CreaturesTable from 'components/CreaturesTable.vue'
-import ThreatBar from 'components/ThreatBar.vue'
-import { useEncounterStore } from 'stores/encounter-store'
-import EncounterList from 'components/EncounterList.vue'
+import { watch } from 'vue';
+import { useQuasar } from 'quasar';
+import CreaturesTable from 'components/CreaturesTable.vue';
+import ThreatBar from 'components/ThreatBar.vue';
+import EncounterList from 'components/EncounterList.vue';
+import { useCreaturesStore } from 'stores/creatures-store';
 
-const encounterStore = useEncounterStore()
-const xpCost = encounterStore.xpCost
-const xpBudget = encounterStore.xpBudget
-const xpPool = encounterStore.xpPool
+const creaturesStore = useCreaturesStore();
+const $q = useQuasar();
+
+watch(
+  () => creaturesStore.isLoading,
+  (isLoading) => {
+    if (isLoading) {
+      $q.loading.show({ delay: 400, message: 'Loading creatures…' });
+    } else {
+      $q.loading.hide();
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <style scoped>
-/* Hide number input arrows */
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type='number'] {
-  -moz-appearance: textfield;
+.encounter-panel {
+  position: sticky;
+  top: 66px;
+  max-height: calc(100vh - 82px);
 }
 </style>

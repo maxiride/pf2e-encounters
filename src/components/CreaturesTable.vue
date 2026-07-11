@@ -1,181 +1,272 @@
 <template>
-  <q-table
-    title="Creatures"
-    :columns="columns"
-    :rows="creatures"
-    :visible-columns="visibleColumns"
-    :pagination="defaultPagination"
-    no-data-label="The selected filter does not match any creature."
-    dense
-    style="height: 100%"
-    @row-dblclick="addCreatureToEncounter"
-  >
-    <template v-slot:top-right>
-      <q-select
-        v-model="visibleColumns"
-        multiple
-        outlined
-        dense
-        options-dense
-        display-value="Show\Hide columns"
-        emit-value
-        map-options
-        :options="showHideColumnOptions"
-        option-value="name"
-        options-cover
-        style="min-width: 150px"
-      >
-        <template v-if="!isVisibleColumnsDefault" v-slot:append>
-          <q-icon name="cancel" @click.stop.prevent="visibleColumns = defaultVisibleColumns" class="cursor-pointer">
-            <q-tooltip> Reset to default</q-tooltip>
-          </q-icon>
-        </template>
-      </q-select>
-    </template>
-    <template v-slot:body-cell-name="props">
-      <td class="text-left">
-        <q-btn
-          icon="search"
-          size="xs"
-          color="grey-5"
-          round
-          dense
-          unelevated
-          :href="`https://2e.aonprd.com${props.row.url}&source=pf2e-encounters`"
-          target="_blank"
-          style="margin-bottom: 3px"
-        />
-        {{ props.value }}
-      </td>
-    </template>
-    <template v-slot:body-cell-actions>
-      <td class="text-left">
-        <q-btn icon="add" size="xs" color="green-5" dense unelevated />
-      </td>
-    </template>
-  </q-table>
+  <q-card flat bordered>
+    <!-- Filter bar -->
+    <q-card-section class="q-pb-none">
+      <div class="row q-col-gutter-sm items-center">
+        <div class="col-12 col-md-4">
+          <q-input v-model="search" outlined dense clearable placeholder="Search by name…" debounce="150">
+            <template v-slot:prepend>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </div>
+        <div class="col-auto">
+          <q-btn-toggle
+            v-model="typeFilter"
+            no-caps
+            unelevated
+            dense
+            toggle-color="primary"
+            :options="[
+              { label: 'All', value: 'all' },
+              { label: 'Monsters', value: 'monsters' },
+              { label: 'NPCs', value: 'npcs' },
+            ]"
+            class="type-toggle"
+          />
+        </div>
+        <div class="col-12 col-md-3 q-px-md">
+          <q-range
+            v-model="levelRange"
+            dense
+            :min="levelBounds.min"
+            :max="levelBounds.max"
+            :step="1"
+            label
+            switch-label-side
+            color="primary"
+          />
+          <div class="text-caption text-grey-7 text-center" style="margin-top: -6px">
+            Level {{ levelRange.min }} – {{ levelRange.max }}
+          </div>
+        </div>
+        <div class="col">
+          <q-btn
+            flat
+            dense
+            no-caps
+            color="grey-8"
+            :icon="showAdvanced ? 'expand_less' : 'tune'"
+            :label="showAdvanced ? 'Less filters' : 'More filters'"
+            @click="showAdvanced = !showAdvanced"
+          />
+          <q-btn v-if="filtersActive" flat dense no-caps color="negative" icon="filter_alt_off" label="Reset" @click="resetFilters" />
+        </div>
+      </div>
+
+      <q-slide-transition>
+        <div v-show="showAdvanced" class="row q-col-gutter-sm q-pt-sm">
+          <div class="col-6 col-md-2">
+            <q-select
+              v-model="rarityFilter"
+              :options="metadata.rarities"
+              label="Rarity"
+              multiple
+              outlined
+              dense
+              options-dense
+              clearable
+              use-chips
+            />
+          </div>
+          <div class="col-6 col-md-2">
+            <q-select
+              v-model="sizeFilter"
+              :options="metadata.sizes"
+              label="Size"
+              multiple
+              outlined
+              dense
+              options-dense
+              clearable
+              use-chips
+            />
+          </div>
+          <div class="col-6 col-md-2">
+            <q-select
+              v-model="alignmentFilter"
+              :options="metadata.alignments"
+              label="Alignment"
+              multiple
+              outlined
+              dense
+              options-dense
+              clearable
+              use-chips
+            />
+          </div>
+          <div class="col-6 col-md-2">
+            <FilterSelect v-model="familyFilter" :all-options="metadata.families" label="Family" />
+          </div>
+          <div class="col-6 col-md-2">
+            <FilterSelect v-model="traitsFilter" :all-options="metadata.traits" label="Traits" />
+          </div>
+          <div class="col-6 col-md-2">
+            <FilterSelect v-model="sourcesFilter" :all-options="metadata.sources" label="Source" />
+          </div>
+        </div>
+      </q-slide-transition>
+    </q-card-section>
+
+    <!-- Table -->
+    <q-table
+      flat
+      dense
+      :columns="columns"
+      :rows="filteredCreatures"
+      row-key="url"
+      :pagination="{ sortBy: 'name', descending: false, rowsPerPage: 15 }"
+      :rows-per-page-options="[15, 30, 50]"
+      no-data-label="No creature matches the selected filters."
+      @row-dblclick="(_, row) => add(row)"
+    >
+      <template v-slot:body-cell-name="props">
+        <q-td :props="props">
+          <a :href="aonUrl(props.row)" target="_blank" rel="noopener" class="creature-link">{{ props.row.name }}</a>
+          <span v-if="props.row.family" class="text-grey-6 q-ml-xs">· {{ props.row.family }}</span>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-rarity="props">
+        <q-td :props="props">
+          <q-badge outline :color="rarityColor(props.row.rarity)" :label="props.row.rarity" />
+        </q-td>
+      </template>
+      <template v-slot:body-cell-type="props">
+        <q-td :props="props">
+          <q-badge outline :color="props.row.npc ? 'teal' : 'brown'" :label="props.row.npc ? 'NPC' : 'Monster'" />
+        </q-td>
+      </template>
+      <template v-slot:body-cell-add="props">
+        <q-td :props="props">
+          <q-btn icon="add" size="sm" color="primary" round flat dense @click="add(props.row)">
+            <q-tooltip>Add to encounter</q-tooltip>
+          </q-btn>
+        </q-td>
+      </template>
+    </q-table>
+  </q-card>
 </template>
 
 <script setup lang="ts">
-import { useCreaturesStore, Creature } from 'stores/creatures-store.js';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
+import type { QTableColumn } from 'quasar';
+import { useCreaturesStore } from 'stores/creatures-store';
+import type { Creature } from 'stores/creatures-store';
 import { useEncounterStore } from 'stores/encounter-store';
-import { QTableColumn } from 'quasar';
-
-const columns: QTableColumn[] = [
-  {
-    name: 'name',
-    label: 'Name',
-    align: 'left',
-    field: 'name',
-    sortable: true,
-    required: true,
-  },
-  {
-    name: 'level',
-    label: 'Level',
-    field: (row) => Number(row.level),
-    sortable: true,
-    required: true,
-  },
-  {
-    name: 'size',
-    label: 'Size',
-    field: 'size',
-    sortable: true,
-    align: 'left',
-    required: true,
-  },
-  {
-    name: 'family',
-    label: 'Family',
-    field: 'creature_family',
-    sortable: true,
-    align: 'left',
-  },
-  {
-    name: 'alignment',
-    label: 'Alignment',
-    field: 'alignment',
-    sortable: true,
-    align: 'left',
-  },
-  {
-    name: 'creature_type',
-    label: 'Creature Type',
-    field: (row) => (row.url.toLowerCase().includes('npc') ? 'NPC' : 'Monster'),
-    sortable: true,
-    align: 'left',
-    style: 'width:150px',
-  },
-  {
-    name: 'traits',
-    label: 'Traits',
-    field: 'trait',
-    sortable: false,
-    align: 'left',
-  },
-  {
-    name: 'rarity',
-    label: 'Rarity',
-    field: 'rarity',
-    sortable: true,
-    align: 'left',
-  },
-  {
-    name: 'actions',
-    label: '',
-    field: '',
-    align: 'left',
-    required: true,
-  },
-];
-
-const defaultVisibleColumns: string[] = ['family', 'traits', 'alignment'];
-const visibleColumns = ref<string[]>([]);
-visibleColumns.value = defaultVisibleColumns;
-
-// Only columns without the required: true attribute are selectable in the show/hide q-select.
-const showHideColumnOptions = computed(() => {
-  return columns.filter((column) => !column.required);
-});
-
-const isVisibleColumnsDefault = computed(() => {
-  // Step 1: Check the lengths of both arrays
-  if (visibleColumns.value.length !== defaultVisibleColumns.length) {
-    // If the lengths are different, the arrays cannot be equal
-    return false;
-  }
-
-  // Step 2: Check if all elements in arr1 are present in arr2
-  const allInArr2 = visibleColumns.value.every((item) => defaultVisibleColumns.includes(item));
-
-  // Step 3: Check if all elements in arr2 are present in arr1
-  const allInArr1 = defaultVisibleColumns.every((item) => visibleColumns.value.includes(item));
-
-  // Step 4: Return true only if both conditions are met
-  return allInArr2 && allInArr1;
-});
-
-const defaultPagination = {
-  sortBy: 'name',
-  descending: false,
-  page: 1,
-  rowsPerPage: 20,
-};
+import FilterSelect from 'components/FilterSelect.vue';
 
 const creaturesStore = useCreaturesStore();
-const creatures = creaturesStore.creatures;
-
+const { creatures, metadata } = storeToRefs(creaturesStore);
 const encounterStore = useEncounterStore();
 
-function addCreatureToEncounter(evt: Event, row: Creature) {
-  encounterStore.addCreature(row.name, Number(row.level));
+// --- filter state ---
+const search = ref('');
+const typeFilter = ref<'all' | 'monsters' | 'npcs'>('all');
+const levelBounds = computed(() => metadata.value.levels);
+const levelRange = ref({ min: levelBounds.value.min, max: levelBounds.value.max });
+const showAdvanced = ref(false);
+const rarityFilter = ref<string[] | null>(null);
+const sizeFilter = ref<string[] | null>(null);
+const alignmentFilter = ref<string[] | null>(null);
+const familyFilter = ref<string[]>([]);
+const traitsFilter = ref<string[]>([]);
+const sourcesFilter = ref<string[]>([]);
+
+// widen the range once real metadata arrives
+watch(levelBounds, (b) => {
+  levelRange.value = { min: b.min, max: b.max };
+});
+
+const filtersActive = computed(
+  () =>
+    search.value !== '' ||
+    typeFilter.value !== 'all' ||
+    levelRange.value.min !== levelBounds.value.min ||
+    levelRange.value.max !== levelBounds.value.max ||
+    (rarityFilter.value?.length ?? 0) > 0 ||
+    (sizeFilter.value?.length ?? 0) > 0 ||
+    (alignmentFilter.value?.length ?? 0) > 0 ||
+    familyFilter.value.length > 0 ||
+    traitsFilter.value.length > 0 ||
+    sourcesFilter.value.length > 0,
+);
+
+function resetFilters() {
+  search.value = '';
+  typeFilter.value = 'all';
+  levelRange.value = { min: levelBounds.value.min, max: levelBounds.value.max };
+  rarityFilter.value = null;
+  sizeFilter.value = null;
+  alignmentFilter.value = null;
+  familyFilter.value = [];
+  traitsFilter.value = [];
+  sourcesFilter.value = [];
+}
+
+const filteredCreatures = computed(() => {
+  const q = (search.value ?? '').toLowerCase();
+  return creatures.value.filter((c) => {
+    if (q && !c.name.toLowerCase().includes(q)) return false;
+    if (typeFilter.value === 'monsters' && c.npc) return false;
+    if (typeFilter.value === 'npcs' && !c.npc) return false;
+    if (c.level < levelRange.value.min || c.level > levelRange.value.max) return false;
+    if (rarityFilter.value?.length && !rarityFilter.value.includes(c.rarity)) return false;
+    if (sizeFilter.value?.length && !c.size.some((s) => sizeFilter.value!.includes(s))) return false;
+    if (alignmentFilter.value?.length && !alignmentFilter.value.includes(c.alignment)) return false;
+    if (familyFilter.value.length && !familyFilter.value.includes(c.family)) return false;
+    if (traitsFilter.value.length && !traitsFilter.value.every((t) => c.traits.includes(t))) return false;
+    if (sourcesFilter.value.length && !c.sources.some((s) => sourcesFilter.value.includes(s))) return false;
+    return true;
+  });
+});
+
+// --- table ---
+const columns: QTableColumn[] = [
+  { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
+  { name: 'level', label: 'Level', align: 'center', field: 'level', sortable: true },
+  { name: 'hp', label: 'HP', align: 'center', field: 'hp', sortable: true },
+  { name: 'ac', label: 'AC', align: 'center', field: 'ac', sortable: true },
+  { name: 'size', label: 'Size', align: 'left', field: (row: Creature) => row.size.join(' / '), sortable: true },
+  { name: 'rarity', label: 'Rarity', align: 'left', field: 'rarity', sortable: true },
+  { name: 'type', label: 'Type', align: 'left', field: 'npc', sortable: true },
+  { name: 'add', label: '', field: () => '', align: 'right' },
+];
+
+function aonUrl(row: Creature) {
+  return `https://2e.aonprd.com${row.url}`;
+}
+
+function rarityColor(rarity: string) {
+  switch (rarity) {
+    case 'Uncommon':
+      return 'orange-8';
+    case 'Rare':
+      return 'blue-8';
+    case 'Unique':
+      return 'purple-7';
+    default:
+      return 'grey-7';
+  }
+}
+
+function add(row: Creature) {
+  encounterStore.addCreature(row.name, row.level, row.url);
 }
 </script>
 
 <style lang="scss" scoped>
-tr:nth-child(even) {
-  background-color: $grey-1 !important;
+.creature-link {
+  color: $primary;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.type-toggle {
+  border: 1px solid $separator-color;
+  border-radius: 4px;
 }
 </style>

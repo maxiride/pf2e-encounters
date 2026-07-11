@@ -1,79 +1,71 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
 
+// Creature mirrors the schema produced by tools/aon-downloader/fetch-creatures.js
 export type Creature = {
   name: string;
-  creature_family: string;
+  level: number;
+  hp: number;
+  ac: number;
   rarity: string;
-  size: string;
-  trait: string;
-  level: string; // note: string in JSON
-  hp: string;
-  ac: string;
-  source: string;
+  size: string[];
+  traits: string[];
+  family: string;
+  sources: string[];
   url: string;
+  npc: boolean;
   alignment: string;
 };
 
-interface Metadata {
+export interface Metadata {
   total: number;
+  updated: string;
   traits: string[];
   rarities: string[];
   sizes: string[];
-  sources_normalized: string[];
+  sources: string[];
+  families: string[];
+  alignments: string[];
+  levels: { min: number; max: number };
 }
+
+const emptyMetadata: Metadata = {
+  total: 0,
+  updated: '',
+  traits: [],
+  rarities: [],
+  sizes: [],
+  sources: [],
+  families: [],
+  alignments: [],
+  levels: { min: -1, max: 25 },
+};
 
 export const useCreaturesStore = defineStore('creatures', {
   state: () => ({
     isLoading: false,
     error: null as Error | null,
-    // creatures hold the creature data
     creatures: [] as Creature[],
-    // metadata holds the creature metadata like sizes, traits etc
-    metadata: {} as Metadata,
+    metadata: emptyMetadata,
   }),
-
-  getters: {
-    getCreatures: (state) => state.creatures,
-    getCreature: (state) => (index: number) => state.creatures.at(index),
-    getCreatureCount: (state) => state.creatures.length,
-    getTraits: (state) => state.metadata.traits,
-    getRarities: (state) => state.metadata.rarities,
-    getSizes: (state) => state.metadata.sizes,
-    getSources: (state) => state.metadata.sources_normalized,
-  },
 
   actions: {
     async fetchCreatures() {
       this.isLoading = true;
 
       try {
-        const response = await fetch('/v2/creatures.json');
-
-        // Validate response
+        const response = await fetch('creatures.json');
         if (!response.ok) {
           throw new Error(`Failed to fetch creatures: HTTP ${response.status}`);
         }
-
-        // Parse JSON response and set creatures state
         this.creatures = await response.json();
 
-        console.log('Creatures loaded:', this.creatures.length);
-
-        const metadataResp = await fetch('/v2/metadata.json');
+        const metadataResp = await fetch('metadata.json');
         if (!metadataResp.ok) {
           throw new Error(`Failed to fetch metadata: HTTP ${metadataResp.status}`);
         }
-
         this.metadata = await metadataResp.json();
-
-        console.log('Metadata loaded');
       } catch (err) {
-        if (err instanceof Error) {
-          this.error = err;
-        } else {
-          this.error = new Error(String(err));
-        }
-        console.error('Error fetching creatures:', err);
+        this.error = err instanceof Error ? err : new Error(String(err));
       } finally {
         this.isLoading = false;
       }

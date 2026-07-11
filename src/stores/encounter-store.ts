@@ -8,6 +8,7 @@ export type Creature = {
   level: number;
   count: number;
   kind: 'base' | 'weak' | 'elite';
+  url: string;
 };
 
 // XPBudget represents the upper bounds of each threat level budget
@@ -55,18 +56,34 @@ export const useEncounterStore = defineStore('encounter', () => {
     return xpCost.value / xpBudget.value.extreme;
   });
 
+  // threat is the label of the smallest budget the current cost fits in
+  const threat = computed<string>(() => {
+    if (xpCost.value === 0) return 'None';
+    if (xpCost.value <= xpBudget.value.trivial) return 'Trivial';
+    if (xpCost.value <= xpBudget.value.low) return 'Low';
+    if (xpCost.value <= xpBudget.value.moderate) return 'Moderate';
+    if (xpCost.value <= xpBudget.value.severe) return 'Severe';
+    if (xpCost.value <= xpBudget.value.extreme) return 'Extreme';
+    return 'Beyond Extreme';
+  });
+
   //
   // actions
   //
 
-  // addCreature adds a creature to the encounter
-  function addCreature(name: string, level: number): void {
-    // TODO track with analytics creatures and level added
+  // addCreature adds a creature to the encounter; adding the same creature again bumps its count
+  function addCreature(name: string, level: number, url = ''): void {
+    const existing = encounterCreatures.value.find((c) => c.name === name && c.kind === 'base');
+    if (existing) {
+      existing.count++;
+      return;
+    }
     encounterCreatures.value.push({
       name,
       level,
       count: 1,
       kind: 'base',
+      url,
     });
   }
 
@@ -78,10 +95,10 @@ export const useEncounterStore = defineStore('encounter', () => {
     }
   }
 
-  // decrementCreatureCount decrements the count of a specific creature in the ecounter by 1
+  // decrementCreatureCount decrements the count of a specific creature in the encounter by 1 (never below 1)
   function decrementCreatureCount(index: number): void {
     const creature = encounterCreatures.value.at(index);
-    if (creature && creature.count > 0) {
+    if (creature && creature.count > 1) {
       creature.count--;
     }
   }
@@ -138,6 +155,7 @@ export const useEncounterStore = defineStore('encounter', () => {
     xpBudget,
     xpCost,
     xpPool,
+    threat,
     addCreature,
     incrementCreatureCount,
     decrementCreatureCount,
@@ -155,22 +173,24 @@ export const useEncounterStore = defineStore('encounter', () => {
 // Utility functions
 //
 
-// computeCreatureCost compute how much xp the creature cost to the budget
+// adjustedLevel is the creature's effective level after the weak/elite adjustment
 // ref. https://2e.aonprd.com/Rules.aspx?ID=3262
-export function computeCreatureCost(creature: Creature, partyLevel: number): number {
+export function adjustedLevel(creature: Creature): number {
   switch (creature.kind) {
-    case 'base':
-      // If the creature has the base attribute its level is counted as its original value.
-      return computeDeltaCost(creature.level - partyLevel);
     case 'weak':
       // Decrease the creature's level by 1; if the creature is level 1, instead decrease its level by 2.
-      return computeDeltaCost(creature.level - (creature.level === 1 ? 2 : 1) - partyLevel);
+      return creature.level - (creature.level === 1 ? 2 : 1);
     case 'elite':
-      // Increase the creature’s level by 1; if the creature is level –1 or 0, instead increase its level by 2.
-      return computeDeltaCost(creature.level + (creature.level === -1 || creature.level === 0 ? 2 : 1) - partyLevel);
+      // Increase the creature's level by 1; if the creature is level –1 or 0, instead increase its level by 2.
+      return creature.level + (creature.level === -1 || creature.level === 0 ? 2 : 1);
     default:
-      return 0;
+      return creature.level;
   }
+}
+
+// computeCreatureCost compute how much xp the creature cost to the budget
+export function computeCreatureCost(creature: Creature, partyLevel: number): number {
+  return computeDeltaCost(adjustedLevel(creature) - partyLevel);
 }
 
 /**

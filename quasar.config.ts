@@ -3,7 +3,7 @@
 
 import { defineConfig } from '#q-app/wrappers';
 
-export default defineConfig((/* ctx */) => {
+export default defineConfig((ctx) => {
   return {
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
     // preFetch: true,
@@ -11,7 +11,7 @@ export default defineConfig((/* ctx */) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['axios'],
+    boot: ['creatures'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
@@ -50,7 +50,8 @@ export default defineConfig((/* ctx */) => {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      // served as a GitHub Pages project site at maxiride.github.io/pf2e-encounters
+      publicPath: ctx.prod ? '/pf2e-encounters/' : '/',
       // analyze: true,
       // env: {},
       // rawDefine: {}
@@ -80,8 +81,7 @@ export default defineConfig((/* ctx */) => {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
     devServer: {
       // https: true,
-      open: { app: { name: 'C:\\Program Files\\Firefox Developer Edition\\firefox.exe', arguments: ['--devtools'] } }, // opens browser window and devtools automatically,
-      vueDevtools: true, // launch Vue Devtools
+      open: false,
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
@@ -99,7 +99,7 @@ export default defineConfig((/* ctx */) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ['Loading'],
     },
 
     // animations: 'all', // --- includes all animations
