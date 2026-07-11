@@ -1,6 +1,3 @@
-packages:
-  - 'tools/*'
-
 onlyBuiltDependencies:
   - electron
   - esbuild

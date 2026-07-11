@@ -1,20 +1,35 @@
-# What's this?
+# AoN Creatures Downloader
 
-Back in 2021 i made a [website](https://maxiride.github.io/pf2e-encounters) to build and balance encounters for
-Pathfinder 2e
-([source](https://github.com/maxiride/pf2e-encounters?)), to source the creatures I build a custom webscraper to browse and parse all the archives creatures (monsters and npcs). The approach was very brittle and I had to do a lot of manual work to get the little data needed.
+Fetches every creature and NPC from the [Archives of Nethys](https://2e.aonprd.com) public
+Elasticsearch endpoint (`elasticsearch.aonprd.com` — the same backend the website itself queries)
+and writes `public/creatures.json` plus `public/metadata.json` for the app.
 
-Flash forward to today Archive of Nethys made possible to download a JSON, still a truly programmatic way is not available and from feedback received from the official Discord channel it's out of scope for the moment.
+## Usage
 
-Enter pf2e-aon-export, a simple tool to download the JSON from the official website in the most "politely" way possible to not overload the server.
+```bash
+pnpm run generate:data          # skipped if creatures.json is fresher than 7 days
+pnpm run generate:data --force  # always download
+```
 
+No dependencies — plain Node ≥ 18 (`fetch` built in).
 
-# How does it work?
+## How it works
 
-Initially I sniffed the network traffic to intercept the elastic json chunks, merge them and filter them. It was way more than one coudl bargain for, these chunks contains almost everything, items, actions, creatures, conditions etc.
+One `_search` request filtered on `category=creature` (excluding `exclude_from_search`
+entries — reprints and joke statblocks, mirroring the website), sorted by name, with
+`_source` limited to the fields the app needs. A single request covers the whole corpus
+(~4.7k documents, well under the 10k page limit); the script fails loudly if that ever
+stops being true.
 
-So I decided to streamline the process and simulate what a user would do to download the JSON: hit the "Export as JSON" button. KISS. 😀
+## History
 
-# Disclaimer
+- **v1 (2021)**: custom Go webscraper crawling the HTML pages. Brittle, lots of manual work.
+- **v2 (2025)**: Playwright driving the website UI to click "Export as JSON". Broke when AoN
+  added a cookie-consent dialog, missed NPCs, needed a full Chromium download.
+- **v3 (current)**: direct Elasticsearch query. One HTTP request, zero dependencies.
 
-**DO NOT ABUSE THE TOOL**, the Archive of Nethys is not meant to be used like this, it's a public and community driven resource which must be respected for the effort put in.
+## Disclaimer
+
+**DO NOT ABUSE THE TOOL** — the Archive of Nethys is a public, community-driven resource.
+The freshness guard exists so development runs never hit AoN; the scheduled GitHub Action
+refreshes data once a month.

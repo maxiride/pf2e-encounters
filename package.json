@@ -11,16 +11,13 @@
     "lint": "eslint -c ./eslint.config.js \"./src*/**/*.{ts,js,cjs,mjs,vue}\"",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
-    "generate:data": "pnpm --filter aon-creatures-downloader run generate",
-    "predev": "pnpm run generate:data",
+    "generate:data": "node tools/aon-downloader/fetch-creatures.js",
     "dev": "quasar dev",
-    "prebuild": "pnpm run generate:data",
     "build": "quasar build",
     "postinstall": "quasar prepare"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
-    "axios": "^1.2.1",
     "pinia": "^3.0.1",
     "quasar": "^2.16.0",
     "vue": "^3.4.18",
