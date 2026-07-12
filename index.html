@@ -14,6 +14,11 @@
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
     <link rel="icon" type="image/ico" href="favicon.ico">
+
+    <% if (ctx.prod) { %>
+    <!-- Analytics -->
+    <script defer src="https://analytics.federicod.dev/script.js" data-website-id="fed631bc-1e9e-4f59-85ed-e9ad20615ee1"></script>
+    <% } %>
   </head>
   <body>
     <!-- quasar:entry-point -->

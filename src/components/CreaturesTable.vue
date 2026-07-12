@@ -251,7 +251,7 @@ function rarityColor(rarity: string) {
 }
 
 function add(row: Creature) {
-  encounterStore.addCreature(row.name, row.level, row.url);
+  encounterStore.addCreature(row.name, row.level, row.url, row.npc);
 }
 </script>
 

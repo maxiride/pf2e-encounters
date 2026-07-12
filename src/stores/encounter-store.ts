@@ -1,6 +1,9 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
 import type { Ref } from 'vue';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { trackEvent } from 'src/utils/analytics';
+
+const SNAPSHOT_IDLE_MS = 8000;
 
 // Creature defines the properties of a Creature added to the encounter. We don't need to track all of its attributes, just the minimal ones needed.
 export type Creature = {
@@ -72,7 +75,9 @@ export const useEncounterStore = defineStore('encounter', () => {
   //
 
   // addCreature adds a creature to the encounter; adding the same creature again bumps its count
-  function addCreature(name: string, level: number, url = ''): void {
+  function addCreature(name: string, level: number, url = '', npc = false): void {
+    trackEvent('encounter-add-creature', { name, level, npc });
+
     const existing = encounterCreatures.value.find((c) => c.name === name && c.kind === 'base');
     if (existing) {
       existing.count++;
@@ -108,28 +113,27 @@ export const useEncounterStore = defineStore('encounter', () => {
     encounterCreatures.value.splice(index, 1);
   }
 
+  // setCreatureKind changes a creature's weak/base/elite variant, tracking real changes only
+  function setCreatureKind(index: number, kind: Creature['kind']): void {
+    const creature = encounterCreatures.value.at(index);
+    if (!creature || creature.kind === kind) return;
+    creature.kind = kind;
+    trackEvent('encounter-change-kind', { name: creature.name, kind });
+  }
+
   // makeCreatureBase makes a creature variant base
   function makeCreatureBase(index: number): void {
-    const creature = encounterCreatures.value.at(index);
-    if (creature) {
-      creature.kind = 'base';
-    }
+    setCreatureKind(index, 'base');
   }
 
   // makeCreatureElite makes a creature variant elite
   function makeCreatureElite(index: number): void {
-    const creature = encounterCreatures.value.at(index);
-    if (creature) {
-      creature.kind = 'elite';
-    }
+    setCreatureKind(index, 'elite');
   }
 
   // makeCreatureWeak makes a creature variant weak
   function makeCreatureWeak(index: number): void {
-    const creature = encounterCreatures.value.at(index);
-    if (creature) {
-      creature.kind = 'weak';
-    }
+    setCreatureKind(index, 'weak');
   }
 
   // setPartyLevel sets the party level
@@ -146,6 +150,40 @@ export const useEncounterStore = defineStore('encounter', () => {
   function $reset() {
     encounterCreatures.value = [];
   }
+
+  //
+  // analytics — no explicit "encounter finished" signal exists (creatures get
+  // added/removed continuously), so we snapshot the encounter shape once the
+  // user goes idle, plus an immediate flush if they hide/close the tab first.
+  //
+  let snapshotTimer: ReturnType<typeof setTimeout> | undefined;
+
+  function sendSnapshot(): void {
+    clearTimeout(snapshotTimer);
+    if (encounterCreatures.value.length === 0) return;
+    trackEvent('encounter-snapshot', {
+      party_level: partyLevel.value,
+      party_size: partySize.value,
+      unique_creatures: encounterCreatures.value.length,
+      creature_count: encounterCreatures.value.reduce((sum, c) => sum + c.count, 0),
+      xp_cost: xpCost.value,
+      threat: threat.value,
+    });
+  }
+
+  watch(
+    [encounterCreatures, partyLevel, partySize],
+    () => {
+      clearTimeout(snapshotTimer);
+      snapshotTimer = setTimeout(sendSnapshot, SNAPSHOT_IDLE_MS);
+    },
+    { deep: true },
+  );
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) sendSnapshot();
+  });
+  window.addEventListener('pagehide', sendSnapshot);
 
   // Return state, getters, and actions
   return {

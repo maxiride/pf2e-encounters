@@ -5,3 +5,9 @@ declare namespace NodeJS {
     VUE_ROUTER_BASE: string | undefined;
   }
 }
+
+interface Window {
+  umami?: {
+    track: (event: string, data?: Record<string, unknown>) => void;
+  };
+}
