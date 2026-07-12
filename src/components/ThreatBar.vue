@@ -17,7 +17,7 @@
         :class="xpCost > mark.value ? 'text-weight-bold' : 'text-grey-7'"
         :style="{ left: mark.percent + '%' }"
       >
-        {{ mark.label }}<span class="gt-xs"> {{ mark.value }}</span>
+        {{ mark.label }}<span class="gt-xs">&nbsp;{{ mark.value }}</span>
       </div>
     </div>
   </div>
