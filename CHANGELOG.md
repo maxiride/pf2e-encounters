@@ -24,7 +24,12 @@ Full rewrite: Vue 3 + Quasar 2 + TypeScript + Pinia, new data pipeline, redesign
 - Fixed a latent Pinia reactivity bug: `IndexPage` was destructuring computed refs directly off the setup-store (`const xpCost = encounterStore.xpCost`), freezing their value at mount instead of tracking party-level/size changes. Now sourced via `storeToRefs` throughout. Closes [#17](https://github.com/maxiride/pf2e-encounters/issues/17) (milestone: v2).
 - Removed dead code: unused `axios` boot/dependency, `example-store.ts`, stub `user-store.ts`, duplicate Pinia `stores/index.js`, debug `console.log`s and debug CSS outlines.
 - License dialog now renders real Paizo Community Use Policy text and links `LICENSE_AON.md` instead of a commented-out `q-markdown` block. Closes [#68](https://github.com/maxiride/pf2e-encounters/issues/68).
-- Header/menu links wired to real destinations (release notes, bug report, discussions, repository) instead of dead `v-close-popup`-only items.
+- Header/menu links wired to real destinations (release notes, bug report, discussions, repository) instead of dead `v-close-popup`-only items. Added a Buy Me a Coffee button.
+- `package.json` `productName`/`description` were still the Quasar CLI scaffold defaults, showing up as the browser tab title — set to the real product identity.
+- Encounter rows now flag creatures whose effective level is more than 4 levels from the party (e.g. a level-25 solo vs. a level-1 party) with a warning tooltip instead of silently capping their cost at the table's edge value, which made wildly mismatched fights read as merely "Extreme". Per-creature cost still follows GM Core's Creature XP table as written — no unofficial extrapolated formula. Closes [#62](https://github.com/maxiride/pf2e-encounters/issues/62).
+
+### Analytics
+- Self-hosted Umami tracking (script gated to production builds only). Reintroduces the `encounter-add-creature` bounce-workaround event from [#66](https://github.com/maxiride/pf2e-encounters/issues/66), plus `encounter-change-kind` and a debounced `encounter-snapshot` (party level/size, XP cost, threat) fired on idle or tab-hide — there's no "encounter finished" signal to hook since creatures get added/removed continuously.
 
 ### Infrastructure
 - `update-creatures.yml`: scheduled GitHub Action (1st of every month) refreshes creature data and commits it to `development` and `main`, then triggers the deploy workflow.
@@ -32,7 +37,6 @@ Full rewrite: Vue 3 + Quasar 2 + TypeScript + Pinia, new data pipeline, redesign
 - Removed two stale, non-functional workflow files (`yarn`-based, targeting a `src/webui` layout that no longer exists).
 
 ### Known limitations (not addressed in this release)
-- Encounter cost vs. delta level beyond ±4 is still clamped to the ±4 table value instead of being flagged as out-of-bounds — relates to [#62](https://github.com/maxiride/pf2e-encounters/issues/62), not fixed here.
 - No separate "XP to award players" figure (rules-as-written: player rewards are always computed for a party of 4, independent of the size-scaled budget) — [#43](https://github.com/maxiride/pf2e-encounters/issues/43) remains open.
 - No dark mode, saved/shareable encounters, or random-encounter generator — [#25](https://github.com/maxiride/pf2e-encounters/issues/25), [#52](https://github.com/maxiride/pf2e-encounters/issues/52), [#51](https://github.com/maxiride/pf2e-encounters/issues/51), [#18](https://github.com/maxiride/pf2e-encounters/issues/18) remain open.
 

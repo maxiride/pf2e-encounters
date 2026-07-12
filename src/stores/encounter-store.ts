@@ -231,6 +231,19 @@ export function computeCreatureCost(creature: Creature, partyLevel: number): num
   return computeDeltaCost(adjustedLevel(creature) - partyLevel);
 }
 
+// isDeltaOutOfBounds is true when a creature's effective level is more than MAX_DELTA
+// levels from the party. GM Core's Creature XP table only defines costs in that range
+// ("In all but the most unusual circumstances, you'll select creatures ... that range
+// from 4 levels lower ... to 4 levels higher") — beyond it, the displayed cost is
+// clamped to the table's edge value and doesn't reflect how mismatched the fight
+// actually is (ref. issue #62: a level 1 party vs. a level 25 Tarrasque still read as
+// merely "Extreme"). We surface this as a UI warning rather than inventing an
+// unofficial extrapolated cost formula.
+export function isDeltaOutOfBounds(creature: Creature, partyLevel: number): boolean {
+  const delta = adjustedLevel(creature) - partyLevel;
+  return delta < -MAX_DELTA || delta > MAX_DELTA;
+}
+
 /**
  * Compute creature cost based on level delta from party level
  * ref. https://2e.aonprd.com/Rules.aspx?ID=2718
@@ -240,6 +253,8 @@ export function computeCreatureCost(creature: Creature, partyLevel: number): num
  */
 
 type Delta = -4 | -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4;
+
+const MAX_DELTA = 4;
 
 const ruleBookCosts: Record<Delta, number> = {
   [-4]: 10,
@@ -254,8 +269,8 @@ const ruleBookCosts: Record<Delta, number> = {
 };
 
 function computeDeltaCost(delta: number): number {
-  if (delta <= -4) return ruleBookCosts[-4];
-  if (delta >= 4) return ruleBookCosts[4];
+  if (delta <= -MAX_DELTA) return ruleBookCosts[-4];
+  if (delta >= MAX_DELTA) return ruleBookCosts[4];
 
   return ruleBookCosts[delta as Delta];
 }

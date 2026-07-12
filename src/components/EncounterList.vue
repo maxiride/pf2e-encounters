@@ -71,6 +71,12 @@
           <q-item-label caption>
             Level {{ adjustedLevel(creature) }} · {{ costOf(creature) }} XP
             <template v-if="creature.count > 1"> each · {{ costOf(creature) * creature.count }} XP total</template>
+            <q-icon v-if="outOfBounds(creature)" name="warning" color="warning" size="16px" class="q-ml-xs">
+              <q-tooltip
+                >More than 4 levels from the party — cost is capped at the table's edge value and doesn't reflect the
+                true difficulty of this fight.</q-tooltip
+              >
+            </q-icon>
           </q-item-label>
           <div class="row items-center q-gutter-xs q-mt-xs">
             <q-btn-toggle
@@ -133,7 +139,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
-import { adjustedLevel, computeCreatureCost, useEncounterStore } from 'stores/encounter-store';
+import { adjustedLevel, computeCreatureCost, isDeltaOutOfBounds, useEncounterStore } from 'stores/encounter-store';
 import type { Creature } from 'stores/encounter-store';
 import { THREAT_COLORS } from 'components/threat-colors';
 
@@ -142,6 +148,10 @@ const { encounterCreatures, partyLevel, partySize, xpCost, threat } = storeToRef
 
 function costOf(creature: Creature): number {
   return computeCreatureCost(creature, partyLevel.value);
+}
+
+function outOfBounds(creature: Creature): boolean {
+  return isDeltaOutOfBounds(creature, partyLevel.value);
 }
 
 function setKind(index: number, kind: Creature['kind']) {
