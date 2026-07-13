@@ -14,7 +14,7 @@
           />
         </a>
         <q-btn flat no-caps dense label="License" class="q-mr-sm" @click="showLicense = true" />
-        <MainMenu class="q-mr-xl" />
+        <MainMenu class="q-mr-xl" @whats-new="showWhatsNew = true" />
         <OctocatCorner />
       </q-toolbar>
     </q-header>
@@ -24,16 +24,29 @@
     </q-page-container>
 
     <LicenseDialog v-model="showLicense" />
+    <WhatsNewDialog v-model="showWhatsNew" />
   </q-layout>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import OctocatCorner from 'components/OctocatCorner.vue';
 import LicenseDialog from 'components/LicenseDialog.vue';
+import WhatsNewDialog from 'components/WhatsNewDialog.vue';
 import MainMenu from 'components/MainMenu.vue';
 
 const showLicense = ref(false);
+const showWhatsNew = ref(false);
+
+// Bump the suffix on the next major release to announce it again.
+const WHATS_NEW_SEEN_KEY = 'pf2e-encounters:seen-release:v2';
+
+onMounted(() => {
+  if (!localStorage.getItem(WHATS_NEW_SEEN_KEY)) {
+    localStorage.setItem(WHATS_NEW_SEEN_KEY, '1');
+    showWhatsNew.value = true;
+  }
+});
 </script>
 
 <style scoped>
