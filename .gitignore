@@ -32,5 +32,9 @@ yarn-error.log*
 # local .env files
 .env.local*
 
+# Playwright output
+/test-results
+/playwright-report
+
 # local scratch
 pantry.txt
