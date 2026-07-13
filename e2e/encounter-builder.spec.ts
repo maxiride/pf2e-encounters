@@ -25,10 +25,10 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('loads the creature database', async ({ page }) => {
-  const rows = page.locator('tbody tr');
-  await expect(rows).toHaveCount(15); // default page size
+  // virtual-scroll renders a viewport-sized slice, not the full list
+  await expect(page.locator('tbody tr').first()).toBeVisible();
   // total in the thousands -> both monsters and NPCs made it in
-  await expect(page.getByText(/1-15 of \d{4}/)).toBeVisible();
+  await expect(page.getByText(/\d{4} creatures/)).toBeVisible();
 });
 
 test('filters by name', async ({ page }) => {

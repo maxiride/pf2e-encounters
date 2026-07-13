@@ -52,6 +52,7 @@
           />
           <q-btn v-if="filtersActive" flat dense no-caps color="negative" icon="filter_alt_off" label="Reset" @click="resetFilters" />
         </div>
+        <div class="col-auto text-caption text-grey-7">{{ filteredCreatures.length }} creatures</div>
       </div>
 
       <q-slide-transition>
@@ -112,11 +113,13 @@
     <q-table
       flat
       dense
+      virtual-scroll
+      style="height: 65vh"
       :columns="columns"
       :rows="filteredCreatures"
       row-key="url"
-      :pagination="{ sortBy: 'name', descending: false, rowsPerPage: 15 }"
-      :rows-per-page-options="[15, 30, 50]"
+      v-model:pagination="pagination"
+      hide-bottom
       no-data-label="No creature matches the selected filters."
       @row-dblclick="(_, row) => add(row)"
     >
@@ -148,7 +151,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, markRaw, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import type { QTableColumn } from 'quasar';
 import { useCreaturesStore } from 'stores/creatures-store';
@@ -206,7 +209,7 @@ function resetFilters() {
 
 const filteredCreatures = computed(() => {
   const q = (search.value ?? '').toLowerCase();
-  return creatures.value.filter((c) => {
+  const result = creatures.value.filter((c) => {
     if (q && !c.name.toLowerCase().includes(q)) return false;
     if (typeFilter.value === 'monsters' && c.npc) return false;
     if (typeFilter.value === 'npcs' && !c.npc) return false;
@@ -219,9 +222,19 @@ const filteredCreatures = computed(() => {
     if (sourcesFilter.value.length && !c.sources.some((s) => sourcesFilter.value.includes(s))) return false;
     return true;
   });
+  // Quasar's virtual-scroll size calc breaks under a deeply-reactive items array
+  // (see https://quasar.dev/vue-components/virtual-scroll — "do not wrap the
+  // array ... with ref()/computed()/reactive()"). markRaw keeps the *array
+  // itself* out of Vue's reactivity proxy while this computed still re-runs
+  // and re-renders normally whenever a filter changes.
+  return markRaw(result);
 });
 
 // --- table ---
+// stable ref (not an inline literal) so virtual-scroll's internal state isn't
+// reset by every unrelated re-render
+const pagination = ref({ sortBy: 'name', descending: false, rowsPerPage: 0 });
+
 const columns: QTableColumn[] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
   { name: 'level', label: 'Level', align: 'center', field: 'level', sortable: true },
