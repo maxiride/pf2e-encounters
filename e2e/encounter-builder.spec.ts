@@ -25,7 +25,6 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('loads the creature database', async ({ page }) => {
-  // virtual-scroll renders a viewport-sized slice, not the full list
   await expect(page.locator('tbody tr').first()).toBeVisible();
   // total in the thousands -> both monsters and NPCs made it in
   await expect(page.getByText(/\d{4} creatures/)).toBeVisible();
@@ -42,8 +41,8 @@ test('filters by name', async ({ page }) => {
 
 test('filters by creature type', async ({ page }) => {
   await page.getByRole('button', { name: 'NPCs' }).click();
-  await expect(page.locator('tbody .q-badge').filter({ hasText: 'NPC' }).first()).toBeVisible();
-  await expect(page.locator('tbody .q-badge').filter({ hasText: 'Monster' })).toHaveCount(0);
+  await expect(page.locator('tbody .badge-outline').filter({ hasText: 'NPC' }).first()).toBeVisible();
+  await expect(page.locator('tbody .badge-outline').filter({ hasText: 'Monster' })).toHaveCount(0);
 });
 
 test('adds a creature and prices it per the rulebook table', async ({ page }) => {

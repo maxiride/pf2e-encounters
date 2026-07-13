@@ -113,7 +113,6 @@
     <q-table
       flat
       dense
-      virtual-scroll
       style="height: 65vh"
       :columns="columns"
       :rows="filteredCreatures"
@@ -131,19 +130,21 @@
       </template>
       <template v-slot:body-cell-rarity="props">
         <q-td :props="props">
-          <q-badge outline :color="rarityColor(props.row.rarity)" :label="props.row.rarity" />
+          <span class="badge-outline" :class="`text-${rarityColor(props.row.rarity)}`">{{ props.row.rarity }}</span>
         </q-td>
       </template>
       <template v-slot:body-cell-type="props">
         <q-td :props="props">
-          <q-badge outline :color="props.row.npc ? 'teal' : 'brown'" :label="props.row.npc ? 'NPC' : 'Monster'" />
+          <span class="badge-outline" :class="props.row.npc ? 'text-teal' : 'text-brown'">{{
+            props.row.npc ? 'NPC' : 'Monster'
+          }}</span>
         </q-td>
       </template>
       <template v-slot:body-cell-add="props">
         <q-td :props="props">
-          <q-btn icon="add" size="sm" color="primary" round flat dense @click="add(props.row)">
-            <q-tooltip>Add to encounter</q-tooltip>
-          </q-btn>
+          <button type="button" class="row-add-btn" title="Add to encounter" @click="add(props.row)">
+            <i class="material-icons" aria-hidden="true">add</i>
+          </button>
         </q-td>
       </template>
     </q-table>
@@ -281,5 +282,41 @@ function add(row: Creature) {
 .type-toggle {
   border: 1px solid $separator-color;
   border-radius: 4px;
+}
+
+// Plain CSS instead of QBadge/QBtn+QTooltip for cells inside the
+// virtual-scrolled table: those components remount per row as the scroll
+// window moves, and at this row count the mount cost is what made scrolling
+// stutter. Same look, zero component overhead.
+.badge-outline {
+  display: inline-block;
+  padding: 1px 7px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  border: 1px solid currentColor;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.row-add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: $primary;
+  cursor: pointer;
+
+  .material-icons {
+    font-size: 18px;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
 }
 </style>
