@@ -113,6 +113,7 @@
     <q-table
       flat
       dense
+      virtual-scroll
       style="height: 65vh"
       :columns="columns"
       :rows="filteredCreatures"
@@ -152,7 +153,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, markRaw, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import type { QTableColumn } from 'quasar';
 import { useCreaturesStore } from 'stores/creatures-store';
@@ -223,12 +224,7 @@ const filteredCreatures = computed(() => {
     if (sourcesFilter.value.length && !c.sources.some((s) => sourcesFilter.value.includes(s))) return false;
     return true;
   });
-  // Quasar's virtual-scroll size calc breaks under a deeply-reactive items array
-  // (see https://quasar.dev/vue-components/virtual-scroll — "do not wrap the
-  // array ... with ref()/computed()/reactive()"). markRaw keeps the *array
-  // itself* out of Vue's reactivity proxy while this computed still re-runs
-  // and re-renders normally whenever a filter changes.
-  return markRaw(result);
+  return result;
 });
 
 // --- table ---
