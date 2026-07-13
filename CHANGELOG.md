@@ -31,7 +31,12 @@ Full rewrite: Vue 3 + Quasar 2 + TypeScript + Pinia, new data pipeline, redesign
 ### Analytics
 - Self-hosted Umami tracking (script gated to production builds only). Reintroduces the `encounter-add-creature` bounce-workaround event from [#66](https://github.com/maxiride/pf2e-encounters/issues/66), plus `encounter-change-kind` and a debounced `encounter-snapshot` (party level/size, XP cost, threat) fired on idle or tab-hide — there's no "encounter finished" signal to hook since creatures get added/removed continuously.
 
+### Testing & docs
+- First automated test suite: Vitest unit tests encode the GM Core tables row by row (XP budgets per party size, creature XP per level delta, weak/elite exceptions) plus store actions and the analytics event contract; Playwright smoke tests cover the browse → filter → add → balance path with regression tests for [#17](https://github.com/maxiride/pf2e-encounters/issues/17) and [#62](https://github.com/maxiride/pf2e-encounters/issues/62). See [ADR 0004](docs/adr/0004-testing-vitest-unit-playwright-e2e.md).
+- Architecture Decision Records in `docs/adr/` (data pipeline, monthly refresh + Pages deploy, analytics, testing) and a rewritten contributor-oriented README.
+
 ### Infrastructure
+- `ci.yml`: lint + unit + E2E on every push to `development`/`v2` and PRs to `main`.
 - `update-creatures.yml`: scheduled GitHub Action (1st of every month) refreshes creature data and commits it to `development` and `main`, then triggers the deploy workflow.
 - `deploy.yml`: builds the Quasar SPA and publishes `dist/spa` (data included) to `gh-pages` on push to `main`.
 - Removed two stale, non-functional workflow files (`yarn`-based, targeting a `src/webui` layout that no longer exists).
