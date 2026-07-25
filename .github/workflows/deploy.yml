@@ -7,7 +7,9 @@ on:
   workflow_call:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
   group: pages-deploy
@@ -16,6 +18,9 @@ concurrency:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
@@ -40,10 +45,15 @@ jobs:
           NODE_OPTIONS: --max_old_space_size=4096
 
       # The SPA build includes public/creatures.json + metadata.json,
-      # so the dedicated Pages branch always carries the data with it.
-      - name: Publish dist/spa to gh-pages branch
-        uses: JamesIves/github-pages-deploy-action@v4
+      # so the Pages artifact always carries the data with it.
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          branch: gh-pages
-          folder: dist/spa
-          clean: true
+          path: dist/spa
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
