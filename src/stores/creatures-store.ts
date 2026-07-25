@@ -14,6 +14,8 @@ export type Creature = {
   url: string;
   npc: boolean;
   alignment: string;
+  // null for creatures that were never revisited by the 2023 Remaster and only have one edition
+  edition: 'legacy' | 'remastered' | null;
 };
 
 export interface Metadata {

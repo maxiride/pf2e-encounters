@@ -25,6 +25,21 @@
             class="type-toggle"
           />
         </div>
+        <div class="col-auto">
+          <q-btn-toggle
+            v-model="editionFilter"
+            no-caps
+            unelevated
+            dense
+            toggle-color="primary"
+            :options="[
+              { label: 'All', value: 'all' },
+              { label: 'Legacy', value: 'legacy' },
+              { label: 'Remastered', value: 'remastered' },
+            ]"
+            class="type-toggle"
+          />
+        </div>
         <div class="col-12 col-md-3 q-px-md">
           <q-range
             v-model="levelRange"
@@ -127,6 +142,9 @@
         <q-td :props="props">
           <a :href="aonUrl(props.row)" target="_blank" rel="noopener" class="creature-link">{{ props.row.name }}</a>
           <span v-if="props.row.family" class="text-grey-6 q-ml-xs">· {{ props.row.family }}</span>
+          <span v-if="props.row.edition" class="badge-outline q-ml-xs" :class="props.row.edition === 'legacy' ? 'text-grey-7' : 'text-purple-8'">{{
+            props.row.edition === 'legacy' ? 'Legacy' : 'Remastered'
+          }}</span>
         </q-td>
       </template>
       <template v-slot:body-cell-rarity="props">
@@ -168,6 +186,7 @@ const encounterStore = useEncounterStore();
 // --- filter state ---
 const search = ref('');
 const typeFilter = ref<'all' | 'monsters' | 'npcs'>('all');
+const editionFilter = ref<'all' | 'legacy' | 'remastered'>('all');
 const levelBounds = computed(() => metadata.value.levels);
 const levelRange = ref({ min: levelBounds.value.min, max: levelBounds.value.max });
 const showAdvanced = ref(false);
@@ -187,6 +206,7 @@ const filtersActive = computed(
   () =>
     search.value !== '' ||
     typeFilter.value !== 'all' ||
+    editionFilter.value !== 'all' ||
     levelRange.value.min !== levelBounds.value.min ||
     levelRange.value.max !== levelBounds.value.max ||
     (rarityFilter.value?.length ?? 0) > 0 ||
@@ -200,6 +220,7 @@ const filtersActive = computed(
 function resetFilters() {
   search.value = '';
   typeFilter.value = 'all';
+  editionFilter.value = 'all';
   levelRange.value = { min: levelBounds.value.min, max: levelBounds.value.max };
   rarityFilter.value = null;
   sizeFilter.value = null;
@@ -215,6 +236,8 @@ const filteredCreatures = computed(() => {
     if (q && !c.name.toLowerCase().includes(q)) return false;
     if (typeFilter.value === 'monsters' && c.npc) return false;
     if (typeFilter.value === 'npcs' && !c.npc) return false;
+    if (editionFilter.value === 'legacy' && c.edition === 'remastered') return false;
+    if (editionFilter.value === 'remastered' && c.edition === 'legacy') return false;
     if (c.level < levelRange.value.min || c.level > levelRange.value.max) return false;
     if (rarityFilter.value?.length && !rarityFilter.value.includes(c.rarity)) return false;
     if (sizeFilter.value?.length && !c.size.some((s) => sizeFilter.value!.includes(s))) return false;

@@ -50,6 +50,13 @@ an afterthought:
   `traits`/`size`/`sources`, `alignment`, `family`).
 - `alignment` only exists on pre-Remaster statblocks (the 2023 Remaster
   removed it from the game), so ~42% of records have an empty value.
+- The index also links each pair of pre/post-Remaster statblocks that cover
+  the same creature (e.g. "Advisor" in both Gamemastery Guide and NPC Core):
+  the old doc carries a `remaster_id`, the new one a `legacy_id`, pointing at
+  each other. We derive a per-record `edition: 'legacy' | 'remastered' | null`
+  from that (`null` for the ~3,700 creatures never revisited) — see
+  `toCreature` in the downloader. No doc has ever been observed with both
+  fields set.
 - We depend on an undocumented endpoint: if AoN restructures its index the
   script breaks — loudly, at data-refresh time, never at user-facing runtime
   (the committed JSON keeps working).

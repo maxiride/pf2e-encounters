@@ -65,6 +65,8 @@ async function fetchAll() {
       'url',
       'npc',
       'alignment',
+      'legacy_id',
+      'remaster_id',
     ],
     sort: [{ 'name.keyword': 'asc' }],
   };
@@ -104,6 +106,10 @@ function toCreature(s) {
     npc: Boolean(s.npc),
     // absent on most post-Remaster (2023) statblocks — alignment was dropped from the game
     alignment: s.alignment ?? '',
+    // AoN links revisited statblocks both ways: a `remaster_id` on the old
+    // statblock points forward, a `legacy_id` on the new one points back. A
+    // creature with neither field was never revisited and has only one edition.
+    edition: s.remaster_id ? 'legacy' : s.legacy_id ? 'remastered' : null,
   };
 }
 
