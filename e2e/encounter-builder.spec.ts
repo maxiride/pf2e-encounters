@@ -11,11 +11,20 @@ function encounterPanel(page: Page): Locator {
   return page.locator('.q-card').filter({ has: page.getByText('Encounter', { exact: true }) });
 }
 
+// q-table's virtual-scroll renders the real data rows inside a dedicated
+// `.q-virtual-scroll__content` tbody, sandwiched between "before"/"after"
+// padding tbodies (each holding a single zero-height spacer <tr> at rest).
+// A bare `tbody tr` locator matches those spacer rows too, and `.first()`
+// always lands on the "before" spacer -- so scope to the content tbody.
+function contentRows(page: Page): Locator {
+  return page.locator('tbody.q-virtual-scroll__content tr');
+}
+
 async function searchAndAddFirst(page: Page, name: string): Promise<void> {
   await page.getByPlaceholder(/search by name/i).fill(name);
   const firstLink = page.locator('tbody .creature-link').first();
   await expect(firstLink).toContainText(new RegExp(name, 'i'));
-  await page.locator('tbody tr').first().getByRole('button').click();
+  await contentRows(page).first().getByRole('button').click();
 }
 
 test.beforeEach(async ({ page }) => {
@@ -25,11 +34,11 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('pf2e-encounters:seen-release:v2', '1'));
   await page.goto('/');
   // creature database loaded and rendered
-  await expect(page.locator('tbody tr')).not.toHaveCount(0, { timeout: 30_000 });
+  await expect(contentRows(page)).not.toHaveCount(0, { timeout: 30_000 });
 });
 
 test('loads the creature database', async ({ page }) => {
-  await expect(page.locator('tbody tr').first()).toBeVisible();
+  await expect(contentRows(page).first()).toBeVisible();
   // total in the thousands -> both monsters and NPCs made it in
   await expect(page.getByText(/\d{4} creatures/)).toBeVisible();
 });
