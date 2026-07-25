@@ -189,7 +189,7 @@ const typeFilter = ref<'all' | 'monsters' | 'npcs'>('all');
 const editionFilter = ref<'all' | 'legacy' | 'remastered'>('all');
 const levelBounds = computed(() => metadata.value.levels);
 const levelRange = ref({ min: levelBounds.value.min, max: levelBounds.value.max });
-const showAdvanced = ref(false);
+const showAdvanced = ref(true);
 const rarityFilter = ref<string[] | null>(null);
 const sizeFilter = ref<string[] | null>(null);
 const alignmentFilter = ref<string[] | null>(null);
