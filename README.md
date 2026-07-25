@@ -106,4 +106,12 @@ Do you like my work? Every cup of coffee brings me back to the desk!
 
 <a href="https://www.buymeacoffee.com/maxiride" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width=200px ></a>
 
-[![Star History Chart](https://api.star-history.com/svg?repos=maxiride/pf2e-encounters&type=Date)](https://star-history.com/#maxiride/pf2e-encounters&Date)
+## Star History
+
+<a href="https://www.star-history.com/?repos=maxiride%2Fpf2e-encounters&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=maxiride/pf2e-encounters&type=date&theme=dark&legend=top-left&sealed_token=pnGgjzgeKLMW_8YOqzi4Hv82alZyCmLhuaWepje1iAB3wJRjHTx0B92p6JF5Q7_ZXk95HejOnVy_-unKYLVVGHsDS9sB3wcrwQ6Ex5TUYE3zhce2qNhJQg" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=maxiride/pf2e-encounters&type=date&legend=top-left&sealed_token=pnGgjzgeKLMW_8YOqzi4Hv82alZyCmLhuaWepje1iAB3wJRjHTx0B92p6JF5Q7_ZXk95HejOnVy_-unKYLVVGHsDS9sB3wcrwQ6Ex5TUYE3zhce2qNhJQg" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=maxiride/pf2e-encounters&type=date&legend=top-left&sealed_token=pnGgjzgeKLMW_8YOqzi4Hv82alZyCmLhuaWepje1iAB3wJRjHTx0B92p6JF5Q7_ZXk95HejOnVy_-unKYLVVGHsDS9sB3wcrwQ6Ex5TUYE3zhce2qNhJQg" />
+ </picture>
+</a>
