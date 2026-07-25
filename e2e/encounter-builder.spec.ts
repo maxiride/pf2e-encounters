@@ -19,6 +19,10 @@ async function searchAndAddFirst(page: Page, name: string): Promise<void> {
 }
 
 test.beforeEach(async ({ page }) => {
+  // skip the one-time "what's new" dialog (src/layouts/MainLayout.vue) -- it's
+  // gated on localStorage and would otherwise pop up and block every test's
+  // first interaction, since each test starts with a fresh browser context
+  await page.addInitScript(() => localStorage.setItem('pf2e-encounters:seen-release:v2', '1'));
   await page.goto('/');
   // creature database loaded and rendered
   await expect(page.locator('tbody tr')).not.toHaveCount(0, { timeout: 30_000 });
