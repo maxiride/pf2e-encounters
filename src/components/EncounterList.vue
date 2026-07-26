@@ -131,7 +131,13 @@
     <q-card-section class="row items-center q-py-sm">
       <q-badge :color="threatColor" :label="threat" class="q-py-xs q-px-sm text-weight-medium" />
       <q-space />
-      <div class="text-subtitle2">{{ xpCost }} XP</div>
+      <div class="text-subtitle2">
+        {{ xpCost }} XP to award
+        <q-tooltip
+          >Always the 4-character table value — the rules keep XP awards fixed regardless of party size (only
+          the threat budget scales).</q-tooltip
+        >
+      </div>
     </q-card-section>
   </q-card>
 </template>
