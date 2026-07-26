@@ -1,0 +1,38 @@
+name: "Rules bug"
+description: Encounter/XP math disagrees with GM Core rules-as-written
+labels: ["bug", "rules"]
+body:
+  - type: input
+    id: party
+    attributes:
+      label: Party size and level
+      placeholder: "4 players, level 5"
+    validations:
+      required: true
+  - type: textarea
+    id: creatures
+    attributes:
+      label: Creatures added to the encounter
+      placeholder: "Name, level, and weak/elite adjustment for each"
+    validations:
+      required: true
+  - type: input
+    id: expected
+    attributes:
+      label: Expected XP / budget result
+    validations:
+      required: true
+  - type: input
+    id: actual
+    attributes:
+      label: Actual XP / budget result shown
+    validations:
+      required: true
+  - type: input
+    id: rule-link
+    attributes:
+      label: AoN rules page
+      description: Link to the specific rule this contradicts
+      placeholder: "https://2e.aonprd.com/Rules.aspx?ID=2715"
+    validations:
+      required: true
