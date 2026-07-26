@@ -1,0 +1,34 @@
+name: "UI / performance regression"
+description: Table freezes, virtual-scroll broken, or all rows rendering at once
+labels: ["bug", "performance"]
+body:
+  - type: checkboxes
+    id: real-browser
+    attributes:
+      label: Confirmation
+      options:
+        - label: I reproduced this in a real browser (not a headless/automation tool)
+          required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and OS
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: symptom
+    attributes:
+      label: Symptom
+      placeholder: "Freeze, dropped frames, all ~4.7k rows in DOM, scroll jank, etc."
+    validations:
+      required: true
+  - type: textarea
+    id: console
+    attributes:
+      label: Console errors/warnings (if any)

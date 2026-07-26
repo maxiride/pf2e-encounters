@@ -1,0 +1,33 @@
+name: "Creature data bug"
+description: Wrong or stale data in creatures.json / metadata.json
+labels: ["bug", "data"]
+body:
+  - type: input
+    id: creature
+    attributes:
+      label: Creature name
+    validations:
+      required: true
+  - type: input
+    id: expected
+    attributes:
+      label: Expected value (per AoN)
+    validations:
+      required: true
+  - type: input
+    id: actual
+    attributes:
+      label: Actual value shown in app
+    validations:
+      required: true
+  - type: input
+    id: last-updated
+    attributes:
+      label: metadata.json "last updated" date
+      description: Shown in the app footer, or check public/metadata.json
+    validations:
+      required: false
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional context
