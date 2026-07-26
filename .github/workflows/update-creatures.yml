@@ -13,10 +13,10 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout development
+      - name: Checkout dev
         uses: actions/checkout@v4
         with:
-          ref: development
+          ref: dev
           fetch-depth: 0
 
       - name: Setup Node
@@ -32,20 +32,20 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Commit data to development
+      - name: Commit data to dev
         run: |
           git add public/creatures.json public/metadata.json
           if git diff --cached --quiet; then
             echo "No data changes this month."
           else
             git commit -m "chore: monthly AoN creatures data refresh"
-            git push origin development
+            git push origin dev
           fi
 
       - name: Commit data to main
         run: |
           git checkout main
-          git checkout development -- public/creatures.json public/metadata.json
+          git checkout dev -- public/creatures.json public/metadata.json
           git add public/creatures.json public/metadata.json
           if git diff --cached --quiet; then
             echo "main already up to date."

@@ -36,7 +36,7 @@ Two thin layers, no component-test middle layer for now:
   monthly. Regression tests reference the issues they guard (#17, #62).
 
 Both run in CI ([`ci.yml`](../../.github/workflows/ci.yml)) on pushes to
-`development`/`v2` and PRs to `main`, with the Playwright HTML report uploaded
+`dev` and PRs to `main`, with the Playwright HTML report uploaded
 as an artifact on failure.
 
 ## Consequences

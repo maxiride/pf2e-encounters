@@ -17,7 +17,7 @@ Two GitHub Actions workflows:
 - [`update-creatures.yml`](../../.github/workflows/update-creatures.yml) —
   scheduled for the **1st of every month** (plus manual dispatch). Runs the
   fetch script with `--force`, commits the refreshed
-  `public/creatures.json` + `public/metadata.json` to `development` **and**
+  `public/creatures.json` + `public/metadata.json` to `dev` **and**
   `main` (both branches stay usable for development), then calls the deploy
   workflow. One AoN request per month, total.
 - [`deploy.yml`](../../.github/workflows/deploy.yml) — builds the Quasar SPA

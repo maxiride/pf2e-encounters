@@ -2,7 +2,7 @@
 
 Build and balance [Pathfinder 2e](https://paizo.com/pathfinder) encounters: browse every creature and
 NPC from the [Archives of Nethys](https://2e.aonprd.com), filter by level, type, traits, rarity, size,
-family, alignment or source, and assemble an encounter with live XP budgeting per the
+family, alignment, source or Legacy/Remastered edition, and assemble an encounter with live XP budgeting per the
 [GM Core encounter rules](https://2e.aonprd.com/Rules.aspx?ID=2716) — including *Weak* and *Elite*
 variant adjustments, which most similar tools overlook.
 
@@ -86,8 +86,7 @@ GM Core tables row by row.
 Issues and PRs welcome.
 
 - Read the [ADRs](docs/adr/) first — they explain the non-obvious choices and their trade-offs.
-- Branch model: work lands on `development`, `v2` mirrors it for the pending v2 release PR, `main` is
-  what production builds from.
+- Branch model: work lands on `dev`, `main` is what production builds from and the target for PRs.
 - CI (lint + unit + E2E) must pass; it runs automatically on pushes and PRs.
 - Rules discussions should cite the relevant [Archives of Nethys rules page](https://2e.aonprd.com/Rules.aspx?ID=2715) —
   the tool intentionally implements rules-as-written with no house rulings
