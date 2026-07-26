@@ -1,7 +1,7 @@
 {
   "name": "quasar-project",
   "version": "0.0.1",
-  "description": "Build and balance Pathfinder 2e encounters",
+  "description": "Build and balance Pathfinder 2e encounters — XP-budget math, done for you.",
   "productName": "PF2e Encounter Builder",
   "author": "Federico D'Eredità <me@federicod.dev>",
   "type": "module",
