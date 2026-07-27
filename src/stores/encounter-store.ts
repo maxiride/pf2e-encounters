@@ -37,7 +37,7 @@ export const useEncounterStore = defineStore('encounter', () => {
   // ref. https://2e.aonprd.com/Rules.aspx?ID=2717
   const xpBudget = computed<XPBudget>(() => ({
     trivial: 40 + 10 * (partySize.value - 4),
-    low: 60 + 20 * (partySize.value - 4),
+    low: 60 + 15 * (partySize.value - 4),
     moderate: 80 + 20 * (partySize.value - 4),
     severe: 120 + 30 * (partySize.value - 4),
     extreme: 160 + 40 * (partySize.value - 4),

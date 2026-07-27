@@ -108,10 +108,12 @@ describe('encounter store', () => {
   describe('xpBudget (GM Core pg. 76, Encounter Budget + Character Adjustment)', () => {
     it.each([
       // partySize, trivial, low, moderate, severe, extreme
-      [3, 30, 40, 60, 90, 120],
+      [1, 10, 15, 20, 30, 40],
+      [2, 20, 30, 40, 60, 80],
+      [3, 30, 45, 60, 90, 120],
       [4, 40, 60, 80, 120, 160],
-      [5, 50, 80, 100, 150, 200],
-      [6, 60, 100, 120, 180, 240],
+      [5, 50, 75, 100, 150, 200],
+      [6, 60, 90, 120, 180, 240],
     ])('party of %i -> budgets %i/%i/%i/%i/%i', (size, trivial, low, moderate, severe, extreme) => {
       const store = useEncounterStore();
       store.setPartySize(size);
@@ -146,6 +148,19 @@ describe('encounter store', () => {
       store.addCreature('X', 14); // 160
       store.addCreature('Y', 6); // +10 -> 170 > 160
       expect(store.threat).toBe('Beyond Extreme');
+    });
+
+    it.each([
+      // solo adventure (party of 1); budgets 10/15/20/30/40 -- see issue #81
+      [10 - 4, 'Trivial'], // 10 XP, boundary
+      [10 - 3, 'Low'], // 15 XP, boundary
+      [10 - 2, 'Moderate'], // 20 XP, boundary
+    ])('solo party: single creature of level %i vs party level 10 -> %s', (level, expected) => {
+      const store = useEncounterStore();
+      store.setPartySize(1);
+      store.setPartyLevel(10);
+      store.addCreature('X', level);
+      expect(store.threat).toBe(expected);
     });
   });
 
