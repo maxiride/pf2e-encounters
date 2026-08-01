@@ -15,6 +15,7 @@
     "test:unit:watch": "vitest",
     "test:e2e": "playwright test",
     "generate:data": "node tools/aon-downloader/fetch-creatures.js",
+    "validate:data": "node tools/aon-downloader/validate-creatures.js",
     "dev": "quasar dev",
     "build": "quasar build",
     "postinstall": "quasar prepare"
