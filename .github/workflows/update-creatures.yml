@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   update:
@@ -24,8 +25,15 @@ jobs:
         with:
           node-version: 22
 
+      - name: Read previous creature count
+        id: previous_count
+        run: echo "count=$(node -e "console.log(require('./public/creatures.json').length)")" >> "$GITHUB_OUTPUT"
+
       - name: Fetch creatures from AoN
         run: node tools/aon-downloader/fetch-creatures.js --force
+
+      - name: Validate creature data
+        run: node tools/aon-downloader/validate-creatures.js --previous-count=${{ steps.previous_count.outputs.count }}
 
       - name: Configure git
         run: |
@@ -42,24 +50,21 @@ jobs:
             git push origin dev
           fi
 
-      - name: Commit data to main
+      - name: Open PR to main
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git checkout main
+          BRANCH="data-refresh/$(date +%Y-%m-%d)"
+          git fetch origin main
+          git checkout -b "$BRANCH" origin/main
           git checkout dev -- public/creatures.json public/metadata.json
           git add public/creatures.json public/metadata.json
           if git diff --cached --quiet; then
             echo "main already up to date."
           else
             git commit -m "chore: monthly AoN creatures data refresh"
-            git push origin main
+            git push origin "$BRANCH"
+            gh pr create --base main --head "$BRANCH" \
+              --title "chore: monthly AoN creatures data refresh" \
+              --body "Automated monthly AoN data refresh. Validated by \`validate:data\` in CI before merge."
           fi
-
-  # Pushes made with GITHUB_TOKEN don't trigger the push-based deploy workflow,
-  # so call it explicitly to rebuild the Pages branch with the fresh data.
-  deploy:
-    needs: update
-    uses: ./.github/workflows/deploy.yml
-    permissions:
-      contents: read
-      pages: write
-      id-token: write

@@ -31,6 +31,9 @@ jobs:
       - name: Unit tests
         run: pnpm run test:unit
 
+      - name: Validate creature data
+        run: pnpm run validate:data
+
       - name: Install Playwright browsers
         run: pnpm exec playwright install chromium --with-deps
 
