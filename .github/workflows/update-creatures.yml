@@ -14,10 +14,20 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+      # Tooling (fetch-creatures.js, validate-creatures.js, this workflow) lives
+      # on main. dev is a data-only checkout, used just as a commit target below —
+      # never run scripts against a dev checkout, it can lag main's tooling.
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
       - name: Checkout dev
         uses: actions/checkout@v4
         with:
           ref: dev
+          path: dev-checkout
           fetch-depth: 0
 
       - name: Setup Node
@@ -27,7 +37,7 @@ jobs:
 
       - name: Read previous creature count
         id: previous_count
-        run: echo "count=$(node -e "console.log(require('./public/creatures.json').length)")" >> "$GITHUB_OUTPUT"
+        run: echo "count=$(node -e "console.log(require('./dev-checkout/public/creatures.json').length)")" >> "$GITHUB_OUTPUT"
 
       - name: Fetch creatures from AoN
         run: node tools/aon-downloader/fetch-creatures.js --force
@@ -39,9 +49,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C dev-checkout config user.name "github-actions[bot]"
+          git -C dev-checkout config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Commit data to dev
         run: |
+          cp public/creatures.json public/metadata.json dev-checkout/public/
+          cd dev-checkout
           git add public/creatures.json public/metadata.json
           if git diff --cached --quiet; then
             echo "No data changes this month."
@@ -55,9 +69,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           BRANCH="data-refresh/$(date +%Y-%m-%d)"
-          git fetch origin main
-          git checkout -b "$BRANCH" origin/main
-          git checkout dev -- public/creatures.json public/metadata.json
+          git checkout -b "$BRANCH"
           git add public/creatures.json public/metadata.json
           if git diff --cached --quiet; then
             echo "main already up to date."
