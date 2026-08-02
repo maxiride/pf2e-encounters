@@ -45,6 +45,9 @@ jobs:
       - name: Validate creature data
         run: node tools/aon-downloader/validate-creatures.js --previous-count=${{ steps.previous_count.outputs.count }}
 
+      - name: Generate data diff summary
+        run: node tools/aon-downloader/summarize-diff.js dev-checkout/public/creatures.json dev-checkout/public/metadata.json > data-diff-summary.md
+
       - name: Configure git
         run: |
           git config user.name "github-actions[bot]"
@@ -76,7 +79,12 @@ jobs:
           else
             git commit -m "chore: monthly AoN creatures data refresh"
             git push origin "$BRANCH"
+            {
+              echo "Automated monthly AoN data refresh. Validated by \`validate:data\` in CI before merge."
+              echo
+              cat data-diff-summary.md
+            } > pr-body.md
             gh pr create --base main --head "$BRANCH" \
               --title "chore: monthly AoN creatures data refresh" \
-              --body "Automated monthly AoN data refresh. Validated by \`validate:data\` in CI before merge."
+              --body-file pr-body.md
           fi
