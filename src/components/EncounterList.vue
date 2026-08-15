@@ -33,7 +33,7 @@
           @update:model-value="(v) => encounterStore.setPartyLevel(Number(v))"
         />
       </div>
-      <div class="col-6">
+      <div class="col-6 row items-center no-wrap">
         <q-input
           :model-value="partySize"
           type="number"
@@ -41,8 +41,33 @@
           outlined
           dense
           :min="1"
+          class="col"
           @update:model-value="(v) => encounterStore.setPartySize(Number(v))"
         />
+        <q-icon v-if="hasDegenerateBudget" name="warning" color="warning" size="16px" class="q-ml-xs">
+          <q-tooltip
+            >At this party size, one or more difficulty bands overlap or invert per the rulebook's math (GM Core
+            Encounter Budget table) — a known rules-as-written gap for small parties, not a bug in this tool. Use GM
+            judgment.
+            <div class="q-mt-xs">
+              <a
+                href="https://2e.aonprd.com/Rules.aspx?ID=2717"
+                target="_blank"
+                rel="noopener"
+                class="text-white"
+                >Rulebook</a
+              >
+              ·
+              <a
+                href="https://github.com/maxiride/pf2e-encounters/issues/81"
+                target="_blank"
+                rel="noopener"
+                class="text-white"
+                >Issue #81</a
+              >
+            </div>
+          </q-tooltip>
+        </q-icon>
       </div>
     </q-card-section>
 
@@ -150,7 +175,8 @@ import type { Creature } from 'stores/encounter-store';
 import { THREAT_COLORS } from 'components/threat-colors';
 
 const encounterStore = useEncounterStore();
-const { encounterCreatures, partyLevel, partySize, xpCost, threat } = storeToRefs(encounterStore);
+const { encounterCreatures, partyLevel, partySize, xpCost, threat, hasDegenerateBudget } =
+  storeToRefs(encounterStore);
 
 function costOf(creature: Creature): number {
   return computeCreatureCost(creature, partyLevel.value);
