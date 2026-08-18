@@ -119,6 +119,20 @@ describe('encounter store', () => {
     });
   });
 
+  describe('hasDegenerateBudget (issue #81)', () => {
+    it.each([
+      [1, true], // low (0) < trivial (10)
+      [2, true], // low (20) == trivial (20), Low unreachable
+      [3, false],
+      [4, false],
+      [5, false],
+    ])('party of %i -> %s', (size, expected) => {
+      const store = useEncounterStore();
+      store.setPartySize(size);
+      expect(store.hasDegenerateBudget).toBe(expected);
+    });
+  });
+
   describe('threat', () => {
     it('is None for an empty encounter', () => {
       const store = useEncounterStore();

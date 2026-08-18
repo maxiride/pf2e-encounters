@@ -59,6 +59,17 @@ export const useEncounterStore = defineStore('encounter', () => {
     return xpCost.value / xpBudget.value.extreme;
   });
 
+  // hasDegenerateBudget is true when the rulebook's own budget formula produces
+  // a non-increasing threat ladder for the current party size — e.g. at a party
+  // of 1, "Low" (0 XP) computes below "Trivial" (10 XP), so "Low" can never be
+  // reached. Confirmed against the rulebook (issue #81): this is a rules-as-written
+  // gap in small-party math, not a bug in this tool's arithmetic, so we only warn
+  // rather than reinterpret the table.
+  const hasDegenerateBudget = computed<boolean>(() => {
+    const { trivial, low, moderate, severe, extreme } = xpBudget.value;
+    return low <= trivial || moderate <= low || severe <= moderate || extreme <= severe;
+  });
+
   // threat is the label of the smallest budget the current cost fits in
   const threat = computed<string>(() => {
     if (xpCost.value === 0) return 'None';
@@ -194,6 +205,7 @@ export const useEncounterStore = defineStore('encounter', () => {
     xpCost,
     xpPool,
     threat,
+    hasDegenerateBudget,
     addCreature,
     incrementCreatureCount,
     decrementCreatureCount,
