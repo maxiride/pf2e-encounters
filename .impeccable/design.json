@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-18T08:19:23Z",
+  "title": "Design System: PF2e Encounter Builder",
+  "extensions": {
+    "colorMeta": {
+      "oxblood": {
+        "role": "primary",
+        "displayName": "Oxblood",
+        "canonical": "#581911",
+        "tonalRamp": [
+          "#1a0705",
+          "#2e0c09",
+          "#42110d",
+          "#581911",
+          "#7a2318",
+          "#a53222",
+          "#d1502f",
+          "#f0805a"
+        ]
+      },
+      "aged-gold": {
+        "role": "secondary",
+        "displayName": "Aged Gold",
+        "canonical": "#e9c58e",
+        "tonalRamp": [
+          "#4a3a1e",
+          "#6b542a",
+          "#8f7038",
+          "#b28f52",
+          "#cba869",
+          "#e9c58e",
+          "#f2d9b1",
+          "#f9ecd8"
+        ]
+      },
+      "negative": {
+        "role": "semantic-error",
+        "displayName": "Negative Red",
+        "canonical": "#C10015",
+        "tonalRamp": [
+          "#3d0006",
+          "#5c000a",
+          "#7f000e",
+          "#a30012",
+          "#c10015",
+          "#e0324a",
+          "#ee7a89",
+          "#f9c8ce"
+        ]
+      },
+      "warning": {
+        "role": "semantic-warning",
+        "displayName": "Warning Amber",
+        "canonical": "#F2C037",
+        "tonalRamp": [
+          "#4d3d05",
+          "#725c08",
+          "#98800c",
+          "#bfa312",
+          "#e0be25",
+          "#f2c037",
+          "#f6d370",
+          "#fbe9b6"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "App title in the header toolbar only. Never reused elsewhere."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Every other piece of text in the app: tables, forms, dialogs, labels."
+      }
+    },
+    "breakpoints": [
+      { "name": "md", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Toggle Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Weak/Base/Elite selector on an encounter entry; active segment fills oxblood.",
+      "html": "<div class=\"ds-btn-toggle\"><button class=\"ds-btn-toggle-opt\">Weak</button><button class=\"ds-btn-toggle-opt ds-active\">Base</button><button class=\"ds-btn-toggle-opt\">Elite</button></div>",
+      "css": ".ds-btn-toggle { display: inline-flex; border: 1px solid rgba(0,0,0,0.12); border-radius: 4px; overflow: hidden; } .ds-btn-toggle-opt { font-size: 0.8125rem; text-transform: none; padding: 4px 10px; background: transparent; border: none; cursor: pointer; color: #1d1d1d; } .ds-btn-toggle-opt:hover { background: rgba(0,0,0,0.04); } .ds-btn-toggle-opt.ds-active { background: #581911; color: #fff; }"
+    },
+    {
+      "name": "Negative Icon Button",
+      "kind": "button",
+      "refersTo": "button-negative",
+      "description": "Round, flat icon-only button for destructive actions (remove, clear, close).",
+      "html": "<button class=\"ds-btn-negative\" aria-label=\"Remove\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/></svg></button>",
+      "css": ".ds-btn-negative { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; border: none; background: transparent; color: #C10015; cursor: pointer; transition: background 0.2s; } .ds-btn-negative:hover { background: rgba(193,0,21,0.08); } .ds-btn-negative:focus-visible { outline: 2px solid #C10015; outline-offset: 2px; }"
+    },
+    {
+      "name": "Outline Badge",
+      "kind": "chip",
+      "refersTo": "badge-outline",
+      "description": "Signature pill tag for rarity/edition/type, used inline in the virtual-scrolled creatures table. Plain span, not a component, to avoid remount cost.",
+      "html": "<span class=\"ds-badge-outline\" style=\"color:#c76a00\">Uncommon</span>",
+      "css": ".ds-badge-outline { display: inline-block; padding: 1px 7px; font-size: 0.75rem; line-height: 1.4; border: 1px solid currentColor; border-radius: 10px; white-space: nowrap; }"
+    },
+    {
+      "name": "Bordered Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Flat, square-cornered, 1px-bordered container. No shadow. Used for the creatures table and the encounter panel.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-section\">Encounter</div></div>",
+      "css": ".ds-card { background: #fff; border: 1px solid rgba(0,0,0,0.12); border-radius: 0; } .ds-card-section { padding: 12px 16px; font-weight: 500; }"
+    },
+    {
+      "name": "Outlined Dense Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Compact outlined text/number field used throughout filters and party settings.",
+      "html": "<label class=\"ds-input\"><span class=\"ds-input-label\">Party level</span><input type=\"number\" class=\"ds-input-field\" /></label>",
+      "css": ".ds-input { display: block; position: relative; } .ds-input-label { position: absolute; top: -8px; left: 8px; background: #fff; padding: 0 4px; font-size: 0.75rem; color: rgba(0,0,0,0.6); } .ds-input-field { width: 100%; height: 36px; padding: 0 12px; border: 1px solid rgba(0,0,0,0.24); border-radius: 4px; font-size: 0.875rem; box-sizing: border-box; } .ds-input-field:focus-visible { outline: none; border-color: #581911; border-width: 2px; }"
+    },
+    {
+      "name": "Threat Bar",
+      "kind": "custom",
+      "refersTo": "threat-bar",
+      "description": "Horizontal XP-budget gauge: rounded track, animated colored fill, threshold ticks at each difficulty band.",
+      "html": "<div class=\"ds-threat-bar\"><div class=\"ds-threat-track\"><div class=\"ds-threat-fill\" style=\"width:42%;background:#9e9d24\"></div><div class=\"ds-threat-tick\" style=\"left:60%\"></div></div></div>",
+      "css": ".ds-threat-track { position: relative; height: 12px; border-radius: 6px; background: rgba(0,0,0,0.08); overflow: hidden; } .ds-threat-fill { height: 100%; border-radius: 6px; transition: width 0.3s ease, background-color 0.3s ease; } .ds-threat-tick { position: absolute; top: 0; width: 2px; height: 100%; background: rgba(0,0,0,0.35); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The GM's Ledger",
+    "overview": "A dense working tool wearing a thin tabletop skin. The chrome — header bar, display title, a handful of accent touches — carries the fantasy framing: oxblood header, an aged-gold title set in a custom display face. Everything below that line is a plain, flat, no-frills Quasar data surface: bordered cards, outlined dense inputs, no-caps buttons, zero drop shadows. The system does not try to look like a fantasy book throughout — it looks like a GM's plain ledger with a leather cover.\n\nThe interface exists to be scanned fast during prep, not admired. Density and legibility win over decoration everywhere except the header title and the semantic color language (threat levels, rarity, edition).",
+    "keyCharacteristics": [
+      "Two-color brand accent (oxblood + aged gold) confined almost entirely to the header; the working surface is neutral grey/white.",
+      "Flat throughout — no shadows anywhere in the codebase; depth comes from borders and separators.",
+      "Dense, outlined, no-caps form controls (Quasar dense/outlined/unelevated defaults).",
+      "A recurring pill-shaped outline badge (border-radius: 10px, border: 1px solid currentColor) is the system's one signature component, reused for rarity, edition, and creature-type tags."
+    ],
+    "rules": [
+      {
+        "name": "The Header-Only Accent Rule",
+        "body": "Oxblood and gold exist to mark the app's identity in the header; they do not recur as decoration in cards, tables, or dialogs.",
+        "section": "colors"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Surfaces never lift. A card's edge is a 1px border, not a shadow; introducing elevation would be a new decision, not a restoration of an existing pattern.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep the oxblood/gold accent confined to the header; the working surface stays neutral grey/white so the data is what draws the eye.",
+      "Do reuse badge-outline (10px pill, 1px solid currentColor, transparent fill) for any new inline tag/status label, especially inside virtual-scrolled lists where component mount cost matters.",
+      "Do keep new controls dense/outlined/no-caps to match the existing density.",
+      "Do use the existing Quasar-palette threat ramp (threat-colors.ts) for any new difficulty/severity indicator rather than inventing new colors for the same concept."
+    ],
+    "donts": [
+      "Don't add box-shadow or Quasar elevation — nothing in this system lifts off the page.",
+      "Don't introduce a second display/fantasy font; becker-regular is reserved for the header title only.",
+      "Don't style badges as filled q-badge components inside the creatures table — the plain-CSS badge-outline span exists specifically to avoid virtual-scroll remount cost."
+    ]
+  }
+}
