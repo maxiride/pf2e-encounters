@@ -33,7 +33,7 @@
           @update:model-value="(v) => encounterStore.setPartyLevel(Number(v))"
         />
       </div>
-      <div class="col-6 row items-center no-wrap">
+      <div class="col-6">
         <q-input
           :model-value="partySize"
           type="number"
@@ -41,33 +41,27 @@
           outlined
           dense
           :min="1"
-          class="col"
           @update:model-value="(v) => encounterStore.setPartySize(Number(v))"
         />
-        <q-icon v-if="hasDegenerateBudget" name="warning" color="warning" size="16px" class="q-ml-xs">
-          <q-tooltip
-            >At this party size, one or more difficulty bands overlap or invert per the rulebook's math (GM Core
-            Encounter Budget table) — a known rules-as-written gap for small parties, not a bug in this tool. Use GM
-            judgment.
-            <div class="q-mt-xs">
-              <a
-                href="https://2e.aonprd.com/Rules.aspx?ID=2717"
-                target="_blank"
-                rel="noopener"
-                class="text-white"
-                >Rulebook</a
-              >
-              ·
-              <a
-                href="https://github.com/maxiride/pf2e-encounters/issues/81"
-                target="_blank"
-                rel="noopener"
-                class="text-white"
-                >Issue #81</a
-              >
+      </div>
+      <div class="col-12">
+        <Transition name="degenerate-warn">
+          <div v-if="hasDegenerateBudget" class="degenerate-banner" role="status">
+            <q-icon name="warning" size="18px" />
+            <div class="text-body2">
+              At this party size, one or more difficulty bands overlap or invert per the rulebook's math (GM Core
+              Encounter Budget table) — a known rules-as-written gap for small parties, not a bug in this tool. Use GM
+              judgment.
+              <div class="q-mt-xs">
+                <a href="https://2e.aonprd.com/Rules.aspx?ID=2717" target="_blank" rel="noopener">Rulebook</a>
+                ·
+                <a href="https://github.com/maxiride/pf2e-encounters/issues/81" target="_blank" rel="noopener"
+                  >Issue #81</a
+                >
+              </div>
             </div>
-          </q-tooltip>
-        </q-icon>
+          </div>
+        </Transition>
       </div>
     </q-card-section>
 
@@ -208,5 +202,50 @@ const threatColor = computed(() => THREAT_COLORS[threat.value] ?? 'grey-6');
 .kind-toggle {
   border: 1px solid $separator-color;
   border-radius: 4px;
+}
+
+.degenerate-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  background: rgba($warning, 0.14);
+  border: 1px solid rgba($warning, 0.5);
+  color: darken($warning, 30%);
+
+  .q-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.degenerate-warn-enter-active,
+.degenerate-warn-leave-active {
+  transition:
+    opacity 220ms cubic-bezier(0, 0, 0.2, 1),
+    transform 220ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.degenerate-warn-enter-from,
+.degenerate-warn-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .degenerate-warn-enter-active,
+  .degenerate-warn-leave-active {
+    transition: none;
+  }
 }
 </style>
