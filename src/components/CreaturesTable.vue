@@ -129,7 +129,7 @@
       flat
       dense
       virtual-scroll
-      style="height: 65vh"
+      class="creatures-table"
       :columns="columns"
       :rows="filteredCreatures"
       row-key="url"
@@ -289,6 +289,18 @@ function add(row: Creature) {
 </script>
 
 <style lang="scss" scoped>
+.creatures-table {
+  height: 65vh;
+}
+
+// Leaves clearance below the table on narrow viewports so the fixed-position
+// ko-fi donation widget (index.html) doesn't sit on top of the last rows.
+@media (max-width: 599px) {
+  .creatures-table {
+    height: calc(65vh - 80px);
+  }
+}
+
 .creature-link {
   color: $primary;
   text-decoration: none;

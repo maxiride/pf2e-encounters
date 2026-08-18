@@ -32,5 +32,120 @@
   </head>
   <body>
     <!-- quasar:entry-point -->
+    <style>
+      #kofi-widget-dismiss {
+        position: fixed;
+        z-index: 100000000;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: #581911;
+        color: #fff;
+        font-size: 13px;
+        line-height: 20px;
+        text-align: center;
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      (function () {
+        var DISMISS_KEY = 'pf2e-encounters:kofi-widget-dismissed-until';
+        var dismissedUntil = Number(localStorage.getItem(DISMISS_KEY));
+        if (dismissedUntil && Date.now() < dismissedUntil) return;
+
+        var script = document.createElement('script');
+        script.src = 'https://storage.ko-fi.com/cdn/scripts/overlay-widget.js';
+        script.onload = function () {
+          kofiWidgetOverlay.draw('federicod', {
+            'type': 'floating-chat',
+            'floating-chat.donateButton.text': 'Tip Me',
+            'floating-chat.donateButton.background-color': '#581911',
+            'floating-chat.donateButton.text-color': '#fff'
+          });
+
+          var SCALE = 0.85;
+
+          function positionDismiss() {
+            var dismiss = document.getElementById('kofi-widget-dismiss');
+            if (!dismiss) return;
+            var wrap = document.querySelector('.floatingchat-container-wrap');
+            var wrapMobi = document.querySelector('.floatingchat-container-wrap-mobi');
+            var visible = wrap && getComputedStyle(wrap).display !== 'none' ? wrap : wrapMobi;
+            if (!visible) return;
+            var rect = visible.getBoundingClientRect();
+            dismiss.style.left = rect.right - 10 + 'px';
+            dismiss.style.top = rect.top - 10 + 'px';
+          }
+
+          // ko-fi's stylesheet hardcodes .floatingchat-container-wrap(-mobi) to the
+          // bottom-left, and that isn't configurable through draw() (the widget's own
+          // position config key is dead code in the served script). Overriding it via
+          // CSS left/right is unreliable — the -mobi wrapper's iframe child is
+          // positioned out-of-flow, so the wrapper's own shrink-to-fit width resolves
+          // to 0px and any right-anchoring based on that collapsed width pushes the
+          // widget off-screen. Instead, measure each wrapper's actual rendered width
+          // once ko-fi has drawn it, and set an explicit `left` in pixels — the same
+          // mechanism ko-fi's own default already positions correctly, just computed
+          // for the right edge instead of the hardcoded left one. Scaling is applied
+          // after that measurement (anchored bottom-right, so the 16px margin holds),
+          // and the transform is reset before each re-measure so resize doesn't
+          // compound the shrink on top of an already-scaled width.
+          function pinToRight(el) {
+            var reposition = function () {
+              if (getComputedStyle(el).display === 'none') return;
+              el.style.setProperty('transform', 'none', 'important');
+              var w = el.getBoundingClientRect().width;
+              if (!w) return;
+              el.style.setProperty('right', 'auto');
+              el.style.setProperty('left', window.innerWidth - w - 16 + 'px');
+              el.style.setProperty('transform', 'scale(' + SCALE + ')', 'important');
+              el.style.setProperty('transform-origin', 'bottom right', 'important');
+              positionDismiss();
+            };
+            reposition();
+            setTimeout(reposition, 300);
+            window.addEventListener('resize', reposition);
+          }
+
+          // The widget's markup is built async by the script above; wait for it,
+          // then reposition it, label the iframe for screen readers, and add our own
+          // dismiss control (ko-fi's close button only lives on the expanded popup).
+          var observer = new MutationObserver(function () {
+            var wrap = document.querySelector('.floatingchat-container-wrap');
+            var wrapMobi = document.querySelector('.floatingchat-container-wrap-mobi');
+            if (!wrap || !wrapMobi) return;
+
+            pinToRight(wrap);
+            pinToRight(wrapMobi);
+
+            document.querySelectorAll('.floatingchat-container, .floatingchat-container-mobi').forEach(function (iframe) {
+              if (!iframe.title) iframe.title = 'Ko-fi donation widget';
+            });
+
+            var dismiss = document.createElement('button');
+            dismiss.id = 'kofi-widget-dismiss';
+            dismiss.type = 'button';
+            dismiss.title = 'Hide donation widget';
+            dismiss.setAttribute('aria-label', 'Hide donation widget');
+            dismiss.textContent = '×';
+            dismiss.onclick = function () {
+              localStorage.setItem(DISMISS_KEY, String(Date.now() + 7 * 24 * 60 * 60 * 1000));
+              document
+                .querySelectorAll('.floatingchat-container-wrap, .floatingchat-container-wrap-mobi, #kofi-widget-dismiss')
+                .forEach(function (el) {
+                  el.style.display = 'none';
+                });
+            };
+            document.body.appendChild(dismiss);
+            positionDismiss();
+            observer.disconnect();
+          });
+          observer.observe(document.body, { childList: true, subtree: true });
+        };
+        document.body.appendChild(script);
+      })();
+    </script>
   </body>
 </html>

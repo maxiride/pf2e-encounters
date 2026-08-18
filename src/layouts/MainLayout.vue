@@ -7,12 +7,18 @@
         </q-avatar>
         <q-toolbar-title class="app-title">Pathfinder 2e Encounter Builder</q-toolbar-title>
         <q-space />
-        <a href="https://www.buymeacoffee.com/maxiride" target="_blank" rel="noopener" class="q-mr-md donate-link">
-          <img
-            src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=maxiride&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
-            alt="Buy me a coffee"
-          />
-        </a>
+        <q-btn
+          flat
+          no-caps
+          dense
+          icon="feedback"
+          label="Feedback"
+          class="q-mr-sm"
+          tag="a"
+          href="https://pf2e-encounters.fider.io/"
+          target="_blank"
+          rel="noopener"
+        />
         <q-btn flat no-caps dense label="License" class="q-mr-sm" @click="showLicense = true" />
         <MainMenu class="q-mr-xl" @whats-new="showWhatsNew = true" />
         <OctocatCorner />
@@ -55,11 +61,5 @@ onMounted(() => {
   font-size: x-large;
   color: #e9c58e;
   flex: 0 1 auto;
-}
-
-.donate-link img {
-  display: block;
-  height: 36px;
-  width: auto;
 }
 </style>
