@@ -56,11 +56,16 @@ function show(snapshot: { threat: string; creatureCount: number }): void {
 const stopWatch = watch(
   () => encounterStore.lastSnapshot,
   (snapshot) => {
-    // Tab is backgrounded or closing — nobody would see it, so leave the
-    // watcher live for the next real idle snapshot instead of consuming it.
     if (!snapshot || document.hidden || !eligibleToShow()) return;
-    showTimer = setTimeout(() => show(snapshot), SHOW_DELAY_MS);
-    stopWatch();
+    showTimer = setTimeout(() => {
+      // Recheck rather than trusting the state from when this was scheduled —
+      // the tab may have been backgrounded during the delay. Only consume the
+      // one-shot watcher once we're actually about to display it, so a skip
+      // here leaves it live for the next real idle snapshot.
+      if (document.hidden || !eligibleToShow()) return;
+      stopWatch();
+      show(snapshot);
+    }, SHOW_DELAY_MS);
   },
 );
 

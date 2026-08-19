@@ -103,7 +103,7 @@ by Paizo or the Archives of Nethys.
 
 Do you like my work? Every cup of coffee brings me back to the desk!
 
-<a href="https://ko-fi.com/F1F7343J9" target="_blank"><img src="https://storage.ko-fi.com/cdn/kofi5.png?v=3" alt="Support me on Ko-fi" width=200px ></a>
+<a href="https://www.buymeacoffee.com/maxiride" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width=200px ></a>
 
 ## Star History
 
