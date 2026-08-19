@@ -67,7 +67,9 @@
           />
           <q-btn v-if="filtersActive" flat dense no-caps color="negative" icon="filter_alt_off" label="Reset" @click="resetFilters" />
         </div>
-        <div class="col-auto text-caption text-grey-7">{{ filteredCreatures.length }} creatures</div>
+        <div class="col-auto text-caption text-grey-7">
+          {{ filteredCreatures.length }} {{ filteredCreatures.length === 1 ? 'creature' : 'creatures' }}
+        </div>
       </div>
 
       <q-slide-transition>
@@ -129,7 +131,7 @@
       flat
       dense
       virtual-scroll
-      style="height: 65vh"
+      class="creatures-table"
       :columns="columns"
       :rows="filteredCreatures"
       row-key="url"
@@ -289,6 +291,18 @@ function add(row: Creature) {
 </script>
 
 <style lang="scss" scoped>
+.creatures-table {
+  height: 65vh;
+}
+
+// Leaves clearance below the table on narrow viewports so the fixed-position
+// ko-fi donation widget (index.html) doesn't sit on top of the last rows.
+@media (max-width: 599px) {
+  .creatures-table {
+    height: calc(65vh - 80px);
+  }
+}
+
 .creature-link {
   color: $primary;
   text-decoration: none;
