@@ -156,19 +156,25 @@ export const useEncounterStore = defineStore('encounter', () => {
   // added/removed continuously), so we snapshot the encounter shape once the
   // user goes idle, plus an immediate flush if they hide/close the tab first.
   //
+  // lastSnapshot mirrors that same idle/hide signal for non-analytics consumers
+  // (e.g. the donation nudge) that want to react to "the GM paused after building
+  // something", not to raw creature-list mutations.
   let snapshotTimer: ReturnType<typeof setTimeout> | undefined;
+  const lastSnapshot: Ref<{ threat: string; creatureCount: number } | null> = ref(null);
 
   function sendSnapshot(): void {
     clearTimeout(snapshotTimer);
     if (encounterCreatures.value.length === 0) return;
+    const creatureCount = encounterCreatures.value.reduce((sum, c) => sum + c.count, 0);
     trackEvent('encounter-snapshot', {
       party_level: partyLevel.value,
       party_size: partySize.value,
       unique_creatures: encounterCreatures.value.length,
-      creature_count: encounterCreatures.value.reduce((sum, c) => sum + c.count, 0),
+      creature_count: creatureCount,
       xp_cost: xpCost.value,
       threat: threat.value,
     });
+    lastSnapshot.value = { threat: threat.value, creatureCount };
   }
 
   watch(
@@ -194,6 +200,7 @@ export const useEncounterStore = defineStore('encounter', () => {
     xpCost,
     xpPool,
     threat,
+    lastSnapshot,
     addCreature,
     incrementCreatureCount,
     decrementCreatureCount,

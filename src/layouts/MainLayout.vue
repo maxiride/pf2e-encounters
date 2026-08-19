@@ -31,6 +31,7 @@
 
     <LicenseDialog v-model="showLicense" />
     <WhatsNewDialog v-model="showWhatsNew" />
+    <DonationNudge />
   </q-layout>
 </template>
 
@@ -40,6 +41,7 @@ import OctocatCorner from 'components/OctocatCorner.vue';
 import LicenseDialog from 'components/LicenseDialog.vue';
 import WhatsNewDialog from 'components/WhatsNewDialog.vue';
 import MainMenu from 'components/MainMenu.vue';
+import DonationNudge from 'components/DonationNudge.vue';
 
 const showLicense = ref(false);
 const showWhatsNew = ref(false);

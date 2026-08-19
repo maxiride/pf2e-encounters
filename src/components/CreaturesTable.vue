@@ -67,7 +67,9 @@
           />
           <q-btn v-if="filtersActive" flat dense no-caps color="negative" icon="filter_alt_off" label="Reset" @click="resetFilters" />
         </div>
-        <div class="col-auto text-caption text-grey-7">{{ filteredCreatures.length }} creatures</div>
+        <div class="col-auto text-caption text-grey-7">
+          {{ filteredCreatures.length }} {{ filteredCreatures.length === 1 ? 'creature' : 'creatures' }}
+        </div>
       </div>
 
       <q-slide-transition>
