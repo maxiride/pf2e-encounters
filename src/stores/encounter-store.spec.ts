@@ -184,12 +184,38 @@ describe('encounter store', () => {
   });
 
   describe('actions', () => {
-    it('adding the same base creature again bumps its count instead of duplicating', () => {
+    it('adding the same creature again always creates a new base entry, never merges counts', () => {
       const store = useEncounterStore();
       store.addCreature('Goblin', 1);
       store.addCreature('Goblin', 1);
-      expect(store.encounterCreatures).toHaveLength(1);
-      expect(store.encounterCreatures[0]?.count).toBe(2);
+      expect(store.encounterCreatures).toEqual([
+        { name: 'Goblin', level: 1, count: 1, kind: 'base', url: '' },
+        { name: 'Goblin', level: 1, count: 1, kind: 'base', url: '' },
+      ]);
+    });
+
+    it('re-kinding one entry never affects another entry of the same creature (regression, issue #94)', () => {
+      const store = useEncounterStore();
+      store.addCreature('Centipede', 1);
+      store.addCreature('Centipede', 1);
+      store.makeCreatureWeak(0);
+
+      expect(store.encounterCreatures).toEqual([
+        { name: 'Centipede', level: 1, count: 1, kind: 'weak', url: '' },
+        { name: 'Centipede', level: 1, count: 1, kind: 'base', url: '' },
+      ]);
+    });
+
+    it('coexistence of weak/base entries for the same creature does not depend on add/toggle order (regression, issue #94)', () => {
+      const store = useEncounterStore();
+      store.addCreature('Centipede', 1);
+      store.makeCreatureWeak(0);
+      store.addCreature('Centipede', 1);
+
+      expect(store.encounterCreatures).toEqual([
+        { name: 'Centipede', level: 1, count: 1, kind: 'weak', url: '' },
+        { name: 'Centipede', level: 1, count: 1, kind: 'base', url: '' },
+      ]);
     });
 
     it('never decrements a creature count below 1', () => {
