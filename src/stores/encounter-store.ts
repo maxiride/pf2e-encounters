@@ -74,15 +74,13 @@ export const useEncounterStore = defineStore('encounter', () => {
   // actions
   //
 
-  // addCreature adds a creature to the encounter; adding the same creature again bumps its count
+  // addCreature adds a creature to the encounter as a new base entry. It never merges into an
+  // existing row (issue #94): merging by name would silently fold a fresh addition into whatever
+  // kind that row already happened to be, or make splitting a weak/elite copy off a stack
+  // dependent on the order the creature was added in. Stacking count is the count stepper's job.
   function addCreature(name: string, level: number, url = '', npc = false): void {
     trackEvent('encounter-add-creature', { name, level, npc });
 
-    const existing = encounterCreatures.value.find((c) => c.name === name && c.kind === 'base');
-    if (existing) {
-      existing.count++;
-      return;
-    }
     encounterCreatures.value.push({
       name,
       level,
@@ -113,7 +111,9 @@ export const useEncounterStore = defineStore('encounter', () => {
     encounterCreatures.value.splice(index, 1);
   }
 
-  // setCreatureKind changes a creature's weak/base/elite variant, tracking real changes only
+  // setCreatureKind changes a creature entry's weak/base/elite variant, tracking real changes
+  // only. It re-kinds the whole entry (and whatever count it holds) in place - entries are never
+  // merged by name, so this never affects any other entry of the same creature.
   function setCreatureKind(index: number, kind: Creature['kind']): void {
     const creature = encounterCreatures.value.at(index);
     if (!creature || creature.kind === kind) return;
