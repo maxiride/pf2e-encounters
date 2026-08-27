@@ -175,7 +175,7 @@ export const useEncounterStore = defineStore('encounter', () => {
     trackEvent('encounter-snapshot', {
       party_level: partyLevel.value,
       party_size: partySize.value,
-      unique_creatures: encounterCreatures.value.length,
+      unique_creatures: new Set(encounterCreatures.value.map((c) => c.name)).size,
       creature_count: encounterCreatures.value.reduce((sum, c) => sum + c.count, 0),
       xp_cost: xpCost.value,
       threat: threat.value,
