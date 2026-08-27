@@ -290,6 +290,23 @@ describe('encounter store', () => {
       });
     });
 
+    it('counts unique_creatures by distinct name, not row count', async () => {
+      vi.useFakeTimers();
+      const store = useEncounterStore();
+      store.addCreature('Goblin', 1);
+      store.addCreature('Goblin', 1);
+      await nextTick();
+
+      const track = vi.mocked(window.umami!.track);
+      track.mockClear();
+
+      vi.advanceTimersByTime(8000);
+      expect(track).toHaveBeenCalledWith(
+        'encounter-snapshot',
+        expect.objectContaining({ unique_creatures: 1, creature_count: 2 }),
+      );
+    });
+
     it('does not snapshot an empty encounter', async () => {
       vi.useFakeTimers();
       const store = useEncounterStore();
