@@ -54,6 +54,14 @@ export const useEncounterStore = defineStore('encounter', () => {
     return cost;
   });
 
+  // xpAwardFourPc is the XP a group of four would be awarded for the same fight (issue #99).
+  // GM Core is ambiguous on the per-character award for other party sizes: Adversaries and
+  // Hazards (ID 2650) says the award is the creatures' total XP ("excludes XP adjustments for
+  // different party sizes"), which is xpCost; Party Size / Different Party Sizes (IDs 2652, 2719)
+  // say the award is "the amount of XP listed for a group of four characters", which is this.
+  // Not exact at the Low band: GM Core's Low adjustment is 20, not a quarter of the budget step.
+  const xpAwardFourPc = computed<number>(() => Math.floor((xpCost.value * 4) / partySize.value));
+
   // xpPool represents a percentage of how much xp points are left in the pool based off the extreme budget
   const xpPool = computed<number>(() => {
     return xpCost.value / xpBudget.value.extreme;
@@ -203,6 +211,7 @@ export const useEncounterStore = defineStore('encounter', () => {
     encounterCreatures,
     xpBudget,
     xpCost,
+    xpAwardFourPc,
     xpPool,
     threat,
     hasDegenerateBudget,

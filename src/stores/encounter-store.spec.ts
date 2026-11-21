@@ -183,6 +183,47 @@ describe('encounter store', () => {
     });
   });
 
+  describe('xpAwardFourPc (issue #99)', () => {
+    it('issue case: 3 PCs, three level-6 creatures vs party level 8 -> costs 60, 4-PC award 80', () => {
+      const store = useEncounterStore();
+      store.setPartyLevel(8);
+      store.setPartySize(3);
+      store.addCreature('Legbreaker', 6); // delta -2 -> 20
+      store.incrementCreatureCount(0);
+      store.incrementCreatureCount(0); // 3 x 20
+      expect(store.xpCost).toBe(60);
+      expect(store.threat).toBe('Moderate');
+      expect(store.xpAwardFourPc).toBe(80);
+    });
+
+    it('equals xpCost for a party of 4', () => {
+      const store = useEncounterStore();
+      store.setPartyLevel(3);
+      store.addCreature('Goblin', 3); // 40
+      store.addCreature('Ogre', 4); // 60
+      expect(store.xpAwardFourPc).toBe(store.xpCost);
+    });
+
+    it.each([
+      // partySize, xpCost, expected floor(xpCost * 4 / partySize)
+      [3, 60, 80],
+      [5, 100, 80],
+      [6, 120, 80],
+      [3, 40, 53], // Low at 3 PCs: GM Core Low adjustment is 20, so this is not 60
+      [8, 10, 5],
+    ])('party of %i, %i XP of creatures -> %i', (size, cost, expected) => {
+      const store = useEncounterStore();
+      store.setPartyLevel(1);
+      store.setPartySize(size);
+      // Build the cost from 10 XP units: a level -3 creature is delta -4 vs party level 1.
+      const units = cost / 10;
+      store.addCreature('Unit', -3); // delta -4 -> 10
+      for (let i = 1; i < units; i++) store.incrementCreatureCount(0);
+      expect(store.xpCost).toBe(cost);
+      expect(store.xpAwardFourPc).toBe(expected);
+    });
+  });
+
   describe('actions', () => {
     it('adding the same creature again always creates a new base entry, never merges counts', () => {
       const store = useEncounterStore();
