@@ -16,11 +16,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
@@ -54,6 +51,15 @@ jobs:
         with:
           path: dist/spa
 
+  # Separate job so "Re-run failed jobs" redeploys the already-uploaded artifact instead of
+  # rebuilding and uploading a second "github-pages" artifact, which deploy-pages rejects.
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
