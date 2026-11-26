@@ -150,12 +150,35 @@
     <q-card-section class="row items-center q-py-sm">
       <q-badge :color="threatColor" :label="threat" class="q-py-xs q-px-sm text-weight-medium" />
       <q-space />
-      <div class="text-subtitle2">
-        {{ xpCost }} XP to award
-        <q-tooltip
-          >Always the 4-character table value — the rules keep XP awards fixed regardless of party size (only
-          the threat budget scales).</q-tooltip
-        >
+      <div class="text-right">
+        <div class="text-subtitle2">
+          <span class="rule-tag">RAW</span> {{ xpCost }} XP to award
+          <q-icon name="info_outline" size="16px" class="rule-info" tabindex="0" aria-label="About the RAW value">
+            <q-tooltip max-width="260px" class="text-body2"
+              >Rules as written: each character gains the total XP of the creatures and hazards (GM Core,
+              Adversaries and Hazards — "this excludes XP adjustments for different party sizes").</q-tooltip
+            >
+          </q-icon>
+        </div>
+        <div v-if="partySize !== 4" class="text-caption text-grey-7" data-testid="xp-award-four-pc">
+          <span class="rule-tag">RAI</span> {{ xpAwardFourPc }} XP · 4-PC equivalent
+          <a
+            href="https://github.com/maxiride/pf2e-encounters/issues/99"
+            target="_blank"
+            rel="noopener"
+            class="rule-info"
+            aria-label="About the RAI value: issue #99"
+          >
+            <q-icon name="info_outline" size="16px">
+              <q-tooltip max-width="260px" class="text-body2"
+                >Other reading of GM Core (Party Size, Different Party Sizes): "you'll always award the amount of XP
+                listed for a group of four characters", i.e. floor(XP × 4 / party size). Paizo hasn't clarified which
+                applies. At the Low threat band this overshoots, because GM Core's Low adjustment is 20, not a quarter
+                of the budget step. Click to open issue #99.</q-tooltip
+              >
+            </q-icon>
+          </a>
+        </div>
       </div>
     </q-card-section>
   </q-card>
@@ -169,7 +192,7 @@ import type { Creature } from 'stores/encounter-store';
 import { THREAT_COLORS } from 'components/threat-colors';
 
 const encounterStore = useEncounterStore();
-const { encounterCreatures, partyLevel, partySize, xpCost, threat, hasDegenerateBudget } =
+const { encounterCreatures, partyLevel, partySize, xpCost, xpAwardFourPc, threat, hasDegenerateBudget } =
   storeToRefs(encounterStore);
 
 function costOf(creature: Creature): number {
@@ -202,6 +225,25 @@ const threatColor = computed(() => THREAT_COLORS[threat.value] ?? 'grey-6');
 .kind-toggle {
   border: 1px solid $separator-color;
   border-radius: 4px;
+}
+
+.rule-tag {
+  font-size: 0.7em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+
+.rule-info {
+  margin-left: 2px;
+  color: $primary;
+  vertical-align: text-bottom;
+  cursor: help;
+  text-decoration: none;
+}
+
+a.rule-info {
+  cursor: pointer;
 }
 
 .degenerate-banner {
